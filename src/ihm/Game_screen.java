@@ -41,7 +41,7 @@ public class Game_screen extends JFrame implements Runnable{
 
 	/**
 	 * Create the frame.
-	 */
+	 */ 
 	public Game_screen() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 854, 809);
