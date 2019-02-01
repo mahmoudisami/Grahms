@@ -9,4 +9,8 @@ public class Money {
 	public Money() {
 		money = Const.START_MONEY;
 	}
+	
+	public void addMoney(int gain) {
+		
+	}
 }
