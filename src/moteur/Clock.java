@@ -11,7 +11,7 @@ public class Clock  {		//creation of the clock
 	private int day;
 	private int month;
 	private int year;
-	
+	private int dayCpt;
 	
 	public Clock(){
 		hour = 16;
@@ -19,15 +19,17 @@ public class Clock  {		//creation of the clock
 		day = 04;
 		month = 01;
 		year = 2019;
+		dayCpt = 0;
 	}
 	
-	public Clock(int hH, int mMin, int dD, int mMo, int yYYY) {
+	public Clock(int hH, int mMin, int dD, int mMo, int yYYY, int dC) {
 		super();
 		hour = hH;
 		this.minute = mMin;
 		day = dD;
 		month = mMo;
 		year = yYYY;
+		dayCpt = dC;
 	}
 	
 	public String getHour() {		//getters ->
@@ -67,7 +69,10 @@ public class Clock  {		//creation of the clock
 	public int getYear() {		//<-
 		return year;
 	}
-
+	
+	public int getDayCpt() {
+		return dayCpt;
+	}
 
 	public void start(){		//start the clock
 		started  = true;
@@ -93,6 +98,7 @@ public class Clock  {		//creation of the clock
 				}
 				else{
 					day += 1;
+					dayCpt++;
 				}
 			}
 			else{
@@ -131,7 +137,7 @@ public class Clock  {		//creation of the clock
 	}
 
 	public String toString() {
-		return "HOUR : " + getHour() + ":" + getMinute() + " ; DATE : " + getDay() + "/" + getMonth() + "/" + getYear();
+		return "HOUR : " + getHour() + ":" + getMinute() + " ; DATE : " + getDay() + "/" + getMonth() + "/" + getYear() + " ; Day gone : " + getDayCpt();
 	}
 	
 	public String displayDate() {
@@ -142,13 +148,16 @@ public class Clock  {		//creation of the clock
 		return "HOUR : " + getHour() + ":" + getMinute();
 	}
 	
+	public String displayDayCpt() {
+		return "Day : " + getDayCpt();
+	}
 	public static void main(String[] args){ //Test 
 		Clock clock = new Clock();
 		
 		boolean bool = true;
 		while (bool!=false){
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				System.out.println(e.getMessage());
 			}
