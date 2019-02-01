@@ -52,11 +52,11 @@ public class Game_screen extends JFrame implements Runnable{
 		contentPane.setLayout(null);
 		
 		JPanel gamePanel = new JPanel();
-		gamePanel.setBounds(10, 11, 592, 600);
+		gamePanel.setBounds(10, 10, 610, 610);
 		contentPane.add(gamePanel);
 		
 		JPanel infoVillePanel = new JPanel();
-		infoVillePanel.setBounds(612, 11, 216, 321);
+		infoVillePanel.setBounds(628, 10, 208, 321);
 		contentPane.add(infoVillePanel);
 		infoVillePanel.setLayout(null);
 		
@@ -89,7 +89,7 @@ public class Game_screen extends JFrame implements Runnable{
 		infoVillePanel.add(textPane);
 		
 		JPanel buttonLPanel = new JPanel();
-		buttonLPanel.setBounds(10, 622, 282, 137);
+		buttonLPanel.setBounds(10, 622, 286, 137);
 		contentPane.add(buttonLPanel);
 		buttonLPanel.setLayout(null);
 		
@@ -106,7 +106,7 @@ public class Game_screen extends JFrame implements Runnable{
 		buttonLPanel.add(button_1);
 		
 		JPanel buttonRPanel = new JPanel();
-		buttonRPanel.setBounds(302, 622, 299, 137);
+		buttonRPanel.setBounds(302, 622, 318, 137);
 		contentPane.add(buttonRPanel);
 		buttonRPanel.setLayout(null);
 		
@@ -123,7 +123,7 @@ public class Game_screen extends JFrame implements Runnable{
 		buttonRPanel.add(btnNewButton_2);
 		
 		JPanel infoDistrictPanel = new JPanel();
-		infoDistrictPanel.setBounds(612, 343, 216, 268);
+		infoDistrictPanel.setBounds(630, 343, 206, 277);
 		contentPane.add(infoDistrictPanel);
 		infoDistrictPanel.setLayout(null);
 		
@@ -143,7 +143,7 @@ public class Game_screen extends JFrame implements Runnable{
 		infoDistrictPanel.add(txtpnNombreDeVisitejours);
 		
 		JPanel infoDatePanel = new JPanel();
-		infoDatePanel.setBounds(612, 622, 216, 137);
+		infoDatePanel.setBounds(628, 622, 208, 137);
 		contentPane.add(infoDatePanel);
 		infoDatePanel.setLayout(null);
 		
