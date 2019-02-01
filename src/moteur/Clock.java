@@ -103,7 +103,7 @@ public class Clock  {		//creation of the clock
 			minute += 1;
 		}
 	}
-
+	
 	private boolean is30() {		//return true if the current month has 30 days
 		if(month==04||month==06||month==9||month==11){
 			return true;
@@ -156,7 +156,5 @@ public class Clock  {		//creation of the clock
 			System.out.println(clock.toString());
 		}	
 	}
-	
-	
 	
 }
