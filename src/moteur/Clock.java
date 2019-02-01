@@ -47,7 +47,7 @@ public class Clock  {		//creation of the clock
 			return "" + minute;
 		}
 	}
-
+ 
 	public String getDay() {
 		if (day<10)
 			return "" + 0 + day;
