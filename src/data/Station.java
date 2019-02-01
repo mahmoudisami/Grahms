@@ -1,4 +1,4 @@
-package moteur;
+package data;
 
 public class Station {
 
