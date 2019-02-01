@@ -75,7 +75,7 @@ public class Game_screen extends JFrame implements Runnable{
 		infoVillePanel.add(txtpnPopulationTotale);
 		
 		JButton btnNewButton_3 = new JButton("HISTORIQUE");
-		btnNewButton_3.setBounds(0, 264, 216, 57);
+		btnNewButton_3.setBounds(0, 264, 208, 57);
 		infoVillePanel.add(btnNewButton_3);
 		
 		JLabel txtpnEquilibreFinancier = new JLabel();
