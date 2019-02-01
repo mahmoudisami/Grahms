@@ -43,6 +43,7 @@ public class Game_screen extends JFrame implements Runnable{
 	 * Create the frame.
 	 */ 
 	public Game_screen() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 854, 809);
 		contentPane = new JPanel();
@@ -60,7 +61,7 @@ public class Game_screen extends JFrame implements Runnable{
 		infoVillePanel.setLayout(null);
 		
 		JLabel txtpnVille = new JLabel();
-		txtpnVille.setBounds(93, 0, 32, 20);
+		txtpnVille.setBounds(93, 0, 66, 20);
 		txtpnVille.setText("VILLE");
 		infoVillePanel.add(txtpnVille);
 		
@@ -127,7 +128,7 @@ public class Game_screen extends JFrame implements Runnable{
 		infoDistrictPanel.setLayout(null);
 		
 		JLabel txtpnQuartier = new JLabel();
-		txtpnQuartier.setBounds(79, 5, 58, 20);
+		txtpnQuartier.setBounds(79, 5, 97, 20);
 		txtpnQuartier.setText("QUARTIER");
 		infoDistrictPanel.add(txtpnQuartier);
 		
@@ -147,7 +148,7 @@ public class Game_screen extends JFrame implements Runnable{
 		infoDatePanel.setLayout(null);
 		
 		JLabel txtpnDate = new JLabel();
-		txtpnDate.setBounds(92, 5, 32, 20);
+		txtpnDate.setBounds(92, 5, 81, 20);
 		txtpnDate.setText("DATE");
 		infoDatePanel.add(txtpnDate);
 		
