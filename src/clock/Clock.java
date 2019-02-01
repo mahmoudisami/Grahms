@@ -141,6 +141,7 @@ public class Clock  {		//creation of the clock
 	public String displayTime() {
 		return "HOUR : " + getHour() + ":" + getMinute();
 	}
+	
 	public static void main(String[] args){ //Test 
 		Clock clock = new Clock();
 		

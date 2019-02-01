@@ -55,7 +55,7 @@ public class Game_screen extends JFrame implements Runnable{
 		contentPane.add(gamePanel);
 		
 		JPanel infoVillePanel = new JPanel();
-		infoVillePanel.setBounds(612, 11, 216, 289);
+		infoVillePanel.setBounds(612, 11, 216, 321);
 		contentPane.add(infoVillePanel);
 		infoVillePanel.setLayout(null);
 		
@@ -74,7 +74,7 @@ public class Game_screen extends JFrame implements Runnable{
 		infoVillePanel.add(txtpnPopulationTotale);
 		
 		JButton btnNewButton_3 = new JButton("HISTORIQUE");
-		btnNewButton_3.setBounds(0, 221, 206, 57);
+		btnNewButton_3.setBounds(0, 264, 216, 57);
 		infoVillePanel.add(btnNewButton_3);
 		
 		JLabel txtpnEquilibreFinancier = new JLabel();
@@ -84,7 +84,7 @@ public class Game_screen extends JFrame implements Runnable{
 		
 		JLabel textPane = new JLabel();
 		textPane.setText("+/- :");
-		textPane.setBounds(20, 156, 161, 20);
+		textPane.setBounds(20, 172, 161, 20);
 		infoVillePanel.add(textPane);
 		
 		JPanel buttonLPanel = new JPanel();
@@ -122,7 +122,7 @@ public class Game_screen extends JFrame implements Runnable{
 		buttonRPanel.add(btnNewButton_2);
 		
 		JPanel infoDistrictPanel = new JPanel();
-		infoDistrictPanel.setBounds(612, 311, 216, 223);
+		infoDistrictPanel.setBounds(612, 343, 216, 268);
 		contentPane.add(infoDistrictPanel);
 		infoDistrictPanel.setLayout(null);
 		
@@ -142,7 +142,7 @@ public class Game_screen extends JFrame implements Runnable{
 		infoDistrictPanel.add(txtpnNombreDeVisitejours);
 		
 		JPanel infoDatePanel = new JPanel();
-		infoDatePanel.setBounds(612, 545, 216, 214);
+		infoDatePanel.setBounds(612, 622, 216, 137);
 		contentPane.add(infoDatePanel);
 		infoDatePanel.setLayout(null);
 		
@@ -166,13 +166,13 @@ public class Game_screen extends JFrame implements Runnable{
 		txtpnVitesse.setText("Vitesse :");
 		
 		clock = new Clock();
-		clockLabDate = new JLabel(clock.displayDate());
-		clockLabDate.setBounds(60, 97, 98, 37);
-		infoDatePanel.add(clockLabDate);
 		
 		clockLabTime = new JLabel(clock.displayTime());
-		clockLabTime.setBounds(70, 133, 112, 30);
+		clockLabTime.setBounds(61, 96, 112, 30);
 		infoDatePanel.add(clockLabTime);
+		clockLabDate = new JLabel(clock.displayDate());
+		clockLabDate.setBounds(51, 68, 98, 37);
+		infoDatePanel.add(clockLabDate);
 	}
 
 	@Override
