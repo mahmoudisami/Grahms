@@ -9,19 +9,11 @@ public class Commercial extends District{
 	
 	public Commercial() {
 		super(Const.GAIN_COM,0); 
-		size = 1; // Taille de départ
+		size = 1; // Taille de depart
 	}
 	
 	public String getImg() {
-		if(size == 1) {
-			return img1;
-		}
-		else if(size == 2) {
-			return img2;
-		}
-		else {
-			return img3;
-		}
+		return super.getImg(size, img1, img2, img3);
 	}
 	
 	public void upSize() {

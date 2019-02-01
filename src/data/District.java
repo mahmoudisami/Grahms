@@ -21,12 +21,36 @@ public class District {
 	
 	public boolean createStation() {
 		if(isStation) {
-			return false; // Station déjà existante
+			return false; // Station deja� existante
 		}
 		else {
-			station = new Station(); // Création de la nouvelle station
+			station = new Station(); // Creation de la nouvelle station
 			return true; // Construction ok
 		}
+	}
+	
+	public String getImg(int size, String img1, String img2, String img3) {
+		if(size == 1) {
+			return img1;
+		}
+		else if(size == 2) {
+			return img2;
+		}
+		else {
+			return img3;
+		}
+	}
+
+	public int getGain() {
+		return gain;
+	}
+
+	public int getCost() {
+		return cost;
+	}
+
+	public int getActualPeople() {
+		return actualPeople;
 	}
 	
 }
