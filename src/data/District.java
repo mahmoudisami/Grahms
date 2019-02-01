@@ -12,6 +12,6 @@ public class District {
 	public District(int gain,int cost) {
 		this.gain = gain;
 		this.cost = cost;
-		station = null;
+		station = null; 
 	}
 }

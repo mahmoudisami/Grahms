@@ -7,7 +7,7 @@ public class Commercial extends District{
 	private final static int COST = 0; // Gratuit � construire
 	
 	public Commercial() {
-		super(GAIN,COST);
+		super(GAIN,COST); 
 		taille = 1; // Taille de d�part
 	}
 }
