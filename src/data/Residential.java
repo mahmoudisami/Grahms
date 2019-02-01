@@ -7,6 +7,6 @@ public class Residential extends District{
 	
 	public Residential() {
 		super(Const.GAIN_RES,0); 
-		size = 1; // Taille de départ
+		size = 1; // Taille de dé part
 	}
 }
