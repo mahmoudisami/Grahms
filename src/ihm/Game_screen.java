@@ -59,7 +59,7 @@ public class Game_screen extends JFrame implements Runnable{
 		contentPane.add(infoVillePanel);
 		infoVillePanel.setLayout(null);
 		
-		JTextPane txtpnVille = new JTextPane();
+		JLabel txtpnVille = new JLabel();
 		txtpnVille.setBounds(93, 0, 32, 20);
 		txtpnVille.setText("VILLE");
 		infoVillePanel.add(txtpnVille);
@@ -68,7 +68,7 @@ public class Game_screen extends JFrame implements Runnable{
 		progressBar.setBounds(20, 87, 161, 14);
 		infoVillePanel.add(progressBar);
 		
-		JTextPane txtpnPopulationTotale = new JTextPane();
+		JLabel txtpnPopulationTotale = new JLabel();
 		txtpnPopulationTotale.setText("Population totale :");
 		txtpnPopulationTotale.setBounds(20, 33, 161, 20);
 		infoVillePanel.add(txtpnPopulationTotale);
@@ -77,12 +77,12 @@ public class Game_screen extends JFrame implements Runnable{
 		btnNewButton_3.setBounds(0, 221, 206, 57);
 		infoVillePanel.add(btnNewButton_3);
 		
-		JTextPane txtpnEquilibreFinancier = new JTextPane();
+		JLabel txtpnEquilibreFinancier = new JLabel();
 		txtpnEquilibreFinancier.setText("Equilibre financier :");
 		txtpnEquilibreFinancier.setBounds(20, 125, 161, 20);
 		infoVillePanel.add(txtpnEquilibreFinancier);
 		
-		JTextPane textPane = new JTextPane();
+		JLabel textPane = new JLabel();
 		textPane.setText("+/- :");
 		textPane.setBounds(20, 156, 161, 20);
 		infoVillePanel.add(textPane);
@@ -126,17 +126,17 @@ public class Game_screen extends JFrame implements Runnable{
 		contentPane.add(infoDistrictPanel);
 		infoDistrictPanel.setLayout(null);
 		
-		JTextPane txtpnQuartier = new JTextPane();
+		JLabel txtpnQuartier = new JLabel();
 		txtpnQuartier.setBounds(79, 5, 58, 20);
 		txtpnQuartier.setText("QUARTIER");
 		infoDistrictPanel.add(txtpnQuartier);
 		
-		JTextPane txtpnPopulation = new JTextPane();
+		JLabel txtpnPopulation = new JLabel();
 		txtpnPopulation.setText("Population :");
 		txtpnPopulation.setBounds(23, 52, 153, 20);
 		infoDistrictPanel.add(txtpnPopulation);
 		
-		JTextPane txtpnNombreDeVisitejours = new JTextPane();
+		JLabel txtpnNombreDeVisitejours = new JLabel();
 		txtpnNombreDeVisitejours.setText("Nombre de visite / jours :");
 		txtpnNombreDeVisitejours.setBounds(23, 120, 153, 20);
 		infoDistrictPanel.add(txtpnNombreDeVisitejours);
@@ -146,7 +146,7 @@ public class Game_screen extends JFrame implements Runnable{
 		contentPane.add(infoDatePanel);
 		infoDatePanel.setLayout(null);
 		
-		JTextPane txtpnDate = new JTextPane();
+		JLabel txtpnDate = new JLabel();
 		txtpnDate.setBounds(92, 5, 32, 20);
 		txtpnDate.setText("DATE");
 		infoDatePanel.add(txtpnDate);
@@ -155,12 +155,12 @@ public class Game_screen extends JFrame implements Runnable{
 		button_3.setBounds(85, 41, 64, 23);
 		infoDatePanel.add(button_3);
 		
-		JTextPane txtpnX = new JTextPane();
+		JLabel txtpnX = new JLabel();
 		txtpnX.setText("x 10");
 		txtpnX.setBounds(159, 44, 39, 20);
 		infoDatePanel.add(txtpnX);
 		
-		JTextPane txtpnVitesse = new JTextPane();
+		JLabel txtpnVitesse = new JLabel();
 		txtpnVitesse.setBounds(28, 44, 47, 20);
 		infoDatePanel.add(txtpnVitesse);
 		txtpnVitesse.setText("Vitesse :");
