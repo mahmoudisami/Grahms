@@ -1,4 +1,4 @@
-package moteur;
+ package moteur;
 
 
 import java.util.concurrent.TimeUnit;
@@ -14,11 +14,11 @@ public class Clock  {		//creation of the clock
 	
 	
 	public Clock(){
-		hour = 8;
-		minute = 30;
-		day = 01;
-		month = 04;
-		year = 2018;
+		hour = 16;
+		minute = 00;
+		day = 04;
+		month = 01;
+		year = 2019;
 	}
 	
 	public Clock(int hH, int mMin, int dD, int mMo, int yYYY) {
@@ -134,8 +134,14 @@ public class Clock  {		//creation of the clock
 		return "HOUR : " + getHour() + ":" + getMinute() + " ; DATE : " + getDay() + "/" + getMonth() + "/" + getYear();
 	}
 	
+	public String displayDate() {
+		return "DATE : " + getDay() + "/" + getMonth() + "/" + getYear();
+	}
 	
-
+	public String displayTime() {
+		return "HOUR : " + getHour() + ":" + getMinute();
+	}
+	
 	public static void main(String[] args){ //Test 
 		Clock clock = new Clock();
 		
