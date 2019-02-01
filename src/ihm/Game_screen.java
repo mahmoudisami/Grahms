@@ -14,7 +14,7 @@ import java.awt.FlowLayout;
 import javax.swing.JTextPane;
 import javax.swing.JProgressBar;
 
-import clock.Clock; 
+import moteur.Clock; 
 
 public class Game_screen extends JFrame implements Runnable{
 
