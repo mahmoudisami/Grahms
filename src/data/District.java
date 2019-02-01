@@ -5,7 +5,7 @@ public class District {
 	private Station station;
 	private int gain;
 	private int cost;
-	private int people;
+	private int actualPeople;
 	private int satisfaction;
 	
 

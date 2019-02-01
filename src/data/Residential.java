@@ -2,11 +2,12 @@ package data;
 
 public class Residential extends District{
 
-	private int taille;
+	private int size;
 	private final static int GAIN = 100; // Gain par semaine ou par mois � d�finir
+	private int maxPeople;
 	
 	public Residential() {
 		super(GAIN,0); 
-		taille = 1; // Taille de d�part
+		size = 1; // Taille de d�part
 	}
 }
