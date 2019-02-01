@@ -4,7 +4,7 @@ public class Const {
 
 	
 	/***********************      MONEY        ********************************/
-	public final static int START_MONEY = 100;
+	public final static int START_MONEY = 1000; // Argent de départ
 	
 	/***********************      STATIONS        ********************************/
 	public final static int MAINTENANCE_COST_STATION = 100; // Cout chaque semaine/mois à définir 
@@ -12,7 +12,6 @@ public class Const {
 
 	/***********************      COMMERCIAL        ********************************/
 	public final static int GAIN_COM = 500; // Gain par semaine ou par mois à définir
-	public final static int COST_COM = 0; // Gratuit à construire
 	
 	/***********************      RESIDENTIEL        ********************************/
 	public final static int GAIN_RES = 100; // Gain par semaine ou par mois à définir
