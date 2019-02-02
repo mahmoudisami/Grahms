@@ -12,7 +12,7 @@ public class Clock  {		//creation of the clock
 	private int month;
 	private int year;
 	private int dayCpt;
-	
+	private int dayPos;	
 	public Clock(){
 		hour = 16;
 		minute = 00;
@@ -20,9 +20,10 @@ public class Clock  {		//creation of the clock
 		month = 01;
 		year = 2019;
 		dayCpt = 0;
+		dayPos = 1;
 	}
 	
-	public Clock(int hH, int mMin, int dD, int mMo, int yYYY, int dC) {
+	public Clock(int hH, int mMin, int dD, int mMo, int yYYY, int dC, int dN) {
 		super();
 		hour = hH;
 		this.minute = mMin;
@@ -30,6 +31,7 @@ public class Clock  {		//creation of the clock
 		month = mMo;
 		year = yYYY;
 		dayCpt = dC;
+		dayPos = dN;
 	}
 	
 	public String getHour() {		//getters ->
@@ -73,11 +75,63 @@ public class Clock  {		//creation of the clock
 	public int getDayCpt() {
 		return dayCpt;
 	}
-
+	
+	public int getDayPos() {
+		return dayPos;
+	}
+	
+	public String getDayName() {
+		String todayName = calculDayName(getDayPos());
+		return todayName;
+	}
+	
 	public void start(){		//start the clock
 		started  = true;
 		while (started==true){
 			this.increment();
+		}
+	}
+	
+	public String calculDayName(int a) { //calcul day name
+		int num = a;
+		String name = null;
+		switch (num) {
+			case 1: name = "Monday";
+					break;
+			case 2: name = "Tuesday";
+					break;
+			case 3: name = "Wednesday";
+					break;
+			case 4: name = "Thursday";
+					break;
+			case 5: name = "Friday";
+					break;
+			case 6: name = "Saturday";
+					break;
+			case 7: name = "Sunday";
+					break;
+			default: name = "Invalid day";
+            break;
+		}
+		return name;
+	}
+	
+	private boolean isWeekend(int a) {
+		int today = a;
+		if(today == 6 || today == 7) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public String getWeekend() {
+		if (isWeekend(getDayPos())) {
+			return "Yes";
+		}
+		else {
+			return "No";
 		}
 	}
 	
@@ -99,6 +153,12 @@ public class Clock  {		//creation of the clock
 				else{
 					day += 1;
 					dayCpt++;
+					if (dayPos < 7) {
+						dayPos++;
+					}
+					else {
+						dayPos = 1;
+					}
 				}
 			}
 			else{
@@ -137,7 +197,7 @@ public class Clock  {		//creation of the clock
 	}
 
 	public String toString() {
-		return "HOUR : " + getHour() + ":" + getMinute() + " ; DATE : " + getDay() + "/" + getMonth() + "/" + getYear() + " ; Day gone : " + getDayCpt();
+		return "HOUR : " + getHour() + ":" + getMinute() + " ; DATE : " + getDay() + "/" + getMonth() + "/" + getYear() + " ; Day gone : " + getDayCpt() + " ; Today is : " + getDayName() + " ; Week end : " + getWeekend();
 	}
 	
 	public String displayDate() {
@@ -157,7 +217,7 @@ public class Clock  {		//creation of the clock
 		boolean bool = true;
 		while (bool!=false){
 			try {
-				Thread.sleep(100);
+				Thread.sleep(5);
 			} catch (InterruptedException e) {
 				System.out.println(e.getMessage());
 			}
