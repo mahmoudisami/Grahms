@@ -118,7 +118,7 @@ public class Clock  {		//creation of the clock
 		String todayName = calculDayName(getDayPos());
 		return todayName;
 	}
-	
+	 
 	public String calculMonthName(int a) { //calcul day name
 		int month = a;
 		String monthString = null;
