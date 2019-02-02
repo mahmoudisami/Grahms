@@ -33,15 +33,5 @@ public class Residential extends District{
 		return maxPeople;
 	}
 	
-	public int getCost() {
-		return super.getCost();
-	}
 	
-	public int getGain() {
-		return super.getGain();
-	}
-	
-	public int getMaintenanceCost() {
-		return super.getMaintenanceCost(); // Aucun frais de maintenance
-	}
 }

@@ -28,15 +28,5 @@ public class Commercial extends District{
 		size++;
 	}
 	
-	public int getCost() {
-		return super.getCost();
-	}
 	
-	public int getGain() {
-		return super.getGain();
-	}
-	
-	public int getMaintenanceCost() {
-		return super.getMaintenanceCost(); //Aucun frai de maintenance
-	}
 }
