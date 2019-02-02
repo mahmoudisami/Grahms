@@ -32,7 +32,6 @@ public class Game_screen extends JFrame implements Runnable{
 			public void run() {
 				try {
 					Game_screen frame = new Game_screen();
-					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,7 +45,7 @@ public class Game_screen extends JFrame implements Runnable{
 	public Game_screen() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(854, 809);
+		setSize(854, 809);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,8 +60,8 @@ public class Game_screen extends JFrame implements Runnable{
                 int x=e.getX();
                 int y=e.getY();
                 //System.out.println(x+","+y); // Coordonnées cliquées
-                int caseX = testPosition(x, 5); // Retourne la case cliquée en X
-                int caseY = testPosition(y, 5); // Retourne la case cliquée en Y
+                int caseX = getCase(x, 5); // Retourne la case cliquée en X
+                int caseY = getCase(y, 5); // Retourne la case cliquée en Y
                 System.out.println(caseX+","+caseY); // Affichage
             }
         });
@@ -184,8 +183,10 @@ public class Game_screen extends JFrame implements Runnable{
 		clockLabTime.setBounds(61, 96, 112, 30);
 		infoDatePanel.add(clockLabTime);
 		clockLabDate = new JLabel(clock.displayDate());
-		clockLabDate.setBounds(51, 68, 98, 37);
+		clockLabDate.setBounds(51, 68, 120, 37);
 		infoDatePanel.add(clockLabDate);
+		
+		setVisible(true);
 	}
 
 	@Override
@@ -203,7 +204,7 @@ public class Game_screen extends JFrame implements Runnable{
 		}
 	}
 	
-	public int testPosition(int coordinate, int numberOfSquare) {
+	public int getCase(int coordinate, int numberOfSquare) {
         int divider = 610 / numberOfSquare;
         int position = (int) Math.floor(coordinate / divider);
         return position;
