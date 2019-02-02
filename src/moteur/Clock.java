@@ -66,7 +66,10 @@ public class Clock  {		//creation of the clock
 			return "" + month;
 		}
 	}
-
+	
+	public int getMonthPos() {
+		return month;
+	}
 
 	public int getYear() {		//<-
 		return year;
@@ -78,11 +81,6 @@ public class Clock  {		//creation of the clock
 	
 	public int getDayPos() {
 		return dayPos;
-	}
-	
-	public String getDayName() {
-		String todayName = calculDayName(getDayPos());
-		return todayName;
 	}
 	
 	public void start(){		//start the clock
@@ -116,6 +114,49 @@ public class Clock  {		//creation of the clock
 		return name;
 	}
 	
+	public String getDayName() {
+		String todayName = calculDayName(getDayPos());
+		return todayName;
+	}
+	
+	public String calculMonthName(int a) { //calcul day name
+		int month = a;
+		String monthString = null;
+        switch (month) {
+            case 1:  monthString = "January";
+                     break;
+            case 2:  monthString = "February";
+                     break;
+            case 3:  monthString = "March";
+                     break;
+            case 4:  monthString = "April";
+                     break;
+            case 5:  monthString = "May";
+                     break;
+            case 6:  monthString = "June";
+                     break;
+            case 7:  monthString = "July";
+                     break;
+            case 8:  monthString = "August";
+                     break;
+            case 9:  monthString = "September";
+                     break;
+            case 10: monthString = "October";
+                     break;
+            case 11: monthString = "November";
+                     break;
+            case 12: monthString = "December";
+                     break;
+            default: monthString = "Invalid month";
+                     break;
+        }
+		return monthString;
+	}
+	
+	public String getMonthName() {
+		String todayMonth = calculMonthName(getMonthPos());
+		return todayMonth;
+	}
 	private boolean isWeekend(int a) {
 		int today = a;
 		if(today == 6 || today == 7) {
@@ -197,7 +238,7 @@ public class Clock  {		//creation of the clock
 	}
 
 	public String toString() {
-		return "HOUR : " + getHour() + ":" + getMinute() + " ; DATE : " + getDay() + "/" + getMonth() + "/" + getYear() + " ; Day gone : " + getDayCpt() + " ; Today is : " + getDayName() + " ; Week end : " + getWeekend();
+		return "HOUR : " + getHour() + ":" + getMinute() + " ; DATE : " + getDay() + "/" + getMonth() + "/" + getYear() + " ; Day gone : " + getDayCpt() + " ; Today is : " + getDayName() + " ; Month : " + getMonthName() +" ; Week end : " + getWeekend();
 	}
 	
 	public String displayDate() {
