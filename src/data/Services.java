@@ -28,14 +28,6 @@ public class Services extends District{
 		size++;
 	}
 	
-	public int getCost() {
-		return super.getCost();
-	}
-	
-	public int getGain() {
-		return super.getGain();
-	}
-	
 	public int getMaintenanceCost() {
 		return Const.MAINTENANCE_COST_SERV;
 	}
