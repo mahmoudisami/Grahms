@@ -63,7 +63,7 @@ public class Game_screen extends JFrame implements Runnable{
                 //System.out.println(x+","+y); // Coordonnées cliquées
                 int caseX = testPosition(x, 5); // Retourne la case cliquée en X
                 int caseY = testPosition(y, 5); // Retourne la case cliquée en Y
-                System.out.println(caseX+","+caseY);
+                System.out.println(caseX+","+caseY); // Affichage
             }
         });
 		
