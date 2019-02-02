@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
@@ -14,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 import javax.swing.JTextPane;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import moteur.Clock; 
 
@@ -87,6 +90,17 @@ public class Game_screen extends JFrame implements Runnable{
 		
 		JButton btnNewButton_3 = new JButton("HISTORIQUE");
 		btnNewButton_3.setBounds(0, 264, 208, 57);
+		btnNewButton_3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame history = new JFrame();
+				history.setSize(300,450);
+				history.setTitle("Historique");
+				history.setLocationRelativeTo(null);
+				history.add(new JScrollPane(new JTextArea("HISTORIQUE ICI")));
+				history.setVisible(true);
+			}	
+		});
 		infoVillePanel.add(btnNewButton_3);
 		
 		JLabel txtpnEquilibreFinancier = new JLabel();
@@ -104,15 +118,15 @@ public class Game_screen extends JFrame implements Runnable{
 		contentPane.add(buttonLPanel);
 		buttonLPanel.setLayout(null);
 		
-		JButton btnNewButton = new JButton("New button");
+		JButton btnNewButton = new JButton("Quartier résidentiel");
 		btnNewButton.setBounds(82, 11, 115, 31);
 		buttonLPanel.add(btnNewButton);
 		
-		JButton button = new JButton("New button");
+		JButton button = new JButton("Quartier commercial");
 		button.setBounds(82, 53, 115, 31);
 		buttonLPanel.add(button);
 		
-		JButton button_1 = new JButton("New button");
+		JButton button_1 = new JButton("Quartier services publics");
 		button_1.setBounds(82, 95, 115, 31);
 		buttonLPanel.add(button_1);
 		
@@ -121,16 +135,31 @@ public class Game_screen extends JFrame implements Runnable{
 		contentPane.add(buttonRPanel);
 		buttonRPanel.setLayout(null);
 		
-		JButton btnNewButton_1 = new JButton("New button");
+		JButton btnNewButton_1 = new JButton("Station");
 		btnNewButton_1.setBounds(27, 11, 89, 73);
 		buttonRPanel.add(btnNewButton_1);
 		
-		JButton button_2 = new JButton("New button");
+		JButton button_2 = new JButton("Ligne");
 		button_2.setBounds(166, 11, 89, 73);
 		buttonRPanel.add(button_2);
 		
-		JButton btnNewButton_2 = new JButton("New button");
+		JButton btnNewButton_2 = new JButton("Détruire");
 		btnNewButton_2.setBounds(27, 95, 228, 23);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane destructPane = new JOptionPane();
+				String[] options = {"Quartier", "Station", "Ligne"};
+				String s = (String)JOptionPane.showInputDialog(
+						 null, // parent
+						 "Choisissez quoi détruire", // message
+						 "Détruire", // titre
+						 JOptionPane.ERROR_MESSAGE, // type de message (icone)
+						 null, // Icone
+						 options, // Tableau de string
+						 options[0]); // Valeur par défaut
+			}
+		});
 		buttonRPanel.add(btnNewButton_2);
 		
 		JPanel infoDistrictPanel = new JPanel();
@@ -149,7 +178,7 @@ public class Game_screen extends JFrame implements Runnable{
 		infoDistrictPanel.add(txtpnPopulation);
 		
 		JLabel txtpnNombreDeVisitejours = new JLabel();
-		txtpnNombreDeVisitejours.setText("Nombre de visite / jours :");
+		txtpnNombreDeVisitejours.setText("Nombre de visite / jour :");
 		txtpnNombreDeVisitejours.setBounds(23, 120, 153, 20);
 		infoDistrictPanel.add(txtpnNombreDeVisitejours);
 		
