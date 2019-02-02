@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 import javax.swing.JTextPane;
@@ -55,6 +56,16 @@ public class Game_screen extends JFrame implements Runnable{
 		JPanel gamePanel = new JPanel();
 		gamePanel.setBounds(10, 10, 610, 610);
 		contentPane.add(gamePanel);
+		gamePanel.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                int x=e.getX();
+                int y=e.getY();
+                //System.out.println(x+","+y); // Coordonnées cliquées
+                int caseX = testPosition(x, 5); // Retourne la case cliquée en X
+                int caseY = testPosition(y, 5); // Retourne la case cliquée en Y
+                System.out.println(caseX+","+caseY);
+            }
+        });
 		
 		JPanel infoVillePanel = new JPanel();
 		infoVillePanel.setBounds(628, 10, 208, 321);
@@ -191,4 +202,10 @@ public class Game_screen extends JFrame implements Runnable{
 			clockLabTime.setText(clock.displayTime());
 		}
 	}
+	
+	public int testPosition(int coordinate, int numberOfSquare) {
+        int divider = 610 / numberOfSquare;
+        int position = (int) Math.floor(coordinate / divider);
+        return position;
+    }
 }
