@@ -29,18 +29,10 @@ public class District {
 		}
 	}
 	
-	public String getImg(int size, String img1, String img2, String img3) {
-		if(size == 1) {
-			return img1;
-		}
-		else if(size == 2) {
-			return img2;
-		}
-		else {
-			return img3;
-		}
+	public String getImg() {
+		return "path";
 	}
-
+	
 	public int getGain() {
 		return gain;
 	}
@@ -51,6 +43,10 @@ public class District {
 
 	public int getActualPeople() {
 		return actualPeople;
+	}
+	
+	public int getMaintenanceCost() {
+		return 0;
 	}
 	
 }

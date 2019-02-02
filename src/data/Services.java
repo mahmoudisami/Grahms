@@ -13,10 +13,30 @@ public class Services extends District{
 	}
 	
 	public String getImg() {
-		return super.getImg(size, img1, img2, img3);
+		if(size == 1) {
+			return img1;
+		}
+		else if(size == 2) {
+			return img2;
+		}
+		else {
+			return img3;
+		}
 	}
 	
 	public void upSize() {
 		size++;
+	}
+	
+	public int getCost() {
+		return super.getCost();
+	}
+	
+	public int getGain() {
+		return super.getGain();
+	}
+	
+	public int getMaintenanceCost() {
+		return Const.MAINTENANCE_COST_SERV;
 	}
 }
