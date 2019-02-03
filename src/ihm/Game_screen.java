@@ -23,9 +23,15 @@ import moteur.Clock;
 public class Game_screen extends JFrame implements Runnable{
 
 	private JPanel contentPane;
+	private JPanel gamePanel;
 	private static Clock clock;
 	private static JLabel clockLabDate;
 	private static JLabel clockLabTime;
+	private JButton btnResDistrict;
+	private JButton btnComDistrict;
+	private JButton btnServDistrict;
+	private JButton btnAddStation;
+	private JButton btnAddLine;
 	
 	/**
 	 * Launch the application.
@@ -46,16 +52,16 @@ public class Game_screen extends JFrame implements Runnable{
 	 * Create the frame.
 	 */ 
 	public Game_screen() {
-		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(854, 809);
-		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setSize(854, 809);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel gamePanel = new JPanel();
+		gamePanel = new JPanel();
 		gamePanel.setBounds(10, 10, 610, 610);
 		contentPane.add(gamePanel);
 		gamePanel.addMouseListener(new MouseAdapter() {
@@ -97,7 +103,7 @@ public class Game_screen extends JFrame implements Runnable{
 				history.setSize(300,450);
 				history.setTitle("Historique");
 				history.setLocationRelativeTo(null);
-				history.add(new JScrollPane(new JTextArea("HISTORIQUE ICI")));
+				history.getContentPane().add(new JScrollPane(new JTextArea("HISTORIQUE ICI")));
 				history.setVisible(true);
 			}	
 		});
@@ -113,40 +119,41 @@ public class Game_screen extends JFrame implements Runnable{
 		textPane.setBounds(20, 172, 161, 20);
 		infoVillePanel.add(textPane);
 		
-		JPanel buttonLPanel = new JPanel();
-		buttonLPanel.setBounds(10, 622, 286, 137);
-		contentPane.add(buttonLPanel);
-		buttonLPanel.setLayout(null);
+		// This Pane is visible when case without District is clicked
+		JPanel districtPanel = new JPanel();
+		districtPanel.setBounds(10, 622, 520, 137);
+		contentPane.add(districtPanel);
+		districtPanel.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Quartier résidentiel");
-		btnNewButton.setBounds(82, 11, 115, 31);
-		buttonLPanel.add(btnNewButton);
+		btnResDistrict = new JButton("Quartier résidentiel");
+		btnResDistrict.setBounds(10, 11, 149, 115);
+		districtPanel.add(btnResDistrict);
 		
-		JButton button = new JButton("Quartier commercial");
-		button.setBounds(82, 53, 115, 31);
-		buttonLPanel.add(button);
+		btnComDistrict = new JButton("Quartier commercial");
+		btnComDistrict.setBounds(184, 11, 149, 115);
+		districtPanel.add(btnComDistrict);
 		
-		JButton button_1 = new JButton("Quartier services publics");
-		button_1.setBounds(82, 95, 115, 31);
-		buttonLPanel.add(button_1);
+		btnServDistrict = new JButton("Quartier services publics");
+		btnServDistrict .setBounds(358, 11, 149, 115);
+		districtPanel.add(btnServDistrict );
 		
+		// This Pane is visible when a District is clicked
 		JPanel buttonRPanel = new JPanel();
 		buttonRPanel.setBounds(302, 622, 318, 137);
 		contentPane.add(buttonRPanel);
 		buttonRPanel.setLayout(null);
 		
-		JButton btnNewButton_1 = new JButton("Station");
-		btnNewButton_1.setBounds(27, 11, 89, 73);
-		buttonRPanel.add(btnNewButton_1);
+		btnAddStation = new JButton("Station");
+		btnAddStation.setBounds(27, 11, 89, 73);
+		buttonRPanel.add(btnAddStation);
 		
-		JButton button_2 = new JButton("Ligne");
-		button_2.setBounds(166, 11, 89, 73);
-		buttonRPanel.add(button_2);
+		btnAddLine = new JButton("Line");
+		btnAddLine.setBounds(166, 11, 89, 73);
+		buttonRPanel.add(btnAddLine);
 		
 		JButton btnNewButton_2 = new JButton("Détruire");
 		btnNewButton_2.setBounds(27, 95, 228, 23);
 		btnNewButton_2.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				JOptionPane destructPane = new JOptionPane();
 				String[] options = {"Quartier", "Station", "Ligne"};
@@ -162,6 +169,7 @@ public class Game_screen extends JFrame implements Runnable{
 		});
 		buttonRPanel.add(btnNewButton_2);
 		
+		// Informations of City
 		JPanel infoDistrictPanel = new JPanel();
 		infoDistrictPanel.setBounds(630, 343, 206, 277);
 		contentPane.add(infoDistrictPanel);
