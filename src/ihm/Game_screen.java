@@ -62,7 +62,7 @@ public class Game_screen extends JFrame implements Runnable{
 		contentPane.setLayout(null);
 		
 		gamePanel = new JPanel();
-		gamePanel.setBounds(10, 10, 610, 610);
+		gamePanel.setBounds(10, 10, 610, 602);
 		contentPane.add(gamePanel);
 		gamePanel.addMouseListener(new MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -118,7 +118,7 @@ public class Game_screen extends JFrame implements Runnable{
 		textPane.setText("+/- :");
 		textPane.setBounds(20, 172, 161, 20);
 		infoVillePanel.add(textPane);
-		
+		if(1==2) {
 		// This Pane is visible when case without District is clicked
 		JPanel districtPanel = new JPanel();
 		districtPanel.setBounds(10, 622, 520, 137);
@@ -136,38 +136,32 @@ public class Game_screen extends JFrame implements Runnable{
 		btnServDistrict = new JButton("Quartier services publics");
 		btnServDistrict .setBounds(358, 11, 149, 115);
 		districtPanel.add(btnServDistrict );
-		
+		}
 		// This Pane is visible when a District is clicked
 		JPanel buttonRPanel = new JPanel();
-		buttonRPanel.setBounds(302, 622, 318, 137);
+		buttonRPanel.setBounds(10, 622, 610, 137);
 		contentPane.add(buttonRPanel);
 		buttonRPanel.setLayout(null);
 		
-		btnAddStation = new JButton("Station");
-		btnAddStation.setBounds(27, 11, 89, 73);
+		btnAddStation = new JButton("Add Station");
+		btnAddStation.setBounds(10, 11, 122, 52);
 		buttonRPanel.add(btnAddStation);
 		
-		btnAddLine = new JButton("Line");
-		btnAddLine.setBounds(166, 11, 89, 73);
+		btnAddLine = new JButton("Add Line");
+		btnAddLine.setBounds(10, 74, 122, 52);
 		buttonRPanel.add(btnAddLine);
 		
-		JButton btnNewButton_2 = new JButton("Détruire");
-		btnNewButton_2.setBounds(27, 95, 228, 23);
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane destructPane = new JOptionPane();
-				String[] options = {"Quartier", "Station", "Ligne"};
-				String s = (String)JOptionPane.showInputDialog(
-						 null, // parent
-						 "Choisissez quoi détruire", // message
-						 "Détruire", // titre
-						 JOptionPane.ERROR_MESSAGE, // type de message (icone)
-						 null, // Icone
-						 options, // Tableau de string
-						 options[0]); // Valeur par défaut
-			}
-		});
-		buttonRPanel.add(btnNewButton_2);
+		JButton btnDestroyStation = new JButton("<html>Destroy<br>\r\nStation</html>");
+		btnDestroyStation.setBounds(154, 11, 81, 52);
+		buttonRPanel.add(btnDestroyStation);
+		
+		JButton btnDestroyLine = new JButton("<html>Destroy<br>\r\n&nbsp;&nbsp;&nbsp;Line</html>");
+		btnDestroyLine.setBounds(154, 74, 81, 52);
+		buttonRPanel.add(btnDestroyLine);
+		
+		JButton btnUpgradeDistrict = new JButton("<html>Upgrade<br>\r\n&nbsp;Station<html>");
+		btnUpgradeDistrict.setBounds(485, 11, 115, 115);
+		buttonRPanel.add(btnUpgradeDistrict);
 		
 		// Informations of City
 		JPanel infoDistrictPanel = new JPanel();
