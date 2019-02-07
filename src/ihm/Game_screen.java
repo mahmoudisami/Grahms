@@ -2,6 +2,7 @@ package ihm;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -27,6 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import moteur.Clock;
+import javax.swing.ImageIcon;
 
 public class Game_screen extends JFrame implements Runnable{
 
@@ -130,8 +132,11 @@ public class Game_screen extends JFrame implements Runnable{
 		txtpnPopulationTotale.setBounds(20, 33, 161, 20);
 		infoVillePanel.add(txtpnPopulationTotale);
 		
-		JButton btnNewButton_3 = new JButton("HISTORIQUE");
-		btnNewButton_3.setBounds(0, 264, 208, 57);
+		JButton btnNewButton_3 = new JButton();
+		btnNewButton_3.setIcon(new ImageIcon(Game_screen.class.getResource("/image/Diary.jpg")));
+		btnNewButton_3.setBounds(70, 264, 80, 57);
+		btnNewButton_3.setBackground(Color.WHITE);
+		
 		btnNewButton_3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

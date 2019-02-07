@@ -174,7 +174,7 @@ public class Clock  {		//creation of the clock
 		else {
 			return "No";
 		}
-	}
+	} 
 	
 	public void increment(){	//increment the clock by 1 minute
 		if (minute + 1 == 60){
@@ -235,7 +235,7 @@ public class Clock  {		//creation of the clock
 		}else{
 			return false;			
 		}
-	}
+	} 
 
 	public String toString() { //show all info in java console
 		return "HOUR : " + getHour() + ":" + getMinute() + " ; DATE : " + getDay() + "/" + getMonth() + "/" + getYear() + " ; Day gone : " + getDayCpt() + " ; Today is : " + getDayName() + " ; Month : " + getMonthName() +" ; Week end : " + getWeekend();
