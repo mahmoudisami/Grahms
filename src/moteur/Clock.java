@@ -109,7 +109,7 @@ public class Clock  {		//creation of the clock
 			case 7: name = "Sunday";
 					break;
 			default: name = "Invalid day";
-            break;
+					break;
 		}
 		return name;
 	}
@@ -237,16 +237,20 @@ public class Clock  {		//creation of the clock
 		}
 	}
 
-	public String toString() {
+	public String toString() { //show all info in java console
 		return "HOUR : " + getHour() + ":" + getMinute() + " ; DATE : " + getDay() + "/" + getMonth() + "/" + getYear() + " ; Day gone : " + getDayCpt() + " ; Today is : " + getDayName() + " ; Month : " + getMonthName() +" ; Week end : " + getWeekend();
 	}
 	
-	public String displayDate() {
-		return "DATE : " + getDay() + "/" + getMonth() + "/" + getYear();
+	public String displayDate() { //show in gui
+		return "DATE : " + getDay() + " " + getMonthName() + " " + getYear();
 	}
 	
 	public String displayTime() {
 		return "HOUR : " + getHour() + ":" + getMinute();
+	}
+	
+	public String displayGetDaygone() {
+		return "Day gone : " + getDayCpt();
 	}
 	
 	public String displayDayCpt() {
@@ -258,7 +262,7 @@ public class Clock  {		//creation of the clock
 		boolean bool = true;
 		while (bool!=false){
 			try {
-				Thread.sleep(5);
+				Thread.sleep(1);
 			} catch (InterruptedException e) {
 				System.out.println(e.getMessage());
 			}

@@ -247,10 +247,10 @@ public class Game_screen extends JFrame implements Runnable{
 		clock = new Clock();
 		
 		clockLabTime = new JLabel(clock.displayTime());
-		clockLabTime.setBounds(61, 96, 112, 30);
+		clockLabTime.setBounds(75, 96, 112, 30);
 		infoDatePanel.add(clockLabTime);
 		clockLabDate = new JLabel(clock.displayDate());
-		clockLabDate.setBounds(51, 68, 120, 37);
+		clockLabDate.setBounds(51, 68, 147, 37);
 		infoDatePanel.add(clockLabDate);
 		
 		setVisible(true);
