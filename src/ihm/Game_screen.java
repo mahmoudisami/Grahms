@@ -10,6 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import map.Grid;
+
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -37,7 +40,8 @@ import javax.swing.JTextField;
 public class Game_screen extends JFrame implements Runnable{
 
 	private JPanel contentPane;
-	private JPanel gamePanel;
+//	private JPanel gamePanel;
+	public Grid myGrid = null;
 	private static Clock clock;
 	private JButton btnResDistrict;
 	private JButton btnComDistrict;
@@ -75,45 +79,48 @@ public class Game_screen extends JFrame implements Runnable{
 		contentPane.setLayout(null);
 		
 		
-		try {
-			img = ImageIO.read(new File("src/image/land.jpg"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			img = ImageIO.read(new File("src/image/land.jpg"));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
-		gamePanel = new JPanel(){
-			public void paintComponent(Graphics g){
-				super.paintComponent(g);
-				g.setColor(Color.black);
-				int uniteX = getWidth()/5;
-				int uniteY = getHeight()/5;
-				//Dessin de la grille.
-				for(int i=0; i<6; i++){
-					g.drawLine(uniteX*i, 0, uniteX*i, getHeight());
-					g.drawLine(0, uniteY*i, getWidth(), uniteY*i);
-				}
-				//Affichage des images de terrain nu sur les cases vides.
-				for(int x=0; x<5; x++){
-					for(int y=0; y<5; y++){
-						g.drawImage(img, 1+(122*x), 1+(122*y), 120, 120, this);
-					}
-				}
-			}
-		};
-		gamePanel.setBounds(10, 10, 610, 610);
-		contentPane.add(gamePanel);
-		gamePanel.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                int x=e.getX();
-                int y=e.getY();
-                //System.out.println(x+","+y); // Coordonnees cliquees
-                int caseX = getCase(x, 5); // Retourne la case cliquee en X
-                int caseY = getCase(y, 5); // Retourne la case cliquee en Y
-                System.out.println(caseX+","+caseY); // Affichage
-                districtPanel.setVisible(true);
-            }
-        });
+		myGrid = new Grid();
+		myGrid.setGridscreen(contentPane);
+		contentPane.add(myGrid);
+//		gamePanel = new JPanel(){
+//			public void paintComponent(Graphics g){
+//				super.paintComponent(g);
+//				g.setColor(Color.black);
+//				int uniteX = getWidth()/5;
+//				int uniteY = getHeight()/5;
+//				//Dessin de la grille.
+//				for(int i=0; i<6; i++){
+//					g.drawLine(uniteX*i, 0, uniteX*i, getHeight());
+//					g.drawLine(0, uniteY*i, getWidth(), uniteY*i);
+//				}
+//				//Affichage des images de terrain nu sur les cases vides.
+//				for(int x=0; x<5; x++){
+//					for(int y=0; y<5; y++){
+//						g.drawImage(img, 1+(122*x), 1+(122*y), 120, 120, this);
+//					}
+//				}
+//			}
+//		};
+//		gamePanel.setBounds(10, 10, 610, 610);
+//		contentPane.add(gamePanel);
+//		gamePanel.addMouseListener(new MouseAdapter() {
+//            public void mouseClicked(java.awt.event.MouseEvent e) {
+//                int x=e.getX();
+//                int y=e.getY();
+//                //System.out.println(x+","+y); // Coordonnees cliquees
+//                int caseX = getCase(x, 5); // Retourne la case cliquee en X
+//                int caseY = getCase(y, 5); // Retourne la case cliquee en Y
+//                System.out.println(caseX+","+caseY); // Affichage
+//                districtPanel.setVisible(true);
+//            }
+//        });
 		
 		JPanel infoVillePanel = new JPanel();
 		infoVillePanel.setBounds(628, 10, 208, 177);
