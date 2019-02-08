@@ -85,10 +85,6 @@ public class Game_screen extends JFrame implements Runnable{
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		
-		myGrid = new Grid();
-		myGrid.setGridscreen(contentPane);
-		contentPane.add(myGrid);
 //		gamePanel = new JPanel(){
 //			public void paintComponent(Graphics g){
 //				super.paintComponent(g);
@@ -251,6 +247,10 @@ public class Game_screen extends JFrame implements Runnable{
 		subwayPanel.setVisible(false);
 		
 		clock = new Clock();
+		
+		myGrid = new Grid(districtPanel);
+		myGrid.setGridscreen(contentPane);
+		contentPane.add(myGrid);
 		
 		setVisible(true);
 	}

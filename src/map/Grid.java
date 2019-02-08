@@ -21,8 +21,12 @@ public class Grid extends JPanel{
 	int Taille = 5;
 	District[][] grid = new District[Taille][Taille];
 	public Image img;
+	private JPanel districtPanel;
 	
-	public Grid(){
+	
+	public Grid(JPanel districtPanel){
+		
+		this.districtPanel = districtPanel;
 		
 		try {
 			img = ImageIO.read(new File("src/image/land.jpg"));
@@ -45,6 +49,7 @@ public class Grid extends JPanel{
                 int caseX = getCase(x, 5); // Retourne la case cliquee en X
                 int caseY = getCase(y, 5); // Retourne la case cliquee en Y
                 System.out.println(caseX+","+caseY); // Affichage
+                districtPanel.setVisible(true);
 			}
 			
 		});
