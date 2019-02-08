@@ -11,6 +11,12 @@ public class Money {
 	}
 	
 	public void addMoney(int gain) {
-		
+		money += gain;
 	}
+	
+	public void withDraw(int loss) {
+		money -= loss;
+	}
+	
+	
 }
