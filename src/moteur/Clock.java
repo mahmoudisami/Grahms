@@ -16,11 +16,11 @@ public class Clock  {		//creation of the clock
 	public Clock(){
 		hour = 16;
 		minute = 00;
-		day = 04;
+		day = 01;
 		month = 01;
 		year = 2019;
 		dayCpt = 0;
-		dayPos = 1;
+		dayPos = 2;
 	}
 	
 	public Clock(int hH, int mMin, int dD, int mMo, int yYYY, int dC, int dN) {
@@ -51,10 +51,23 @@ public class Clock  {		//creation of the clock
 	}
  
 	public String getDay() {
-		if (day<10)
+		/*if (day<10)
 			return "" + 0 + day;
 		else{
 			return "" + day;
+		}
+		*/
+		if (day == 1 || day == 21 || day == 31) {
+			return day + "st";
+		}
+		else if(day == 2 || day == 22 || day == 32){
+			return day + "nd";
+		}
+		else if(day == 3) {
+			return day + "rd";
+		}
+		else {
+			return day + "th";
 		}
 	}
 
@@ -255,6 +268,10 @@ public class Clock  {		//creation of the clock
 	
 	public String displayDayCpt() {
 		return "Day : " + getDayCpt();
+	}
+	
+	public String displayGameTimeInfo() {
+		return  getHour() + ":" + getMinute() + "  |  " + getDayName() + "  " + getDay() + "  of  " + getMonthName() + "  " + getYear() + "  |  " + " Day gone : " + getDayCpt() + "  |  ";
 	}
 	public static void main(String[] args){ //Test 
 		Clock clock = new Clock();
