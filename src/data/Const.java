@@ -9,7 +9,7 @@ public class Const {
 	public final static int MAINTENANCE_COST_STATION = 100; // Cout chaque semaine/mois a definir 
 	public final static int CONSTRUCTION_COST_STATION = 200; // Cout de construction a definir
 	
-	/***********************      LINE        *********************************/
+	/***********************      LINE        *********************************/ 
 	public final static int MAINTENANCE_COST_LINE = 100; // Cout chaque semaine/mois a definir PAR quartier traverse
 	public final static int CONSTRUCTION_COST_LINE = 200; // Cout de construction a definir PAR quartier traverse
 

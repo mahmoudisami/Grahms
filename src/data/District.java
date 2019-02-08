@@ -27,7 +27,7 @@ public class District {
 		}
 		else {
 			station = new Station(); // Creation de la nouvelle station
-			isStation = true;
+			isStation = true; 
 			return true; // Construction ok
 		}
 	}

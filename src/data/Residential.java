@@ -15,7 +15,7 @@ public class Residential extends District{
 	private String src3 = "/src/img/House_LVL3.jpg";
 	private BufferedImage img;
 	
-	public Residential() {
+	public Residential() { 
 		super(Const.GAIN_RES,0); 
 		size = 1; // Taille de depart
 	}
