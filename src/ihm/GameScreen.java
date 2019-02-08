@@ -253,7 +253,6 @@ public class GameScreen extends JFrame implements Runnable{
 		districtPanel.add(btnServDistrict );
 		districtPanel.setVisible(false);
 		
-		
 		// This Pane is visible when a District is clicked
 		subwayPanel = new JPanel();
 		subwayPanel.setBounds(628, 346, 208, 274);
