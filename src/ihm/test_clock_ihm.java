@@ -55,10 +55,10 @@ public class test_clock_ihm extends JFrame implements Runnable{
 	}
 	
 	/**
-	 * Launch the application.
+	 * Launch the application. 
 	 */
 	public static void main(String[] args) {
-			new test_clock_ihm();
+			new test_clock_ihm(); 
 	}
 	
 	public void run() {
