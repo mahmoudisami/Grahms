@@ -44,10 +44,9 @@ public class Game_screen extends JFrame implements Runnable{
 	private JButton btnAddLine;
 	
 	public Image img;
-	
-	/**
-	 * Launch the application.
-	 */
+	private JPanel districtPanel;
+	private JPanel subwayPanel;
+	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -110,6 +109,7 @@ public class Game_screen extends JFrame implements Runnable{
                 int caseX = getCase(x, 5); // Retourne la case cliquee en X
                 int caseY = getCase(y, 5); // Retourne la case cliquee en Y
                 System.out.println(caseX+","+caseY); // Affichage
+                districtPanel.setVisible(true);
             }
         });
 		
@@ -159,9 +159,9 @@ public class Game_screen extends JFrame implements Runnable{
 		textPane.setText("+/- :");
 		textPane.setBounds(20, 172, 161, 20);
 		infoVillePanel.add(textPane);
-		if(1==2) {
+		
 		// This Pane is visible when case without District is clicked
-		JPanel districtPanel = new JPanel();
+		districtPanel = new JPanel();
 		districtPanel.setBounds(10, 622, 520, 137);
 		contentPane.add(districtPanel);
 		districtPanel.setLayout(null);
@@ -177,32 +177,36 @@ public class Game_screen extends JFrame implements Runnable{
 		btnServDistrict = new JButton("Quartier services publics");
 		btnServDistrict .setBounds(358, 11, 149, 115);
 		districtPanel.add(btnServDistrict );
-		}
+		
+		districtPanel.setVisible(false);
+		
 		// This Pane is visible when a District is clicked
-		JPanel buttonRPanel = new JPanel();
-		buttonRPanel.setBounds(10, 622, 610, 137);
-		contentPane.add(buttonRPanel);
-		buttonRPanel.setLayout(null);
+		subwayPanel = new JPanel();
+		subwayPanel.setBounds(10, 622, 610, 137);
+		contentPane.add(subwayPanel);
+		subwayPanel.setLayout(null);
 		
 		btnAddStation = new JButton("Add Station");
 		btnAddStation.setBounds(10, 11, 122, 52);
-		buttonRPanel.add(btnAddStation);
+		subwayPanel.add(btnAddStation);
 		
 		btnAddLine = new JButton("Add Line");
 		btnAddLine.setBounds(10, 74, 122, 52);
-		buttonRPanel.add(btnAddLine);
+		subwayPanel.add(btnAddLine);
 		
 		JButton btnDestroyStation = new JButton("<html>Destroy<br>\r\nStation</html>");
 		btnDestroyStation.setBounds(154, 11, 81, 52);
-		buttonRPanel.add(btnDestroyStation);
+		subwayPanel.add(btnDestroyStation);
 		
 		JButton btnDestroyLine = new JButton("<html>Destroy<br>\r\n&nbsp;&nbsp;&nbsp;Line</html>");
 		btnDestroyLine.setBounds(154, 74, 81, 52);
-		buttonRPanel.add(btnDestroyLine);
+		subwayPanel.add(btnDestroyLine);
 		
 		JButton btnUpgradeDistrict = new JButton("<html>Upgrade<br>\r\n&nbsp;Station<html>");
 		btnUpgradeDistrict.setBounds(485, 11, 115, 115);
-		buttonRPanel.add(btnUpgradeDistrict);
+		subwayPanel.add(btnUpgradeDistrict);
+		
+		subwayPanel.setVisible(false);
 		
 		// Informations of City
 		JPanel infoDistrictPanel = new JPanel();
