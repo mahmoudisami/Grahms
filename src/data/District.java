@@ -1,5 +1,6 @@
 package data;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class District {
@@ -31,8 +32,8 @@ public class District {
 		}
 	}
 	
-	public String getImg() {
-		return "path";
+	public BufferedImage getImg() {
+		return null;
 	}
 	
 	public int getGain() {

@@ -1,28 +1,48 @@
 package data;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 public class Residential extends District{
 
 	private int size;
 	private int maxPeople;
-	private String img1 = "/src/img/residLv1.png";
-	private String img2 = "/src/img/residLv2.png";
-	private String img3 = "/src/img/residLv3.png";
+	private String src1 = "/src/img/House_LVL1.jpg";
+	private String src2 = "/src/img/House_LVL2.jpg";
+	private String src3 = "/src/img/House_LVL3.jpg";
+	private BufferedImage img;
 	
 	public Residential() {
 		super(Const.GAIN_RES,0); 
 		size = 1; // Taille de depart
 	}
 	
-	public String getImg() {
+	public BufferedImage getImg() {
 		if(size == 1) {
-			return img1;
+			try {
+				img = ImageIO.read(new File(src1));
+			}catch (IOException e){
+				e.printStackTrace();
+			}
 		}
 		else if(size == 2) {
-			return img2;
+			try {
+				img = ImageIO.read(new File(src2));
+			}catch (IOException e){
+				e.printStackTrace();
+			}
 		}
 		else {
-			return img3;
+			try {
+				img = ImageIO.read(new File(src3));
+			}catch (IOException e){
+				e.printStackTrace();
+			}
 		}
+		return img;
 	}
 	
 	public void upSize() {
