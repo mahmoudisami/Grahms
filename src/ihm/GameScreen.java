@@ -10,6 +10,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import data.Commercial;
+import data.Residential;
+import data.Services;
+
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -213,14 +218,38 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		btnResDistrict = new JButton("Residential District");
 		btnResDistrict.setBounds(10, 11, 186, 60);
+		btnResDistrict.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()] = new Residential();
+				myGrid.repaint();
+			}
+
+		});
 		districtPanel.add(btnResDistrict);
 		
 		btnComDistrict = new JButton("Commercial District");
 		btnComDistrict.setBounds(10, 82, 186, 60);
+		btnComDistrict.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()] = new Commercial();
+				myGrid.repaint();
+			}
+
+		});
 		districtPanel.add(btnComDistrict);
 		
 		btnServDistrict = new JButton("Services District");
 		btnServDistrict.setBounds(10, 153, 186, 60);
+		btnServDistrict.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()] = new Services();
+				myGrid.repaint();
+			}
+
+		});
 		districtPanel.add(btnServDistrict );
 		districtPanel.setVisible(false);
 		

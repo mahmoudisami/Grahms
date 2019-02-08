@@ -17,6 +17,7 @@ public class Grid extends JPanel{
 	int gridSize = 5;
 	District[][] grid = new District[gridSize][gridSize];
 	public Image img;
+	int caseX, caseY, caseWidth;
 	private JPanel districtPanel;
 	
 	
@@ -39,8 +40,8 @@ public class Grid extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				int x=e.getX();
                 int y=e.getY();
-                int caseX = getCase(x, 5); // Retourne la case cliquee en X
-                int caseY = getCase(y, 5); // Retourne la case cliquee en Y
+                caseX = getCase(x, 5); // Retourne la case cliquee en X
+                caseY = getCase(y, 5); // Retourne la case cliquee en Y
                 System.out.println(caseX+","+caseY); // Affichage
                 districtPanel.setVisible(true);
 			}
@@ -50,7 +51,7 @@ public class Grid extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.setColor(Color.black);
-		int caseWidth = getWidth()/gridSize;
+		caseWidth = getWidth()/gridSize;
 		
 		//Dessin des lignes de la grille
 		for(int i=0; i<6; i++){
@@ -79,5 +80,16 @@ public class Grid extends JPanel{
 	public void setGridscreen(JPanel contentPane){
 		myGridScreen = contentPane;
 	}
+
+	public int getCoordsX() {
+		return caseX;
+	}
 	
+	public int getCoordsY() {
+		return caseY;
+	}
+	
+	public District[][] getMapTab() {
+		return grid;
+	}
 }
