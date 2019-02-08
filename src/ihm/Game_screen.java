@@ -29,14 +29,16 @@ import javax.swing.JTextArea;
 
 import moteur.Clock;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import javax.swing.JTextField;
 
 public class Game_screen extends JFrame implements Runnable{
 
 	private JPanel contentPane;
 	private JPanel gamePanel;
 	private static Clock clock;
-	private static JLabel clockLabDate;
-	private static JLabel clockLabTime;
 	private JButton btnResDistrict;
 	private JButton btnComDistrict;
 	private JButton btnServDistrict;
@@ -65,7 +67,7 @@ public class Game_screen extends JFrame implements Runnable{
 	public Game_screen() {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setSize(854, 809);
+		setSize(854, 690);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -114,27 +116,29 @@ public class Game_screen extends JFrame implements Runnable{
         });
 		
 		JPanel infoVillePanel = new JPanel();
-		infoVillePanel.setBounds(628, 10, 208, 321);
+		infoVillePanel.setBounds(628, 10, 208, 177);
 		contentPane.add(infoVillePanel);
 		infoVillePanel.setLayout(null);
 		
-		JLabel txtpnVille = new JLabel();
-		txtpnVille.setBounds(93, 0, 66, 20);
-		txtpnVille.setText("VILLE");
-		infoVillePanel.add(txtpnVille);
+		JLabel lblCity = new JLabel();
+		lblCity.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCity.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblCity.setBounds(10, 0, 188, 25);
+		lblCity.setText("CITY");
+		infoVillePanel.add(lblCity);
 		
 		JProgressBar progressBar = new JProgressBar();
-		progressBar.setBounds(20, 87, 161, 14);
+		progressBar.setBounds(10, 61, 188, 14);
 		infoVillePanel.add(progressBar);
 		
-		JLabel txtpnPopulationTotale = new JLabel();
-		txtpnPopulationTotale.setText("Population totale :");
-		txtpnPopulationTotale.setBounds(20, 33, 161, 20);
-		infoVillePanel.add(txtpnPopulationTotale);
+		JLabel lblTotalPopulation = new JLabel();
+		lblTotalPopulation.setText("Total Population :");
+		lblTotalPopulation.setBounds(10, 30, 93, 20);
+		infoVillePanel.add(lblTotalPopulation);
 		
 		JButton btnNewButton_3 = new JButton();
 		btnNewButton_3.setIcon(new ImageIcon(Game_screen.class.getResource("/image/Diary.jpg")));
-		btnNewButton_3.setBounds(70, 264, 80, 57);
+		btnNewButton_3.setBounds(101, 109, 80, 57);
 		btnNewButton_3.setBackground(Color.WHITE);
 		
 		btnNewButton_3.addActionListener(new ActionListener() {
@@ -151,116 +155,95 @@ public class Game_screen extends JFrame implements Runnable{
 		infoVillePanel.add(btnNewButton_3);
 		
 		JLabel txtpnEquilibreFinancier = new JLabel();
-		txtpnEquilibreFinancier.setText("Equilibre financier :");
-		txtpnEquilibreFinancier.setBounds(20, 125, 161, 20);
+		txtpnEquilibreFinancier.setText("Global Money :");
+		txtpnEquilibreFinancier.setBounds(10, 86, 80, 20);
 		infoVillePanel.add(txtpnEquilibreFinancier);
 		
-		JLabel textPane = new JLabel();
-		textPane.setText("+/- :");
-		textPane.setBounds(20, 172, 161, 20);
-		infoVillePanel.add(textPane);
+		JLabel lblCityPop = new JLabel("inser POP");
+		lblCityPop.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblCityPop.setBounds(108, 30, 90, 20);
+		infoVillePanel.add(lblCityPop);
+		
+		// Informations of City
+		JPanel infoDistrictPanel = new JPanel();
+		infoDistrictPanel.setBounds(630, 198, 206, 137);
+		contentPane.add(infoDistrictPanel);
+		infoDistrictPanel.setLayout(null);
+		
+		JLabel lblDistrict = new JLabel();
+		lblDistrict.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblDistrict.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDistrict.setBounds(10, 5, 186, 27);
+		lblDistrict.setText("DISTRICT");
+		infoDistrictPanel.add(lblDistrict);
+		
+		JLabel lblPopulation = new JLabel();
+		lblPopulation.setText("Population :");
+		lblPopulation.setBounds(10, 36, 65, 20);
+		infoDistrictPanel.add(lblPopulation);
+		
+		JLabel lblDistricMoney = new JLabel();
+		lblDistricMoney.setText("Money income :");
+		lblDistricMoney.setBounds(7, 106, 78, 20);
+		infoDistrictPanel.add(lblDistricMoney);
+		
+		JLabel lblDistrictPop = new JLabel("rempli auto\r\n");
+		lblDistrictPop.setBounds(85, 39, 111, 14);
+		infoDistrictPanel.add(lblDistrictPop);
+		
+		JLabel lblDistrictMoney = new JLabel("rempli auto");
+		lblDistrictMoney.setBounds(95, 109, 46, 14);
+		infoDistrictPanel.add(lblDistrictMoney);
+		
+		JProgressBar progressBar_1 = new JProgressBar();
+		progressBar_1.setBounds(10, 81, 186, 14);
+		infoDistrictPanel.add(progressBar_1);
 		
 		// This Pane is visible when case without District is clicked
 		districtPanel = new JPanel();
-		districtPanel.setBounds(10, 622, 520, 137);
+		districtPanel.setBounds(630, 346, 206, 274);
 		contentPane.add(districtPanel);
 		districtPanel.setLayout(null);
 		
-		btnResDistrict = new JButton("Quartier r�sidentiel");
-		btnResDistrict.setBounds(10, 11, 149, 115);
+		btnResDistrict = new JButton("Residential District");
+		btnResDistrict.setBounds(10, 11, 186, 60);
 		districtPanel.add(btnResDistrict);
 		
-		btnComDistrict = new JButton("Quartier commercial");
-		btnComDistrict.setBounds(184, 11, 149, 115);
+		btnComDistrict = new JButton("Commercial District");
+		btnComDistrict.setBounds(10, 82, 186, 60);
 		districtPanel.add(btnComDistrict);
 		
-		btnServDistrict = new JButton("Quartier services publics");
-		btnServDistrict .setBounds(358, 11, 149, 115);
+		btnServDistrict = new JButton("Services District");
+		btnServDistrict.setBounds(10, 153, 186, 60);
 		districtPanel.add(btnServDistrict );
-		
 		districtPanel.setVisible(false);
+		
 		
 		// This Pane is visible when a District is clicked
 		subwayPanel = new JPanel();
-		subwayPanel.setBounds(10, 622, 610, 137);
+		subwayPanel.setBounds(628, 346, 208, 274);
 		contentPane.add(subwayPanel);
 		subwayPanel.setLayout(null);
 		
 		btnAddStation = new JButton("Add Station");
-		btnAddStation.setBounds(10, 11, 122, 52);
+		btnAddStation.setBounds(10, 11, 188, 52);
 		subwayPanel.add(btnAddStation);
 		
 		btnAddLine = new JButton("Add Line");
-		btnAddLine.setBounds(10, 74, 122, 52);
+		btnAddLine.setBounds(10, 74, 188, 52);
 		subwayPanel.add(btnAddLine);
 		
-		JButton btnDestroyStation = new JButton("<html>Destroy<br>\r\nStation</html>");
-		btnDestroyStation.setBounds(154, 11, 81, 52);
-		subwayPanel.add(btnDestroyStation);
-		
-		JButton btnDestroyLine = new JButton("<html>Destroy<br>\r\n&nbsp;&nbsp;&nbsp;Line</html>");
-		btnDestroyLine.setBounds(154, 74, 81, 52);
-		subwayPanel.add(btnDestroyLine);
-		
 		JButton btnUpgradeDistrict = new JButton("<html>Upgrade<br>\r\n&nbsp;Station<html>");
-		btnUpgradeDistrict.setBounds(485, 11, 115, 115);
+		btnUpgradeDistrict.setBounds(10, 137, 188, 52);
 		subwayPanel.add(btnUpgradeDistrict);
+		
+		JButton btnDestroySubway = new JButton("Destroy Subway");
+		btnDestroySubway.setBounds(10, 211, 188, 52);
+		subwayPanel.add(btnDestroySubway);
 		
 		subwayPanel.setVisible(false);
 		
-		// Informations of City
-		JPanel infoDistrictPanel = new JPanel();
-		infoDistrictPanel.setBounds(630, 343, 206, 277);
-		contentPane.add(infoDistrictPanel);
-		infoDistrictPanel.setLayout(null);
-		
-		JLabel txtpnQuartier = new JLabel();
-		txtpnQuartier.setBounds(79, 5, 97, 20);
-		txtpnQuartier.setText("QUARTIER");
-		infoDistrictPanel.add(txtpnQuartier);
-		
-		JLabel txtpnPopulation = new JLabel();
-		txtpnPopulation.setText("Population :");
-		txtpnPopulation.setBounds(23, 52, 153, 20);
-		infoDistrictPanel.add(txtpnPopulation);
-		
-		JLabel txtpnNombreDeVisitejours = new JLabel();
-		txtpnNombreDeVisitejours.setText("Nombre de visite / jour :");
-		txtpnNombreDeVisitejours.setBounds(23, 120, 153, 20);
-		infoDistrictPanel.add(txtpnNombreDeVisitejours);
-		
-		JPanel infoDatePanel = new JPanel();
-		infoDatePanel.setBounds(628, 622, 208, 137);
-		contentPane.add(infoDatePanel);
-		infoDatePanel.setLayout(null);
-		
-		JLabel txtpnDate = new JLabel();
-		txtpnDate.setBounds(92, 5, 81, 20);
-		txtpnDate.setText("DATE");
-		infoDatePanel.add(txtpnDate);
-		
-		JButton button_3 = new JButton(">>>");
-		button_3.setBounds(85, 41, 64, 23);
-		infoDatePanel.add(button_3);
-		
-		JLabel txtpnX = new JLabel();
-		txtpnX.setText("x 10");
-		txtpnX.setBounds(159, 44, 39, 20);
-		infoDatePanel.add(txtpnX);
-		
-		JLabel txtpnVitesse = new JLabel();
-		txtpnVitesse.setBounds(28, 44, 47, 20);
-		infoDatePanel.add(txtpnVitesse);
-		txtpnVitesse.setText("Vitesse :");
-		
 		clock = new Clock();
-		
-		clockLabTime = new JLabel(clock.displayTime());
-		clockLabTime.setBounds(75, 96, 112, 30);
-		infoDatePanel.add(clockLabTime);
-		clockLabDate = new JLabel(clock.displayDate());
-		clockLabDate.setBounds(51, 68, 147, 37);
-		infoDatePanel.add(clockLabDate);
 		
 		setVisible(true);
 	}
@@ -275,8 +258,8 @@ public class Game_screen extends JFrame implements Runnable{
 				System.out.println(e.getMessage());
 			}
 			clock.increment();
-			clockLabDate.setText(clock.displayDate());
-			clockLabTime.setText(clock.displayTime());
+			//clockLabDate.setText(clock.displayDate());
+			//clockLabTime.setText(clock.displayTime());
 		}
 	}
 	
