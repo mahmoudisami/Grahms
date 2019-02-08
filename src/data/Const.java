@@ -18,6 +18,10 @@ public class Const {
 	
 	/***********************      RESIDENTIEL        **************************/
 	public final static int GAIN_RES = 100; // Gain par semaine ou par mois a definir
+	public final static int MEDIUM_SIZE_RES = 300; // Nbr d'habitants pour changer la taille en médium
+	public final static int HIGH_SIZE_RES = 600; // Nbr d'habitants pour changer la taille en high
+	public final static int SATISFACTION_THRESHOLD_MEDIUM = 75; //Seuil de satisfaction pour évolution
+	public final static int SATISFACTION_THRESHOLD_HIGH = 90; //Seuil de satisfaction pour évolution
 	
 	/***********************      SERVICES        *****************************/	
 	public final static int MAINTENANCE_COST_SERV = 100; // Cout chaque semaine/mois a definir

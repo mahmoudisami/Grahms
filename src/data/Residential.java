@@ -33,5 +33,15 @@ public class Residential extends District{
 		return maxPeople;
 	}
 	
+	public boolean isResidential() {
+		return true;
+	}
 	
+	public int getSize() {
+		return size;
+	}
+	
+	public void setSize(int newSize) {
+		size = newSize;
+	}
 }

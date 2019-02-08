@@ -16,12 +16,13 @@ public class District {
 	public District(int gain,int cost) {
 		this.gain = gain;
 		this.cost = cost;
-		isStation = false; 
+		isStation = false;
+		satisfaction = 50;
 	}
 	
 	public boolean createStation() {
 		if(isStation) {
-			return false; // Station deja  existante
+			return false; // Station dejaï¿½ existante
 		}
 		else {
 			station = new Station(); // Creation de la nouvelle station
@@ -50,4 +51,18 @@ public class District {
 		return 0;
 	}
 	
+	public int getSatisfaction() {
+		return satisfaction;
+	}
+	
+	public boolean isResidential() {
+		return false;
+	}
+	
+	public int getSize() {
+		return 1;
+	}
+	
+	public void setSize(int newSize) {
+	}
 }
