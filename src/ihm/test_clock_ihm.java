@@ -24,6 +24,10 @@ public class test_clock_ihm extends JFrame implements Runnable{
 	 */
 	public test_clock_ihm() {
 		
+		Font fontTitle = new Font("TimesRoman", Font.PLAIN, 18);
+		Font fontInfo = new Font("Courier", Font.PLAIN, 15);
+		Font fontDate = new Font("Tahoma", Font.PLAIN, 14);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 750, 300);
 		contentPane = new JPanel();
@@ -42,12 +46,12 @@ public class test_clock_ihm extends JFrame implements Runnable{
 		
 		JLabel lblNewLabel = new JLabel("VILLE");
 		lblNewLabel.setBounds(44, 40, 300, 37);
-		lblNewLabel.setFont(new Font("TimesRoman", Font.PLAIN, 18));
+		lblNewLabel.setFont(fontTitle);
 		contentPane.add(lblNewLabel);
 		
 		lblNewLabel_1 = new JLabel("Informations");
 		lblNewLabel_1.setBounds(44, 88, 216, 14);
-		lblNewLabel_1.setFont(new Font("Courier", Font.PLAIN, 15));
+		lblNewLabel_1.setFont(fontInfo);
 		contentPane.add(lblNewLabel_1);
 		
 		Thread windowThread = new Thread(instance);
