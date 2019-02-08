@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 public class Services extends District{
 
 	private int size;
-	private String src = "/src/img/Services.jpg";
+	private String src = "src/image/Services.jpg";
 	private BufferedImage img;
 	 
 	public Services() {

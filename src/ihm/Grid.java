@@ -5,13 +5,10 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
 import data.District;
 
 public class Grid extends JPanel{
@@ -24,13 +21,11 @@ public class Grid extends JPanel{
 	
 	
 	public Grid(JPanel districtPanel){
-		
 		this.districtPanel = districtPanel;
 		
 		try {
 			img = ImageIO.read(new File("src/image/land.jpg"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -44,31 +39,33 @@ public class Grid extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				int x=e.getX();
                 int y=e.getY();
-                //System.out.println(x+","+y); // Coordonnees cliquees
                 int caseX = getCase(x, 5); // Retourne la case cliquee en X
                 int caseY = getCase(y, 5); // Retourne la case cliquee en Y
                 System.out.println(caseX+","+caseY); // Affichage
                 districtPanel.setVisible(true);
 			}
-			
 		});
-		
 	}
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.setColor(Color.black);
-		int uniteX = getWidth()/5;
-		int uniteY = getHeight()/5;
-		//Dessin de la grille.
+		int caseWidth = getWidth()/gridSize;
+		
+		//Dessin des lignes de la grille
 		for(int i=0; i<6; i++){
-			g.drawLine(uniteX*i, 0, uniteX*i, getHeight());
-			g.drawLine(0, uniteY*i, getWidth(), uniteY*i);
+			g.drawLine(caseWidth*i, 0, caseWidth*i, getHeight());
+			g.drawLine(0, caseWidth*i, getWidth(), caseWidth*i);
 		}
-		//Affichage des images de terrain nu sur les cases vides.
-		for(int x=0; x<5; x++){
-			for(int y=0; y<5; y++){
-				g.drawImage(img, 1+(122*x), 1+(122*y), 120, 120, this);
+		
+		//Affichage des images de terrain nu sur les cases vides
+		for(int x=0; x<gridSize; x++){
+			for(int y=0; y<gridSize; y++){
+				if (grid[x][y] == null) {
+					g.drawImage(img, 1+(caseWidth*x), 1+(caseWidth*y), 120, 120, this);
+				} else {
+					g.drawImage(grid[x][y].getImg(), 1+(caseWidth*x), 1+(caseWidth*y), 120, 120, this);
+				}
 			}
 		}
 	}

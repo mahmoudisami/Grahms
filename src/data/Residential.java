@@ -10,9 +10,9 @@ public class Residential extends District{
 
 	private int size;
 	private int maxPeople;
-	private String src1 = "/src/img/House_LVL1.jpg";
-	private String src2 = "/src/img/House_LVL2.jpg";
-	private String src3 = "/src/img/House_LVL3.jpg";
+	private String src1 = "src/image/House_LVL1.jpg";
+	private String src2 = "src/image/House_LVL2.jpg";
+	private String src3 = "src/image/House_LVL3.jpg";
 	private BufferedImage img;
 	
 	public Residential() { 
