@@ -10,9 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import map.Grid;
-
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -153,6 +150,12 @@ public class Game_screen extends JFrame implements Runnable{
 				history.setLocationRelativeTo(null);
 				history.getContentPane().add(new JScrollPane(new JTextArea("HISTORIQUE ICI")));
 				history.setVisible(true);
+				btnNewButton_3.setEnabled(false);
+				history.addWindowListener(new java.awt.event.WindowAdapter() {
+					public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+						btnNewButton_3.setEnabled(true);
+					}
+				});
 			}	
 		});
 		infoVillePanel.add(btnNewButton_3);
