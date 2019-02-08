@@ -34,7 +34,7 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JTextField;
 
-public class Game_screen extends JFrame implements Runnable{
+public class GameScreen extends JFrame implements Runnable{
 
 	private JPanel contentPane;
 //	private JPanel gamePanel;
@@ -54,7 +54,7 @@ public class Game_screen extends JFrame implements Runnable{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Game_screen frame = new Game_screen();
+					GameScreen frame = new GameScreen();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -65,7 +65,7 @@ public class Game_screen extends JFrame implements Runnable{
 	/**
 	 * Create the frame.
 	 */ 
-	public Game_screen() {
+	public GameScreen() {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setSize(854, 690);
@@ -137,7 +137,7 @@ public class Game_screen extends JFrame implements Runnable{
 		infoVillePanel.add(lblTotalPopulation);
 		
 		JButton btnNewButton_3 = new JButton();
-		btnNewButton_3.setIcon(new ImageIcon(Game_screen.class.getResource("/image/Diary.jpg")));
+		btnNewButton_3.setIcon(new ImageIcon(GameScreen.class.getResource("/image/Diary.jpg")));
 		btnNewButton_3.setBounds(101, 109, 80, 57);
 		btnNewButton_3.setBackground(Color.WHITE);
 		

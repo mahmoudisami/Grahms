@@ -17,8 +17,8 @@ import data.District;
 public class Grid extends JPanel{
 	
 	public JPanel myGridScreen;
-	int Taille = 5;
-	District[][] grid = new District[Taille][Taille];
+	int gridSize = 5;
+	District[][] grid = new District[gridSize][gridSize];
 	public Image img;
 	private JPanel districtPanel;
 	
@@ -34,8 +34,8 @@ public class Grid extends JPanel{
 			e.printStackTrace();
 		}
 		
-		for(int lig=0;lig<Taille;lig++){
-			for(int col=0;col<Taille;col++){
+		for(int lig=0;lig<gridSize;lig++){
+			for(int col=0;col<gridSize;col++){
 				grid[lig][col] = null;
 			}
 		}

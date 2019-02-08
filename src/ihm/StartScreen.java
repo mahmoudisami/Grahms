@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Start_screen extends JFrame {
+public class StartScreen extends JFrame {
 
 	private JPanel contentPane;
 
@@ -21,7 +21,7 @@ public class Start_screen extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Start_screen frame = new Start_screen();
+					StartScreen frame = new StartScreen();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,7 +33,7 @@ public class Start_screen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Start_screen() {
+	public StartScreen() {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,7 +51,7 @@ public class Start_screen extends JFrame {
 		JButton btnNewButton = new JButton("Continue");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Game_screen frame = new Game_screen();
+				GameScreen frame = new GameScreen();
 			}
 		});
 		btnNewButton.setBounds(218, 120, 223, 62);
@@ -60,7 +60,7 @@ public class Start_screen extends JFrame {
 		JButton button = new JButton("Start");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Game_screen frame = new Game_screen();
+				GameScreen frame = new GameScreen();
 			}
 		});
 		button.setBounds(218, 202, 223, 62);
