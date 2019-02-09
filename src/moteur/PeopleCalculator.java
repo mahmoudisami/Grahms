@@ -9,7 +9,7 @@ public class PeopleCalculator {
 			
 		}
 		
-		public void upgrade(District[][] dist, int size) {	
+		public void upgradeDistrict(District[][] dist, int size) {	
 			for(int i=0;i<size;i++) {
 				for(int j=0;j<size;j++) {
 					if(dist[i][j] != null) {
@@ -23,7 +23,23 @@ public class PeopleCalculator {
 						
 					}
 				}
+			}	
+		}
+		
+		
+		public void upgradeNumberPeople(District[][] dist, int size) {
+			int nbr = 0;
+			int newPopulation;
+			for(int i=0; i<size;i++) {
+				for(int j=0; j<size;i++) {
+					if(dist[i][j] != null) {
+						if(dist[i][j].isResidential()) {
+							nbr = dist[i][j].getActualPeople();
+							newPopulation = nbr/10;
+							dist[i][j].addPeople(newPopulation);
+						}
+					}
+				}
 			}
-			
 		}
 }

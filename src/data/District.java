@@ -48,6 +48,10 @@ public class District {
 		return actualPeople;
 	}
 	
+	public void addPeople(int newPopulation) {
+		actualPeople += newPopulation;
+	}
+	
 	public int getMaintenanceCost() {
 		return 0;
 	}
