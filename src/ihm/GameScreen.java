@@ -42,7 +42,6 @@ import javax.swing.JTextField;
 public class GameScreen extends JFrame implements Runnable{
 
 	private JPanel contentPane;
-//	private JPanel gamePanel;
 	public Grid myGrid = null;
 	private static Clock clock;
 	private JButton btnResDistrict;
@@ -50,6 +49,8 @@ public class GameScreen extends JFrame implements Runnable{
 	private JButton btnServDistrict;
 	private JButton btnAddStation;
 	private JButton btnAddLine;
+	private JButton btnSlowDown;
+	private JButton btnAccelerate;
 	
 	private static JLabel clockLab;
 	private GameScreen instance = this;
@@ -58,7 +59,7 @@ public class GameScreen extends JFrame implements Runnable{
 	private JPanel districtPanel;
 	private JPanel subwayPanel;
 	
-	
+	private long speed = 30;
 	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -87,6 +88,8 @@ public class GameScreen extends JFrame implements Runnable{
 		this.setVisible(true);
 		this.setResizable(false);
 		
+		Font fontTitle = new Font("TimesRoman", Font.PLAIN, 18);
+		Font fontInfo = new Font("Yu Gothic UI Semibold", Font.PLAIN, 15);
 		Font fontDate = new Font("Tahoma", Font.PLAIN, 14);
 //		try {
 //			img = ImageIO.read(new File("src/image/land.jpg"));
@@ -132,28 +135,27 @@ public class GameScreen extends JFrame implements Runnable{
 		contentPane.add(infoVillePanel);
 		infoVillePanel.setLayout(null);
 		
-		JLabel lblCity = new JLabel();
+		JLabel lblCity = new JLabel("CITY");
 		lblCity.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCity.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblCity.setFont(fontTitle);
 		lblCity.setBounds(10, 0, 188, 25);
-		lblCity.setText("CITY");
 		infoVillePanel.add(lblCity);
 		
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setBounds(10, 61, 188, 14);
 		infoVillePanel.add(progressBar);
 		
-		JLabel lblTotalPopulation = new JLabel();
-		lblTotalPopulation.setText("Total Population :");
-		lblTotalPopulation.setBounds(10, 30, 93, 20);
+		JLabel lblTotalPopulation = new JLabel("Total Population :");
+		lblTotalPopulation.setBounds(10, 30, 126, 20);
+		lblTotalPopulation.setFont(fontInfo);
 		infoVillePanel.add(lblTotalPopulation);
 		
-		JButton btnNewButton_3 = new JButton();
-		btnNewButton_3.setIcon(new ImageIcon(GameScreen.class.getResource("/image/Diary.jpg")));
-		btnNewButton_3.setBounds(101, 109, 80, 57);
-		btnNewButton_3.setBackground(Color.WHITE);
+		JButton btnHistoric = new JButton();
+		btnHistoric.setIcon(new ImageIcon(GameScreen.class.getResource("/image/Diary.jpg")));
+		btnHistoric.setBounds(89, 117, 80, 57);
+		btnHistoric.setBackground(Color.WHITE);
 		
-		btnNewButton_3.addActionListener(new ActionListener() {
+		btnHistoric.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame history = new JFrame();
@@ -162,25 +164,36 @@ public class GameScreen extends JFrame implements Runnable{
 				history.setLocationRelativeTo(null);
 				history.getContentPane().add(new JScrollPane(new JTextArea("HISTORIQUE ICI")));
 				history.setVisible(true);
-				btnNewButton_3.setEnabled(false);
+				btnHistoric.setEnabled(false);
 				history.addWindowListener(new java.awt.event.WindowAdapter() {
 					public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-						btnNewButton_3.setEnabled(true);
+						btnHistoric.setEnabled(true);
 					}
 				});
 			}	
 		});
-		infoVillePanel.add(btnNewButton_3);
+		infoVillePanel.add(btnHistoric);
 		
-		JLabel txtpnEquilibreFinancier = new JLabel();
-		txtpnEquilibreFinancier.setText("Global Money :");
-		txtpnEquilibreFinancier.setBounds(10, 86, 80, 20);
-		infoVillePanel.add(txtpnEquilibreFinancier);
+		JLabel lblGlobalMoney = new JLabel("Global Money :");
+		lblGlobalMoney.setBounds(10, 86, 118, 20);
+		lblGlobalMoney.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
+		infoVillePanel.add(lblGlobalMoney);
+		
 		
 		JLabel lblCityPop = new JLabel("inser POP");
-		lblCityPop.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblCityPop.setBounds(108, 30, 90, 20);
+		lblCityPop.setFont(fontInfo);
+		lblCityPop.setBounds(140, 30, 58, 20);
 		infoVillePanel.add(lblCityPop);
+		
+		JLabel lblValGlobalMoney = new JLabel("inser money");
+		lblValGlobalMoney.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
+		lblValGlobalMoney.setBounds(138, 86, 60, 20);
+		infoVillePanel.add(lblValGlobalMoney);
+		
+		JLabel lblHistoric = new JLabel("Historic :");
+		lblHistoric.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
+		lblHistoric.setBounds(19, 146, 70, 20);
+		infoVillePanel.add(lblHistoric);
 		
 		// Informations of City
 		JPanel infoDistrictPanel = new JPanel();
@@ -188,34 +201,35 @@ public class GameScreen extends JFrame implements Runnable{
 		contentPane.add(infoDistrictPanel);
 		infoDistrictPanel.setLayout(null);
 		
-		JLabel lblDistrict = new JLabel();
-		lblDistrict.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		JLabel lblDistrict = new JLabel("DISTRICT");
+		lblDistrict.setFont(fontTitle);
 		lblDistrict.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDistrict.setBounds(10, 5, 186, 27);
-		lblDistrict.setText("DISTRICT");
 		infoDistrictPanel.add(lblDistrict);
 		
-		JLabel lblPopulation = new JLabel();
-		lblPopulation.setText("Population :");
-		lblPopulation.setBounds(10, 36, 65, 20);
+		JLabel lblPopulation = new JLabel("Population :");
+		lblPopulation.setBounds(10, 36, 94, 20);
+		lblPopulation.setFont(fontInfo);
 		infoDistrictPanel.add(lblPopulation);
 		
-		JLabel lblDistricMoney = new JLabel();
-		lblDistricMoney.setText("Money income :");
-		lblDistricMoney.setBounds(7, 106, 78, 20);
-		infoDistrictPanel.add(lblDistricMoney);
-		
-		JLabel lblDistrictPop = new JLabel("rempli auto\r\n");
-		lblDistrictPop.setBounds(85, 39, 111, 14);
-		infoDistrictPanel.add(lblDistrictPop);
-		
-		JLabel lblDistrictMoney = new JLabel("rempli auto");
-		lblDistrictMoney.setBounds(95, 109, 46, 14);
+		JLabel lblDistrictMoney = new JLabel("Money income :");
+		lblDistrictMoney.setBounds(7, 106, 117, 20);
+		lblDistrictMoney.setFont(fontInfo);
 		infoDistrictPanel.add(lblDistrictMoney);
 		
 		JProgressBar progressBar_1 = new JProgressBar();
 		progressBar_1.setBounds(10, 81, 186, 14);
 		infoDistrictPanel.add(progressBar_1);
+		
+		JLabel lblValDistrictPop = new JLabel("inser POP");
+		lblValDistrictPop.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
+		lblValDistrictPop.setBounds(124, 36, 72, 20);
+		infoDistrictPanel.add(lblValDistrictPop);
+		
+		JLabel lblValDistrictMoney = new JLabel("inser money");
+		lblValDistrictMoney.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
+		lblValDistrictMoney.setBounds(124, 106, 72, 20);
+		infoDistrictPanel.add(lblValDistrictMoney);
 		
 		// This Pane is visible when case without District is clicked
 		districtPanel = new JPanel();
@@ -292,7 +306,7 @@ public class GameScreen extends JFrame implements Runnable{
 		clock = new Clock();
 		
 		JPanel datePanel = new JPanel();
-		datePanel.setBounds(10, 620, 620, 40);
+		datePanel.setBounds(10, 620, 610, 40);
 		contentPane.add(datePanel);
 		datePanel.setLayout(null);
 		clockLab = new JLabel(clock.displayGameTimeInfo());
@@ -301,19 +315,41 @@ public class GameScreen extends JFrame implements Runnable{
 		clockLab.setFont(fontDate);
 		
 		JLabel label = new JLabel("");
-		label.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		label.setFont(fontDate);
 		label.setBounds(10, 11, 442, 17);
 		datePanel.add(label);
 		
 		JLabel label_1 = new JLabel("Speed :");
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		label_1.setFont(fontDate);
 		label_1.setBounds(462, 11, 47, 17);
 		datePanel.add(label_1);
 		
-		JButton button = new JButton(">> x10");
-		button.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		button.setBounds(513, 11, 94, 22);
-		datePanel.add(button);
+		// Speed Buttons
+		
+		btnAccelerate = new JButton(">> x10");
+		btnAccelerate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				speed = 3;
+				btnSlowDown.setVisible(true);
+				btnAccelerate.setVisible(false);
+			}
+		});
+		btnAccelerate.setFont(fontDate);
+		btnAccelerate.setBounds(513, 11, 94, 22);
+		datePanel.add(btnAccelerate);
+		
+		btnSlowDown = new JButton("<<  x1");
+		btnSlowDown.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				speed = 30;
+				btnAccelerate.setVisible(true);
+				btnSlowDown.setVisible(false);
+				
+			}
+		});
+		btnSlowDown.setFont(fontDate);
+		btnSlowDown.setBounds(513, 11, 94, 22);
+		datePanel.add(btnSlowDown);
 		
 		Thread windowThread = new Thread(instance);
 		windowThread.start();
@@ -323,7 +359,7 @@ public class GameScreen extends JFrame implements Runnable{
 	public void run() {
 		while (true) {
 			try {
-				Thread.sleep(1);
+				Thread.sleep(speed);
 			} catch (InterruptedException e) {
 				System.out.println(e.getMessage());
 			}
