@@ -11,6 +11,9 @@ import javax.swing.border.EmptyBorder;
 import moteur.Clock;
 
 import javax.swing.JLabel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class test_clock_ihm extends JFrame implements Runnable{
 
@@ -38,11 +41,6 @@ public class test_clock_ihm extends JFrame implements Runnable{
 		this.setResizable(false);
 		
 		clock = new Clock();
-		clockLab = new JLabel(clock.displayGameTimeInfo());
-		clockLab.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		clockLab.setBounds(73, 137, 614, 84);
-
-		contentPane.add(clockLab);
 		
 		JLabel lblNewLabel = new JLabel("VILLE");
 		lblNewLabel.setBounds(44, 40, 300, 37);
@@ -53,6 +51,26 @@ public class test_clock_ihm extends JFrame implements Runnable{
 		lblNewLabel_1.setBounds(44, 88, 216, 14);
 		lblNewLabel_1.setFont(fontInfo);
 		contentPane.add(lblNewLabel_1);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(44, 149, 617, 44);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		clockLab = new JLabel(clock.displayGameTimeInfo());
+		clockLab.setBounds(10, 11, 442, 17);
+		panel.add(clockLab);
+		clockLab.setFont(fontDate);
+		
+		JLabel lblSpeed = new JLabel("Speed :");
+		lblSpeed.setBounds(462, 11, 47, 17);
+		panel.add(lblSpeed);
+		lblSpeed.setFont(fontDate);
+		
+		JButton button = new JButton(">> x10");
+		button.setBounds(513, 11, 94, 22);
+		panel.add(button);
+		button.setFont(fontDate);
+
 		
 		Thread windowThread = new Thread(instance);
 		windowThread.start();

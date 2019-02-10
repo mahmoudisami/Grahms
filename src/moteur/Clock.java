@@ -271,7 +271,7 @@ public class Clock  {		//creation of the clock
 	}
 	
 	public String displayGameTimeInfo() {
-		return  getHour() + ":" + getMinute() + "  |  " + getDayName() + "  " + getDay() + "  of  " + getMonthName() + "  " + getYear() + "  |  " + " Day gone : " + getDayCpt() + "  |  ";
+		return  getHour() + ":" + getMinute() + "  |  " + getDayName() + "  " + getDay() + "  of  " + getMonthName() + "  " + getYear() + "  |  " + " Day gone : " + getDayCpt() + "";
 	}
 	public static void main(String[] args){ //Test 
 		Clock clock = new Clock();

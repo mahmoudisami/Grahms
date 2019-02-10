@@ -51,9 +51,14 @@ public class GameScreen extends JFrame implements Runnable{
 	private JButton btnAddStation;
 	private JButton btnAddLine;
 	
+	private static JLabel clockLab;
+	private GameScreen instance = this;
+	
 	public Image img;
 	private JPanel districtPanel;
 	private JPanel subwayPanel;
+	
+	
 	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -73,14 +78,16 @@ public class GameScreen extends JFrame implements Runnable{
 	public GameScreen() {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setSize(854, 690);
+		setSize(854, 695);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.setVisible(true);
+		this.setResizable(false);
 		
-		
+		Font fontDate = new Font("Tahoma", Font.PLAIN, 14);
 //		try {
 //			img = ImageIO.read(new File("src/image/land.jpg"));
 //		} catch (IOException e) {
@@ -277,26 +284,51 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		subwayPanel.setVisible(false);
 		
-		clock = new Clock();
-		
 		myGrid = new Grid(districtPanel);
 		myGrid.setGridscreen(contentPane);
 		contentPane.add(myGrid);
+		myGrid.setLayout(null);
 		
-		setVisible(true);
+		clock = new Clock();
+		
+		JPanel datePanel = new JPanel();
+		datePanel.setBounds(10, 620, 620, 40);
+		contentPane.add(datePanel);
+		datePanel.setLayout(null);
+		clockLab = new JLabel(clock.displayGameTimeInfo());
+		clockLab.setBounds(10, 11, 442, 17);
+		datePanel.add(clockLab);
+		clockLab.setFont(fontDate);
+		
+		JLabel label = new JLabel("");
+		label.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		label.setBounds(10, 11, 442, 17);
+		datePanel.add(label);
+		
+		JLabel label_1 = new JLabel("Speed :");
+		label_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		label_1.setBounds(462, 11, 47, 17);
+		datePanel.add(label_1);
+		
+		JButton button = new JButton(">> x10");
+		button.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		button.setBounds(513, 11, 94, 22);
+		datePanel.add(button);
+		
+		Thread windowThread = new Thread(instance);
+		windowThread.start();
 	}
 
 	@Override
 	public void run() {
 		while (true) {
 			try {
-				Thread.sleep(100);
+				Thread.sleep(1);
 			} catch (InterruptedException e) {
 				System.out.println(e.getMessage());
 			}
 			clock.increment();
-			//clockLabDate.setText(clock.displayDate());
-			//clockLabTime.setText(clock.displayTime());
+			clockLab.setText(clock.displayGameTimeInfo());
 		}
 	}
 	
