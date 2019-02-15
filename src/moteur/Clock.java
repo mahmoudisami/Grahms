@@ -190,8 +190,6 @@ public class Clock  {		//creation of the clock
 	} 
 	
 	public void increment(){	//increment the clock by 1 minute
-		if (minute + 1 == 60){
-			minute = 0;
 			if(hour + 1 == 24){
 				hour = 0;
 				if((day + 1 == 29 && isFev()) || (day + 1 == 31 && is30()) || (day + 1 == 32 && is31()) ){
@@ -219,10 +217,6 @@ public class Clock  {		//creation of the clock
 				hour += 1;
 			}
 		}
-		else{
-			minute += 1;
-		}
-	}
 	
 	private boolean is30() {		//return true if the current month has 30 days
 		if(month==04||month==06||month==9||month==11){
@@ -273,13 +267,14 @@ public class Clock  {		//creation of the clock
 	public String displayGameTimeInfo() {
 		return  getHour() + ":" + getMinute() + "  |  " + getDayName() + "  " + getDay() + "  of  " + getMonthName() + "  " + getYear() + "  |  " + " Day gone : " + getDayCpt() + "";
 	}
+	
 	public static void main(String[] args){ //Test 
 		Clock clock = new Clock();
 		
 		boolean bool = true;
 		while (bool!=false){
 			try {
-				Thread.sleep(1);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				System.out.println(e.getMessage());
 			}
