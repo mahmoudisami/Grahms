@@ -1,6 +1,7 @@
 package moteur;
 
-import data.District;
+import data.*;
+
 
 public class FinancialCalculator {
 

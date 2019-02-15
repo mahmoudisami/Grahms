@@ -14,6 +14,9 @@ public class Residential extends District{
 	private String src2 = "src/image/House_LVL2.jpg";
 	private String src3 = "src/image/House_LVL3.jpg";
 	private BufferedImage img;
+	private District work;
+	private District services;
+	
 	
 	public Residential() { 
 		super(Const.GAIN_RES,0); 
@@ -63,5 +66,13 @@ public class Residential extends District{
 	
 	public void setSize(int newSize) {
 		size = newSize;
+	}
+	
+	public void setWorkingDistrict(District dist) {
+		work = dist;
+	}
+	
+	public void setServicesDistrict(District dist) {
+		services = dist;
 	}
 }

@@ -3,6 +3,8 @@ package data;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import javafx.geometry.Side;
+
 public class District {
 
 	private Station station;
@@ -12,6 +14,7 @@ public class District {
 	private int actualPeople;
 	private int satisfaction;
 	private ArrayList<Line> line;
+
 	
 
 	public District(int gain,int cost) {
@@ -68,6 +71,9 @@ public class District {
 		return 1;
 	}
 	
-	public void setSize(int newSize) {
-	}
+	public void setSize(int newSize) {}
+	
+	public void setWorkingDistrict(District dist) {}
+	
+	public void setServicesDistrict(District dist) {}
 }
