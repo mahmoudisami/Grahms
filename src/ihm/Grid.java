@@ -99,4 +99,8 @@ public class Grid extends JPanel{
 	public District[][] getMapTab() {
 		return grid;
 	}
+	public District[][] setMapTab(int lig, int col, District newDistrict){
+		grid[lig][col] = newDistrict;
+		return grid;
+	}
 }

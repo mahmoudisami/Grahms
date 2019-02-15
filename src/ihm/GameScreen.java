@@ -285,6 +285,16 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		JButton btnDestroyDistrict = new JButton("Destroy District");
 		btnDestroyDistrict.setBounds(10, 211, 188, 52);
+		btnDestroyDistrict.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				myGrid.setMapTab(myGrid.getCoordsX(),myGrid.getCoordsY(),null);
+				subwayPanel.setVisible(false);
+				districtPanel.setVisible(true);
+				myGrid.repaint();
+			}
+
+		});
 		subwayPanel.add(btnDestroyDistrict);
 		
 		subwayPanel.setVisible(false);
