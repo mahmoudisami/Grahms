@@ -5,37 +5,49 @@ import data.*;
 
 public class FinancialCalculator {
 
-	private int totalStationCost;
-	private int totalDistrictGain;
-	private int totalDistrictCost;
+	private int weeklyStationCost;
+	private int weeklyDistrictGain;
+	private int weeklyDistrictCost;
 	
 	public FinancialCalculator() {
-		totalDistrictCost = 0;
-		totalDistrictGain = 0;
+		weeklyDistrictCost = 0;
+		weeklyDistrictGain = 0;
 	}
 	
 	public int districtCalculatorGain(District grid[][], int dim) {
-		totalDistrictGain = 0;
+		weeklyDistrictGain = 0;
 		for(int i=0; i<dim; i++) {
 			for(int j=0; j<dim; j++) {
 				if(grid[i][j] != null) {
-					totalDistrictGain += grid[i][j].getGain();
+					weeklyDistrictGain += grid[i][j].getGain();
 				}
 			}
 		}
-		return totalDistrictGain;
+		return weeklyDistrictGain;
 	}
 	
 	public int districtCalculatorCost(District grid[][], int dim) {
-		totalDistrictCost = 0;
+		weeklyDistrictCost = 0;
 		for(int i=0; i<dim; i++) {
 			for(int j=0; j<dim; j++) {
 				if(grid[i][j] != null) {
-					totalDistrictCost += grid[i][j].getCost();
+					weeklyDistrictCost += grid[i][j].getCost();
 				}
 			}
 		}
-		return totalDistrictCost;
+		return weeklyDistrictCost;
+	}
+	
+	public int stationCalculatorCost(District grid[][], int dim) {
+		weeklyStationCost = 0;
+		for(int i=0; i<dim; i++) {
+			for(int j=0; j<dim; j++) {
+				if(grid[i][j] != null && grid[i][j].isStation()) {
+					weeklyStationCost += grid[i][j].getStation().getMaintenanceCost();
+				}
+			}
+		}
+		return weeklyStationCost;
 	}
 	
 }
