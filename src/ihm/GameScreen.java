@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 import data.Commercial;
 import data.Residential;
 import data.Services;
+import data.Station;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -293,6 +294,13 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		btnAddStation = new JButton("Add Station");
 		btnAddStation.setBounds(10, 11, 188, 52);
+		btnAddStation.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].createStation();
+				myGrid.repaint();
+			}
+		});
 		subwayPanel.add(btnAddStation);
 		
 		btnAddLine = new JButton("Add Line");
@@ -302,6 +310,17 @@ public class GameScreen extends JFrame implements Runnable{
 		JButton btnUpgradeDistrict = new JButton("<html>Upgrade<br>\r\n&nbsp;Station<html>");
 		btnUpgradeDistrict.setBounds(10, 137, 188, 52);
 		subwayPanel.add(btnUpgradeDistrict);
+		
+		JButton btnDestroyStation = new JButton("Destroy Station");
+		btnDestroyStation.setBounds(10, 191, 188, 15);
+		btnDestroyStation.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].deleteStation();
+				myGrid.repaint();
+			}
+		});
+		subwayPanel.add(btnDestroyStation);
 		
 		JButton btnDestroyDistrict = new JButton("Destroy District");
 		btnDestroyDistrict.setBounds(10, 211, 188, 52);
