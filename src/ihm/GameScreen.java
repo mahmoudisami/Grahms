@@ -242,10 +242,13 @@ public class GameScreen extends JFrame implements Runnable{
 		btnResDistrict.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()] = new Residential();
+				if (myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()]== null){
+					myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()] = new Residential();
+					districtPanel.setVisible(false);
+                	subwayPanel.setVisible(true);
+				}
 				myGrid.repaint();
 			}
-
 		});
 		districtPanel.add(btnResDistrict);
 		
@@ -254,7 +257,11 @@ public class GameScreen extends JFrame implements Runnable{
 		btnComDistrict.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()] = new Commercial();
+				if (myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()]== null){
+					myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()] = new Commercial();
+					districtPanel.setVisible(false);
+                	subwayPanel.setVisible(true);
+				}
 				myGrid.repaint();
 			}
 
@@ -266,11 +273,15 @@ public class GameScreen extends JFrame implements Runnable{
 		btnServDistrict.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()] = new Services();
+				if (myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()]== null){
+					myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()] = new Services();
+					districtPanel.setVisible(false);
+                	subwayPanel.setVisible(true);
+				}
 				myGrid.repaint();
 			}
-
 		});
+		
 		districtPanel.add(btnServDistrict );
 		districtPanel.setVisible(false);
 		
@@ -292,13 +303,22 @@ public class GameScreen extends JFrame implements Runnable{
 		btnUpgradeDistrict.setBounds(10, 137, 188, 52);
 		subwayPanel.add(btnUpgradeDistrict);
 		
-		JButton btnDestroySubway = new JButton("Destroy Subway");
-		btnDestroySubway.setBounds(10, 211, 188, 52);
-		subwayPanel.add(btnDestroySubway);
+		JButton btnDestroyDistrict = new JButton("Destroy District");
+		btnDestroyDistrict.setBounds(10, 211, 188, 52);
+		btnDestroyDistrict.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				myGrid.setMapTab(myGrid.getCoordsX(),myGrid.getCoordsY(),null);
+				subwayPanel.setVisible(false);
+				districtPanel.setVisible(true);
+				myGrid.repaint();
+			}
+		});
+		subwayPanel.add(btnDestroyDistrict);
 		
 		subwayPanel.setVisible(false);
 		
-		myGrid = new Grid(districtPanel);
+		myGrid = new Grid(districtPanel, subwayPanel);
 		myGrid.setGridscreen(contentPane);
 		contentPane.add(myGrid);
 		myGrid.setLayout(null);
