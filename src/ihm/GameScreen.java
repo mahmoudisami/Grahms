@@ -152,7 +152,7 @@ public class GameScreen extends JFrame implements Runnable{
 		infoVillePanel.add(lblTotalPopulation);
 		
 		JButton btnHistoric = new JButton();
-		btnHistoric.setIcon(new ImageIcon(GameScreen.class.getResource("/image/Diary.jpg")));
+		btnHistoric.setIcon(new ImageIcon(GameScreen.class.getResource("/image/Diary.png")));
 		btnHistoric.setBounds(89, 117, 80, 57);
 		btnHistoric.setBackground(Color.WHITE);
 		
