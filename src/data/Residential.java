@@ -51,7 +51,7 @@ public class Residential extends District{
 		else {
 			if(size == 1) {
 				try {
-					img = ImageIO.read(new File(src1)); // Changer avec station
+					img = ImageIO.read(new File(src3)); // Changer avec station
 				}catch (IOException e){
 					e.printStackTrace();
 				}

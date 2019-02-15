@@ -42,8 +42,8 @@ public class Grid extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				int x=e.getX();
                 int y=e.getY();
-                caseX = getCase(x, 5); // Retourne la case cliquee en X
-                caseY = getCase(y, 5); // Retourne la case cliquee en Y
+                caseX = getCase(x, gridSize); // Retourne la case cliquee en X
+                caseY = getCase(y, gridSize); // Retourne la case cliquee en Y
                 System.out.println(caseX+","+caseY); // Affichage
                 if(grid[caseX][caseY]== null){
                 	subwayPanel.setVisible(false);
@@ -62,7 +62,7 @@ public class Grid extends JPanel{
 		caseWidth = getWidth()/gridSize;
 		
 		//Dessin des lignes de la grille
-		for(int i=0; i<6; i++){
+		for(int i=0; i<gridSize+1; i++){
 			g.drawLine(caseWidth*i, 0, caseWidth*i, getHeight());
 			g.drawLine(0, caseWidth*i, getWidth(), caseWidth*i);
 		}
