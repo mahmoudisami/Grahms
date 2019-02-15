@@ -33,6 +33,10 @@ public class District {
 		}
 	}
 	
+	public void deleteStation() {
+		station = null;
+	}
+	
 	public BufferedImage getImg() {
 		return null;
 	}
