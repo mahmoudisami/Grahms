@@ -46,6 +46,7 @@ public class Grid extends JPanel{
                 caseY = getCase(y, 5); // Retourne la case cliquee en Y
                 System.out.println(caseX+","+caseY); // Affichage
                 if(grid[caseX][caseY]== null){
+                	subwayPanel.setVisible(false);
                 	districtPanel.setVisible(true);
                 }else{
                 	districtPanel.setVisible(false);

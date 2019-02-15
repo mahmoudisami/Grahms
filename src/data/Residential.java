@@ -21,28 +21,54 @@ public class Residential extends District{
 	public Residential() { 
 		super(Const.GAIN_RES,0); 
 		size = 1; // Taille de depart
+		isStation = false;
 	}
 	
 	public BufferedImage getImg() {
-		if(size == 1) {
-			try {
-				img = ImageIO.read(new File(src1));
-			}catch (IOException e){
-				e.printStackTrace();
+		if(!isStation) {
+			if(size == 1) {
+				try {
+					img = ImageIO.read(new File(src1));
+				}catch (IOException e){
+					e.printStackTrace();
+				}
 			}
-		}
-		else if(size == 2) {
-			try {
-				img = ImageIO.read(new File(src2));
-			}catch (IOException e){
-				e.printStackTrace();
+			else if(size == 2) {
+				try {
+					img = ImageIO.read(new File(src2));
+				}catch (IOException e){
+					e.printStackTrace();
+				}
+			}
+			else {
+				try {
+					img = ImageIO.read(new File(src3));
+				}catch (IOException e){
+					e.printStackTrace();
+				}
 			}
 		}
 		else {
-			try {
-				img = ImageIO.read(new File(src3));
-			}catch (IOException e){
-				e.printStackTrace();
+			if(size == 1) {
+				try {
+					img = ImageIO.read(new File(src1)); // Changer avec station
+				}catch (IOException e){
+					e.printStackTrace();
+				}
+			}
+			else if(size == 2) {
+				try {
+					img = ImageIO.read(new File(src2)); // Changer avec station
+				}catch (IOException e){
+					e.printStackTrace();
+				}
+			}
+			else {
+				try {
+					img = ImageIO.read(new File(src3)); // Changer avec station
+				}catch (IOException e){
+					e.printStackTrace();
+				}
 			}
 		}
 		return img;

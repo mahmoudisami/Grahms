@@ -21,13 +21,17 @@ public class Commercial extends District{
 	
 	public BufferedImage getImg() {
 		try {
-			img = ImageIO.read(new File(src));
+			if(!isStation) {
+				img = ImageIO.read(new File(src));
+			}
+			else {
+				img = ImageIO.read(new File(src)); // changer img avec station
+			}
 		}catch (IOException e){
 			e.printStackTrace();
 		}
 		return img;
 	}
-
 	
 	public void upSize() {
 		size++;

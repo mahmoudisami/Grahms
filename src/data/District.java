@@ -7,26 +7,24 @@ import javafx.geometry.Side;
 
 public class District {
 
-	private Station station;
-	private boolean isStation;
+	protected Station station;
 	private int gain;
 	private int cost;
 	private int actualPeople;
 	private int satisfaction;
 	private ArrayList<Line> line;
-
-	
+	protected boolean isStation;
 
 	public District(int gain,int cost) {
 		this.gain = gain;
 		this.cost = cost;
-		isStation = false;
 		satisfaction = 50;
+		isStation = false;
 	}
 	
 	public boolean createStation() {
 		if(isStation) {
-			return false; // Station deja� existante
+			return false; // Station deja existante
 		}
 		else {
 			station = new Station(); // Creation de la nouvelle station
