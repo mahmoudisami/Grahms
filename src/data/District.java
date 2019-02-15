@@ -69,9 +69,23 @@ public class District {
 		return 1;
 	}
 	
+	public boolean isStation() {
+		return isStation;
+	}
+	
+	public Station getStation() {
+		return station;
+	}
+	
 	public void setSize(int newSize) {}
 	
 	public void setWorkingDistrict(District dist) {}
 	
 	public void setServicesDistrict(District dist) {}
+	
+    public void setFirstDistrict(District dist) {}
+	
+	public void setSecondDistrict(District dist) {}
+	
+
 }
