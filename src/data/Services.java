@@ -24,7 +24,7 @@ public class Services extends District{
 				img = ImageIO.read(new File(src));
 			}
 			else {
-				img = ImageIO.read(new File(src)); // changer img avec station
+				img = ImageIO.read(new File(srcStation)); // changer img avec station
 			}
 		}catch (IOException e){
 			e.printStackTrace();
