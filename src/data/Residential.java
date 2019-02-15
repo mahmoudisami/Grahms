@@ -13,6 +13,9 @@ public class Residential extends District{
 	private String src1 = "src/image/House_LVL1.jpg";
 	private String src2 = "src/image/House_LVL2.jpg";
 	private String src3 = "src/image/House_LVL3.jpg";
+	private String srcStation1 = "src/image/House_LVL3.jpg"; // Changer chemin
+	private String srcStation2 = "src/image/House_LVL2.jpg"; // Changer chemin
+	private String srcStation3 = "src/image/House_LVL3.jpg"; // Changer chemin
 	private BufferedImage img;
 	private District work;
 	private District services;
@@ -51,21 +54,21 @@ public class Residential extends District{
 		else {
 			if(size == 1) {
 				try {
-					img = ImageIO.read(new File(src3)); // Changer avec station
+					img = ImageIO.read(new File(srcStation1)); // Changer avec station
 				}catch (IOException e){
 					e.printStackTrace();
 				}
 			}
 			else if(size == 2) {
 				try {
-					img = ImageIO.read(new File(src2)); // Changer avec station
+					img = ImageIO.read(new File(srcStation1)); // Changer avec station
 				}catch (IOException e){
 					e.printStackTrace();
 				}
 			}
 			else {
 				try {
-					img = ImageIO.read(new File(src3)); // Changer avec station
+					img = ImageIO.read(new File(srcStation1)); // Changer avec station
 				}catch (IOException e){
 					e.printStackTrace();
 				}

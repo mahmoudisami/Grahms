@@ -12,6 +12,7 @@ public class Commercial extends District{
 
 	private int size;
 	private String src = "src/image/Commercial.jpg";
+	private String srcStation = "src/image/Commercial.jpg"; // Chemin a changer
 	private BufferedImage img;
 
 	public Commercial() {

@@ -10,6 +10,7 @@ public class Services extends District{
 
 	private int size;
 	private String src = "src/image/Services.jpg";
+	private String srcStation = "src/image/Services.jpg"; // Chemin a changer
 	private BufferedImage img;
 	 
 	public Services() {
