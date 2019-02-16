@@ -27,7 +27,7 @@ public class Grid extends JPanel{
 		this.subwayPanel = subwayPanel;
 		
 		try {
-			img = ImageIO.read(new File("src/image/land.jpg"));
+			img = ImageIO.read(new File("src/image/land.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
