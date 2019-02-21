@@ -14,7 +14,7 @@ import data.District;
 public class Grid extends JPanel{
 	
 	public JPanel myGridScreen;
-	int gridSize = 5;
+	int gridSize = 8;
 	District[][] grid = new District[gridSize][gridSize];
 	public Image img;
 	int caseX, caseY, caseWidth;
@@ -68,12 +68,13 @@ public class Grid extends JPanel{
 		}
 		
 		//Affichage des images de terrain nu sur les cases vides
+		int size = 610/gridSize;
 		for(int x=0; x<gridSize; x++){
 			for(int y=0; y<gridSize; y++){
 				if (grid[x][y] == null) {
-					g.drawImage(img, 1+(caseWidth*x), 1+(caseWidth*y), 120, 120, this);
+					g.drawImage(img, 1+(caseWidth*x), 1+(caseWidth*y), size, size, this);
 				} else {
-					g.drawImage(grid[x][y].getImg(), 1+(caseWidth*x), 1+(caseWidth*y), 120, 120, this);
+					g.drawImage(grid[x][y].getImg(), 1+(caseWidth*x), 1+(caseWidth*y), size, size, this);
 				}
 			}
 		}
