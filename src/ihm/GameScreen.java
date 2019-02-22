@@ -34,6 +34,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import moteur.Clock;
+import moteur.GameProgress;
+
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
@@ -59,6 +61,8 @@ public class GameScreen extends JFrame implements Runnable{
 	public Image img;
 	private JPanel districtPanel;
 	private JPanel subwayPanel;
+	
+	private GameProgress game = new GameProgress();
 	
 	private long speed = 30;
 	 
@@ -403,6 +407,7 @@ public class GameScreen extends JFrame implements Runnable{
 				System.out.println(e.getMessage());
 			}
 			clock.increment();
+			game.launchGameProgress(clock, myGrid);
 			clockLab.setText(clock.displayGameTimeInfo());
 		}
 	}
