@@ -79,7 +79,7 @@ public class StartScreen extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame ruleScreen = new JFrame();
-				ruleScreen.setSize(500,510);
+				ruleScreen.setSize(500,520);
 				ruleScreen.setTitle("Rules");
 				ruleScreen.setLocationRelativeTo(null);
 				//JTextArea ruleText = new JTextArea("",5,10);
