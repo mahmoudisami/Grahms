@@ -19,11 +19,11 @@ public class TestCalculator {
 		grid[1][1] = new Residential();
 		grid[2][2] = new Commercial();
 		
-		System.out.println("Gain avec Resid + Commercial: "+ calc.districtCalculatorGain(grid, size));
+		System.out.println("Gain avec Resid + Commercial: "+ calc.districtCalculatorGain(grid));
 		
 		grid[0][0] = new Services();
 		
-		System.out.println("Gain avec Resid + Commercial + Services: "+ calc.districtCalculatorGain(grid, size));
+		System.out.println("Gain avec Resid + Commercial + Services: "+ calc.districtCalculatorGain(grid));
 		
 		
 	}

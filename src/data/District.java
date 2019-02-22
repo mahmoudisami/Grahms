@@ -10,7 +10,7 @@ public class District {
 	protected Station station;
 	private int gain;
 	private int cost;
-	private int actualPeople;
+	protected int actualPeople;
 	private int satisfaction;
 	private ArrayList<Line> line;
 	protected boolean isStation;
@@ -52,6 +52,10 @@ public class District {
 
 	public int getActualPeople() {
 		return actualPeople;
+	}
+	
+	public void setActualPeople(int newActualPeople) {
+		actualPeople = newActualPeople;
 	}
 	
 	public void addPeople(int newPopulation) {

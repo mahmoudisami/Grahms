@@ -14,36 +14,42 @@ public class FinancialCalculator {
 		weeklyDistrictGain = 0;
 	}
 	
-	public int districtCalculatorGain(District grid[][], int dim) {
+	public int districtCalculatorGain(District map[][]) {
+		int nl = map.length;
+		int nc = map[0].length;
 		weeklyDistrictGain = 0;
-		for(int i=0; i<dim; i++) {
-			for(int j=0; j<dim; j++) {
-				if(grid[i][j] != null) {
-					weeklyDistrictGain += grid[i][j].getGain();
+		for(int i=0; i<nl; i++) {
+			for(int j=0; j<nc; j++) {
+				if(map[i][j] != null) {
+					weeklyDistrictGain += map[i][j].getGain();
 				}
 			}
 		}
 		return weeklyDistrictGain;
 	}
 	
-	public int districtCalculatorCost(District grid[][], int dim) {
+	public int districtCalculatorCost(District map[][]) {
+		int nl = map.length;
+		int nc = map[0].length;
 		weeklyDistrictCost = 0;
-		for(int i=0; i<dim; i++) {
-			for(int j=0; j<dim; j++) {
-				if(grid[i][j] != null) {
-					weeklyDistrictCost += grid[i][j].getMaintenanceCost();
+		for(int i=0; i<nl; i++) {
+			for(int j=0; j<nc; j++) {
+				if(map[i][j] != null) {
+					weeklyDistrictCost += map[i][j].getMaintenanceCost();
 				}
 			}
 		}
 		return weeklyDistrictCost;
 	}
 	
-	public int stationCalculatorCost(District grid[][], int dim) {
+	public int stationCalculatorCost(District map[][]) {
+		int nl = map.length;
+		int nc = map[0].length;
 		weeklyStationCost = 0;
-		for(int i=0; i<dim; i++) {
-			for(int j=0; j<dim; j++) {
-				if(grid[i][j] != null && grid[i][j].isStation()) {
-					weeklyStationCost += grid[i][j].getStation().getMaintenanceCost();
+		for(int i=0; i<nl; i++) {
+			for(int j=0; j<nc; j++) {
+				if(map[i][j] != null && map[i][j].isStation()) {
+					weeklyStationCost += map[i][j].getStation().getMaintenanceCost();
 				}
 			}
 		}
