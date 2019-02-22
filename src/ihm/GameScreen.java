@@ -162,7 +162,7 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		JButton btnHistoric = new JButton();
 		btnHistoric.setIcon(new ImageIcon(GameScreen.class.getResource("/image/Diary.png")));
-		btnHistoric.setBounds(89, 117, 80, 57);
+		btnHistoric.setBounds(89, 117, 51, 51);
 		btnHistoric.setBackground(Color.WHITE);
 		
 		btnHistoric.addActionListener(new ActionListener() {
