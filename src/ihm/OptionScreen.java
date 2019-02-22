@@ -1,0 +1,107 @@
+package ihm;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+
+public class OptionScreen extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textField;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					OptionScreen frame = new OptionScreen();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public OptionScreen() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 687, 587);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		Font fontRadio = new Font("Tahoma", Font.BOLD, 16);
+		
+		final JRadioButton smallRadioButton = new JRadioButton("  Small");
+		smallRadioButton.setFont(fontRadio);
+		smallRadioButton.setBounds(275, 274, 117, 29);
+		contentPane.add(smallRadioButton);
+		
+		
+		final JRadioButton mediumRadioButton = new JRadioButton("  Medium");
+		mediumRadioButton.setFont(fontRadio);
+		mediumRadioButton.setBounds(275, 339, 117, 23);
+		contentPane.add(mediumRadioButton);
+		
+		
+		final JRadioButton largeRadioButton = new JRadioButton("  Large");
+		largeRadioButton.setFont(fontRadio);
+		largeRadioButton.setBounds(275, 404, 117, 23);
+		contentPane.add(largeRadioButton);
+		
+		
+		ButtonGroup sizeMapGroup = new ButtonGroup();
+		sizeMapGroup.add(smallRadioButton);
+		sizeMapGroup.add(mediumRadioButton);
+		sizeMapGroup.add(largeRadioButton);
+		
+		JLabel lblOption = new JLabel("OPTIONS");
+		lblOption.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		lblOption.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOption.setBounds(10, 24, 651, 37);
+		contentPane.add(lblOption);
+		
+		JButton btnStart = new JButton("Start");
+		btnStart.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GameScreen frame = new GameScreen();
+			}
+		});
+		btnStart.setBounds(502, 475, 159, 62);
+		contentPane.add(btnStart);
+		
+		textField = new JTextField();
+		textField.setBounds(228, 127, 220, 37);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblCityName = new JLabel("City Name :");
+		lblCityName.setFont(fontRadio);
+		lblCityName.setBounds(109, 127, 109, 37);
+		contentPane.add(lblCityName);
+		
+		JLabel lblSizeMap = new JLabel("Size Map :");
+		lblSizeMap.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblSizeMap.setBounds(109, 266, 136, 37);
+		contentPane.add(lblSizeMap);
+	}
+}
