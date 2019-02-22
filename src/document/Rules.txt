@@ -1,0 +1,27 @@
+HELP GRAHMS CITY:
+
+1-BUILDING AND DESTROYING DISTRICTS
+-To build a district in this game you firstly have to left click on a case of the 
+map the you chose what king of construction you want to put in there between 3 
+types of construction.
+-You can destroy a district by selecting it and clicking on DESTROY DISTRICT
+
+2-THE TYPES OF CONSTRUCTION
+-Residantial District : Cost money to construct / People will live there and 
+will pay tax.
+-Commercial District : Cost no money to construct / People will go there to
+ spend time and work.
+-Service District : Cost no money to construct / People have to go there at 
+least once a week on weekends to pay their tax.
+
+3-STATION AND LINES :
+-It cost money to build Stations and Lines; it also cost money to maintains them.
+-You can upgrade stations to make them able to contrain more people, this also
+ costs money.
+-You can construct or destroy a station in this game, firstly you have to click 
+on a district that you already built then you will have to chose ADD STATION or 
+DESTROY STATION if it's already exist.
+-You can add a LINE between two stations, to do so you have to select by 
+clicking on the first station, then click on ADD LINE, and select the other 
+station that you want to link it with, finally you will have to select one by 
+one the cases that you want the line to pass through.
