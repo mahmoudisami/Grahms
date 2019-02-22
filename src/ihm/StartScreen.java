@@ -58,6 +58,7 @@ public class StartScreen extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GameScreen frame = new GameScreen();
+				dispose();
 			}
 		});
 		btnNewButton.setBounds(218, 120, 223, 62);
