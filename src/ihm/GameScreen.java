@@ -61,6 +61,7 @@ public class GameScreen extends JFrame implements Runnable{
 	private GameScreen instance = this;
 	
 	private Money money = new Money();
+	private String[] destroyString;
 	
 	public Image img;
 	private JPanel districtPanel;
@@ -322,29 +323,42 @@ public class GameScreen extends JFrame implements Runnable{
 		btnUpgradeDistrict.setBounds(10, 137, 188, 52);
 		subwayPanel.add(btnUpgradeDistrict);
 		
-		JButton btnDestroyStation = new JButton("Destroy Station");
-		btnDestroyStation.setBounds(10, 191, 188, 15);
-		btnDestroyStation.addActionListener(new ActionListener() {
+		JButton destroyButton = new JButton("Destroy");
+		destroyButton.setBounds(10, 211, 188, 52);
+		destroyButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].deleteStation();
-				myGrid.repaint();
+			public void actionPerformed(ActionEvent e) {	
+				if (myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].isStation() == true) {
+					destroyString = new String[2];
+					destroyString[0] = "District";
+					destroyString[1] = "Station";
+				} else {
+					destroyString = new String[1];
+					destroyString[0] = "District";
+				}
+				JOptionPane destroyChoice = new JOptionPane();
+				String nom = (String)destroyChoice.showInputDialog(null, 
+				  "What would you destroy?",
+				  "Select",
+				  JOptionPane.WARNING_MESSAGE,
+				  null,
+				  destroyString,
+				  destroyString[0]);
+
+				if (nom == null || (nom != null && ("".equals(nom)))){
+				}
+				else if (nom.equals("District")) {
+					myGrid.setMapTab(myGrid.getCoordsX(),myGrid.getCoordsY(),null);
+					subwayPanel.setVisible(false);
+					districtPanel.setVisible(true);
+					myGrid.repaint();
+				} else if (nom.equals("Station")) {
+					myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()].deleteStation();
+					myGrid.repaint();
+				}
 			}
 		});
-		subwayPanel.add(btnDestroyStation);
-		
-		JButton btnDestroyDistrict = new JButton("Destroy District");
-		btnDestroyDistrict.setBounds(10, 211, 188, 52);
-		btnDestroyDistrict.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				myGrid.setMapTab(myGrid.getCoordsX(),myGrid.getCoordsY(),null);
-				subwayPanel.setVisible(false);
-				districtPanel.setVisible(true);
-				myGrid.repaint();
-			}
-		});
-		subwayPanel.add(btnDestroyDistrict);
+		subwayPanel.add(destroyButton);
 		
 		subwayPanel.setVisible(false);
 		
