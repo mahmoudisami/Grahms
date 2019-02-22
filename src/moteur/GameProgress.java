@@ -18,7 +18,7 @@ public class GameProgress {
 	}
 	
 	public void launchGameProgress (Grid grid) {
-		if(clock.getDayPos()==7 && clock.getHour().equals("23")) { //exemple
+		if(clock.getDayPos()==7 && clock.getHour().equals("23")) { //Chaque dimanche a 23h
 			tmpMoney = fin.districtCalculatorCost(grid.getMapTab(), grid.getMapTab().length);
 			money.withDraw(tmpMoney);
 			historicText += "------------ "+ clock.getDay() +" "+ clock.getMonthName() +"------------\n";
@@ -26,6 +26,9 @@ public class GameProgress {
 			tmpMoney = fin.districtCalculatorGain(grid.getMapTab(), grid.getMapTab().length);
 			money.addMoney(tmpMoney);
 			historicText += "+" + tmpMoney + " Gain des quartiers \n";
+			tmpMoney = fin.stationCalculatorCost(grid.getMapTab(), grid.getMapTab().length);
+			money.withDraw(tmpMoney);
+			historicText += "-" + tmpMoney + " Entretien des stations \n";
 		}
 		if(clock.getHour().equals("07")) {
 			//APPEL fonction habitants parte au travail

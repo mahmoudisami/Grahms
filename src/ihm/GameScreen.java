@@ -310,6 +310,7 @@ public class GameScreen extends JFrame implements Runnable{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].createStation();
+				money.withDraw(myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getStation().getConstructionCost());
 				myGrid.repaint();
 			}
 		});
