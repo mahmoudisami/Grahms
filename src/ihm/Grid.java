@@ -72,9 +72,9 @@ public class Grid extends JPanel{
 		for(int x=0; x<gridSize; x++){
 			for(int y=0; y<gridSize; y++){
 				if (grid[x][y] == null) {
-					g.drawImage(img, 1+(caseWidth*x), 1+(caseWidth*y), size, size, this);
+					g.drawImage(img, 1+(caseWidth*x), 1+(caseWidth*y), size-1, size-1, this);
 				} else {
-					g.drawImage(grid[x][y].getImg(), 1+(caseWidth*x), 1+(caseWidth*y), size, size, this);
+					g.drawImage(grid[x][y].getImg(), 1+(caseWidth*x), 1+(caseWidth*y), size-1, size-1, this);
 				}
 			}
 		}
