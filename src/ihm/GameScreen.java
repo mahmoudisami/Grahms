@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import data.Commercial;
+import data.Money;
 import data.Residential;
 import data.Services;
 import data.Station;
@@ -54,9 +55,12 @@ public class GameScreen extends JFrame implements Runnable{
 	private JButton btnAddLine;
 	private JButton btnSlowDown;
 	private JButton btnAccelerate;
+	private JLabel lblValGlobalMoney;
 	
 	private static JLabel clockLab;
 	private GameScreen instance = this;
+	
+	private Money money = new Money();
 	
 	public Image img;
 	private JPanel districtPanel;
@@ -167,7 +171,7 @@ public class GameScreen extends JFrame implements Runnable{
 				history.setSize(300,450);
 				history.setTitle("Historique");
 				history.setLocationRelativeTo(null);
-				history.getContentPane().add(new JScrollPane(new JTextArea("HISTORIQUE ICI")));
+				history.getContentPane().add(new JScrollPane(new JTextArea(game.getHistoricText())));
 				history.setVisible(true);
 				btnHistoric.setEnabled(false);
 				history.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -190,7 +194,7 @@ public class GameScreen extends JFrame implements Runnable{
 		lblCityPop.setBounds(140, 30, 58, 20);
 		infoVillePanel.add(lblCityPop);
 		
-		JLabel lblValGlobalMoney = new JLabel("inser money");
+		lblValGlobalMoney = new JLabel(""+money.getMoney());
 		lblValGlobalMoney.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		lblValGlobalMoney.setBounds(138, 86, 60, 20);
 		infoVillePanel.add(lblValGlobalMoney);
@@ -249,6 +253,7 @@ public class GameScreen extends JFrame implements Runnable{
 			public void actionPerformed(ActionEvent e) {
 				if (myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()]== null){
 					myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()] = new Residential();
+					money.withDraw(myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getCost());
 					districtPanel.setVisible(false);
                 	subwayPanel.setVisible(true);
 				}
@@ -264,6 +269,7 @@ public class GameScreen extends JFrame implements Runnable{
 			public void actionPerformed(ActionEvent e) {
 				if (myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()]== null){
 					myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()] = new Commercial();
+					money.withDraw(myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getCost());
 					districtPanel.setVisible(false);
                 	subwayPanel.setVisible(true);
 				}
@@ -280,6 +286,7 @@ public class GameScreen extends JFrame implements Runnable{
 			public void actionPerformed(ActionEvent e) {
 				if (myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()]== null){
 					myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()] = new Services();
+					money.withDraw(myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getCost());
 					districtPanel.setVisible(false);
                 	subwayPanel.setVisible(true);
 				}
@@ -407,8 +414,10 @@ public class GameScreen extends JFrame implements Runnable{
 				System.out.println(e.getMessage());
 			}
 			clock.increment();
-			game.launchGameProgress(clock, myGrid);
+			game.launchGameProgress(clock, myGrid, money);
 			clockLab.setText(clock.displayGameTimeInfo());
+			lblValGlobalMoney.setText(""+money.getMoney());
+			
 		}
 	}
 	

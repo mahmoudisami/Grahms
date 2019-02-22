@@ -14,7 +14,7 @@ public class Const {
 	public final static int CONSTRUCTION_COST_LINE = 200; // Cout de construction a definir PAR quartier traverse
 
 	/***********************      COMMERCIAL        ***************************/
-	public final static int GAIN_COM = 300; // Gain par semaine ou par mois a definir
+	public final static int GAIN_COM = 100; // Gain par semaine ou par mois a definir
 	
 	/***********************      RESIDENTIEL        **************************/
 	public final static int GAIN_RES = 100; // Gain par semaine ou par mois a definir
@@ -24,7 +24,7 @@ public class Const {
 	public final static int SATISFACTION_THRESHOLD_HIGH = 90; //Seuil de satisfaction pour évolution
 	
 	/***********************      SERVICES        *****************************/	
-	public final static int MAINTENANCE_COST_SERV = 100; // Cout chaque semaine/mois a definir
-	public final static int GAIN_SERV = 400; // Gain par semaine ou par mois a definir
+	public final static int MAINTENANCE_COST_SERV = 300; // Cout chaque semaine/mois a definir
+	public final static int GAIN_SERV = 100; // Gain par semaine ou par mois a definir
 	public final static int COST_SERV = 300; // Cout de construction
 }

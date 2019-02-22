@@ -31,7 +31,7 @@ public class FinancialCalculator {
 		for(int i=0; i<dim; i++) {
 			for(int j=0; j<dim; j++) {
 				if(grid[i][j] != null) {
-					weeklyDistrictCost += grid[i][j].getCost();
+					weeklyDistrictCost += grid[i][j].getMaintenanceCost();
 				}
 			}
 		}
