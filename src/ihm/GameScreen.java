@@ -47,7 +47,7 @@ public class GameScreen extends JFrame implements Runnable{
 
 	private JPanel contentPane;
 	public Grid myGrid = null;
-	private static Clock clock;
+	private static Clock clock = new Clock();
 	private JButton btnResDistrict;
 	private JButton btnComDistrict;
 	private JButton btnServDistrict;
@@ -66,7 +66,7 @@ public class GameScreen extends JFrame implements Runnable{
 	private JPanel districtPanel;
 	private JPanel subwayPanel;
 	
-	private GameProgress game = new GameProgress();
+	private GameProgress game = new GameProgress(clock, money);
 	
 	private long speed = 30;
 	 
@@ -353,8 +353,6 @@ public class GameScreen extends JFrame implements Runnable{
 		contentPane.add(myGrid);
 		myGrid.setLayout(null);
 		
-		clock = new Clock();
-		
 		JPanel datePanel = new JPanel();
 		datePanel.setBounds(10, 620, 610, 40);
 		contentPane.add(datePanel);
@@ -414,7 +412,7 @@ public class GameScreen extends JFrame implements Runnable{
 				System.out.println(e.getMessage());
 			}
 			clock.increment();
-			game.launchGameProgress(clock, myGrid, money);
+			game.launchGameProgress(myGrid);
 			clockLab.setText(clock.displayGameTimeInfo());
 			lblValGlobalMoney.setText(""+money.getMoney());
 			

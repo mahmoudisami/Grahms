@@ -6,13 +6,18 @@ import moteur.*;
 
 public class GameProgress {
 	
-	// private long speed = 1000; � mettre dans gameScreen
 	private static Clock clock;
+	private static Money money;
 	private static FinancialCalculator fin = new FinancialCalculator();
 	private static int tmpMoney;
 	private static String historicText ="";
 	
-	public void launchGameProgress (Clock clock, Grid grid, Money money) {
+	public GameProgress(Clock clock, Money money) {
+		this.clock = clock;
+		this.money = money;
+	}
+	
+	public void launchGameProgress (Grid grid) {
 		if(clock.getDayPos()==7 && clock.getHour().equals("23")) { //exemple
 			tmpMoney = fin.districtCalculatorCost(grid.getMapTab(), grid.getMapTab().length);
 			money.withDraw(tmpMoney);
