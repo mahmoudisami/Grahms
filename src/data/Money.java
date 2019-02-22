@@ -17,6 +17,9 @@ public class Money {
 	public void withDraw(int loss) {
 		money -= loss;
 	}
-	
+
+	public int getMoney() {
+		return money;
+	}	
 	
 }
