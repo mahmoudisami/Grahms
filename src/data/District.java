@@ -3,7 +3,6 @@ package data;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javafx.geometry.Side;
 
 public class District {
 
@@ -14,12 +13,14 @@ public class District {
 	private int satisfaction;
 	private ArrayList<Line> line;
 	protected boolean isStation;
+	private ArrayList<AccessibleDistrict> accessibleDistrictList = new ArrayList<>();
 
 	public District(int gain,int cost) {
 		this.gain = gain;
 		this.cost = cost;
 		satisfaction = 50;
 		isStation = false;
+		accessibleDistrictList.clear();
 	}
 	
 	public boolean createStation() {
@@ -95,6 +96,19 @@ public class District {
     public void setFirstDistrict(District dist) {}
 	
 	public void setSecondDistrict(District dist) {}
+	
+	public void addAccessibleDistrict(District dist, int distance) {
+		AccessibleDistrict aDistrict = new AccessibleDistrict(dist, distance);
+		accessibleDistrictList.add(aDistrict);
+	}
+	
+	public void removeAccessibleDistrict(AccessibleDistrict aDist) {
+		accessibleDistrictList.remove(aDist);
+	}
+	
+	public ArrayList<AccessibleDistrict> getAccessibleDistrict() {
+		return accessibleDistrictList;
+	}
 	
 
 }

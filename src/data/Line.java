@@ -2,19 +2,26 @@ package data;
 
 public class Line {
 
-
 	private Station firstStation;
 	private Station secondStation;
-	private int visitedDistrict;
+	private int distance;
 	
-	
-	
-	public void setFirstDistrict(District dist) {
-		firstStation = dist.getStation();
+	public Line(Station s1, Station s2, int distance) {
+		firstStation = s1;
+		secondStation = s2;
+		this.distance = distance;
 	}
 	
-	public void setSecondDistrict(District dist) {
-		secondStation = dist.getStation();
+	public int getDistance() {
+		return distance;
+	}
+
+	public Station getFirstStation() {
+		return firstStation;
+	}
+
+	public Station getSecondStation() {
+		return secondStation;
 	}
 	
 }
