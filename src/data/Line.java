@@ -2,13 +2,13 @@ package data;
 
 public class Line {
 
-	private Station firstStation;
-	private Station secondStation;
+	private District firstDistrict;
+	private District secondDistrict;
 	private int distance;
 	
-	public Line(Station s1, Station s2, int distance) {
-		firstStation = s1;
-		secondStation = s2;
+	public Line(District d1, District d2, int distance) {
+		firstDistrict = d1;
+		secondDistrict = d2;
 		this.distance = distance;
 	}
 	
@@ -16,12 +16,19 @@ public class Line {
 		return distance;
 	}
 
-	public Station getFirstStation() {
-		return firstStation;
+	public District getFirstDistrict() {
+		return firstDistrict;
 	}
 
-	public Station getSecondStation() {
-		return secondStation;
+	public District getSecondDistrict() {
+		return secondDistrict;
 	}
 	
+	public Station getFirstStation() {
+		return firstDistrict.getStation();
+	}
+	
+	public Station getSecondStation() {
+		return secondDistrict.getStation();
+	}
 }

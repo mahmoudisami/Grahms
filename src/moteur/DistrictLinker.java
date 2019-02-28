@@ -14,11 +14,10 @@ public class DistrictLinker {
 	public DistrictLinker() {
 	}
 	
-	public void linkDistrict(District d1, District d2, int distance) {
-		Station s1, s2;
-		s1 = d1.getStation();
-		s2 = d2.getStation();
-		Line line = new Line(s1,s2,distance);
+	public void linkDistrict(Line line) {
+		int distance = line.getDistance();
+		District d1 = line.getFirstDistrict();
+		District d2 = line.getSecondDistrict();
 		addAD(d1,d2,distance);
 		addAD(d2,d1,distance);
 	}
