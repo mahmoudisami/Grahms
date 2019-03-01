@@ -47,6 +47,7 @@ public class Grid extends JPanel{
                 caseX = getCase(x, gridSize); // Retourne la case cliquee en X
                 caseY = getCase(y, gridSize); // Retourne la case cliquee en Y
                 System.out.println(caseX+","+caseY); // Affichage
+                neighbourCalculator(caseX,caseY);
                 if(grid[caseX][caseY]== null){
                 	subwayPanel.setVisible(false);
                 	infoDistrictPanel.setVisible(false);
@@ -89,7 +90,57 @@ public class Grid extends JPanel{
         int position = (int) Math.floor(coordinate / divider);
         return position;
     }
-	
+	public void neighbourCalculator(int a, int b) {
+		int calNbRes = 0;
+		int calNbServ = 0;
+		int calNbShop = 0;
+		int calNbStation = 0;
+		int i = a;
+		int j = b;
+			//for(int i=0; i<nbrLine; i++) {
+				//for(int j=0; j<nbrRow; j++) {
+					if(grid[i][j] != null) {
+						for(int k= i-1;k<=i+1;k++) {
+							if(k>=0 && k<=gridSize && j-1>=0 && j-1<gridSize ) {
+								if((grid[k][j-1] != null && grid[k][j-1].isResidential())) {
+									calNbRes++;
+								}
+								if((grid[k][j-1] != null && grid[k][j-1].isStation())) {
+									calNbStation++;
+								}
+							}
+						}
+						for(int l= i-1;l<=i+1;l++) {
+							if(l>=0 && l<=gridSize && j>=0 && j<gridSize ) {
+								if(grid[l][j] != null && grid[l][j] != grid[a][b] && grid[l][j].isResidential()) {
+									calNbRes++;
+								}
+								if(grid[l][j] != null && grid[l][j] != grid[a][b] && grid[l][j].isStation()) {
+									calNbStation++;
+								}
+							}
+						}
+						for(int m= i-1;m<= i+1;m++) {
+							if(m>=0 && m<=gridSize && j+1>=0 && j+1<gridSize ) {
+								if(grid[m][j+1] != null && grid[m][j+1].isResidential()) {
+									calNbRes++;
+								}
+								if(grid[m][j+1] != null && grid[m][j+1].isStation()) {
+									calNbStation++;
+								}
+							}
+						}
+						System.out.println("grid["+i+"]["+j+"] got "+calNbRes+" residential neighborhood(s) nearby");
+						System.out.println("grid["+i+"]["+j+"] got "+calNbStation+" station(s) nearby");
+						
+						if(grid[i][j].isStation()) {
+							System.out.println("grid["+i+"]["+j+"] got his own station ");
+						}
+					}
+					
+				}
+			//}
+		//}
 	public void setGridscreen(JPanel contentPane){
 		myGridScreen = contentPane;
 	}

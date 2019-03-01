@@ -67,6 +67,7 @@ public class GameProgress {
 	}
 	
 	
+	
 	public void historicCalculator() {
 		tmpMoney = fin.districtCalculatorCost(grid.getMapTab());
 		money.withDraw(tmpMoney);
