@@ -381,15 +381,6 @@ public class GameScreen extends JFrame implements Runnable{
 		datePanel.setBounds(10, 620, 878, 40);
 		contentPane.add(datePanel);
 		datePanel.setLayout(null);
-		clockLab = new JLabel(clock.displayGameTimeInfo());
-		clockLab.setBounds(10, 11, 442, 17);
-		datePanel.add(clockLab);
-		clockLab.setFont(fontDate);
-		
-		JLabel lblDate = new JLabel("");
-		lblDate.setFont(fontDate);
-		lblDate.setBounds(10, 11, 442, 17);
-		datePanel.add(lblDate);
 		
 		JLabel label_1 = new JLabel("Speed :");
 		label_1.setFont(fontDate);
@@ -422,6 +413,30 @@ public class GameScreen extends JFrame implements Runnable{
 		btnSlowDown.setFont(fontDate);
 		btnSlowDown.setBounds(748, 11, 94, 22);
 		datePanel.add(btnSlowDown);
+		
+		JLabel lblDay = new JLabel("Months");
+		lblDay.setBounds(147, 13, 46, 17);
+		datePanel.add(lblDay);
+		
+		JLabel lblYears = new JLabel("Years");
+		lblYears.setBounds(203, 14, 46, 14);
+		datePanel.add(lblYears);
+		
+		JLabel lblHour = new JLabel("16:00");
+		lblHour.setBounds(10, 14, 46, 14);
+		datePanel.add(lblHour);
+		
+		JLabel lblDayofweek = new JLabel("DayOfWeek");
+		lblDayofweek.setBounds(66, 14, 69, 14);
+		datePanel.add(lblDayofweek);
+		
+		JLabel lblDaysgone = new JLabel("DaysGone : 0");
+		lblDaysgone.setBounds(259, 14, 94, 14);
+		datePanel.add(lblDaysgone);
+		clockLab = new JLabel(clock.displayGameTimeInfo());
+		clockLab.setBounds(239, 11, 442, 17);
+		datePanel.add(clockLab);
+		clockLab.setFont(fontDate);
 		
 		Thread windowThread = new Thread(instance);
 		windowThread.start();
