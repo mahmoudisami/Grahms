@@ -56,8 +56,12 @@ public class GameScreen extends JFrame implements Runnable{
 	private JButton btnSlowDown;
 	private JButton btnAccelerate;
 	private JLabel lblValGlobalMoney;
-	
-	private static JLabel clockLab;
+	private JLabel lblDay;
+	private JLabel lblYears;
+	private JLabel lblHour;
+	private JLabel lblDayofWeek;
+	private JLabel lblDaysgone;
+	private JLabel lblDayNumber;
 	private GameScreen instance = this;
 	
 	private Money money = new Money();
@@ -414,29 +418,29 @@ public class GameScreen extends JFrame implements Runnable{
 		btnSlowDown.setBounds(748, 11, 94, 22);
 		datePanel.add(btnSlowDown);
 		
-		JLabel lblDay = new JLabel("Months");
-		lblDay.setBounds(147, 13, 46, 17);
+		lblDay = new JLabel("of "+clock.getMonthName());
+		lblDay.setBounds(143, 13, 88, 17);
 		datePanel.add(lblDay);
 		
-		JLabel lblYears = new JLabel("Years");
-		lblYears.setBounds(203, 14, 46, 14);
+		lblYears = new JLabel(""+clock.getYear());
+		lblYears.setBounds(205, 14, 46, 14);
 		datePanel.add(lblYears);
 		
-		JLabel lblHour = new JLabel("16:00");
+		lblHour = new JLabel(clock.displayTime());
 		lblHour.setBounds(10, 14, 46, 14);
 		datePanel.add(lblHour);
 		
-		JLabel lblDayofweek = new JLabel("DayOfWeek");
-		lblDayofweek.setBounds(66, 14, 69, 14);
-		datePanel.add(lblDayofweek);
+		lblDayofWeek = new JLabel(clock.getDayName());
+		lblDayofWeek.setBounds(58, 14, 46, 14);
+		datePanel.add(lblDayofWeek);
 		
-		JLabel lblDaysgone = new JLabel("DaysGone : 0");
-		lblDaysgone.setBounds(259, 14, 94, 14);
+		lblDaysgone = new JLabel("Days Gone : "+clock.getDayCpt());
+		lblDaysgone.setBounds(241, 14, 94, 14);
 		datePanel.add(lblDaysgone);
-		clockLab = new JLabel(clock.displayGameTimeInfo());
-		clockLab.setBounds(239, 11, 442, 17);
-		datePanel.add(clockLab);
-		clockLab.setFont(fontDate);
+		
+		lblDayNumber = new JLabel(clock.getDay());
+		lblDayNumber.setBounds(114, 14, 46, 14);
+		datePanel.add(lblDayNumber);
 		
 		Thread windowThread = new Thread(instance);
 		windowThread.start();
@@ -452,7 +456,12 @@ public class GameScreen extends JFrame implements Runnable{
 			}
 			clock.increment();
 			game.launchGameProgress();
-			clockLab.setText(clock.displayGameTimeInfo());
+			lblDay.setText("of "+clock.getMonthName());
+			lblYears.setText(""+clock.getYear());
+			lblHour.setText(clock.displayTime());
+			lblDayofWeek.setText(clock.getDayName());
+			lblDaysgone.setText("Days Gone : "+clock.getDayCpt());
+			lblDayNumber.setText(clock.getDay());
 			lblValGlobalMoney.setText(""+money.getMoney());
 			
 		}

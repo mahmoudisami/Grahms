@@ -253,7 +253,7 @@ public class Clock  {		//creation of the clock
 	}
 	
 	public String displayTime() {
-		return "HOUR : " + getHour() + ":" + getMinute();
+		return  getHour() + ":" + getMinute();
 	}
 	
 	public String displayGetDaygone() {
