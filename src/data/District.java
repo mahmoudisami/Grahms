@@ -11,7 +11,7 @@ public class District {
 	private int cost;
 	protected int actualPeople;
 	private int satisfaction;
-	private ArrayList<Line> line;
+	private ArrayList<Line> line = new ArrayList<>();
 	protected boolean isStation;
 	private ArrayList<AccessibleDistrict> accessibleDistrictList = new ArrayList<>();
 
@@ -99,7 +99,17 @@ public class District {
 	
 	public void addAccessibleDistrict(District dist, int distance) {
 		AccessibleDistrict aDistrict = new AccessibleDistrict(dist, distance);
+		Line newLine = new Line(this,dist,distance, false);
+		addLine(newLine);
 		accessibleDistrictList.add(aDistrict);
+	}
+	
+	public void addLine(Line newLine) {
+		line.add(newLine);
+	}
+	
+	public ArrayList<Line> getLines(){
+		return line;
 	}
 	
 	public void removeAccessibleDistrict(AccessibleDistrict aDist) {

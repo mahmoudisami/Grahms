@@ -21,8 +21,8 @@ public class DistrictLinker {
 		System.out.println("----"+ d1 +"  " + d2+"----");
 		addAD(d1,d2,distance);
 		addAD(d2,d1,distance);
-		refreshAD(d1,d2, distance);
 		refreshAD(d2,d1, distance);
+		refreshAD(d1,d2, distance);
 	}
 	
 	public void addAD(District dist1, District dist2,int distance) {
@@ -53,29 +53,42 @@ public class DistrictLinker {
 	public void refreshAD(District dist1, District dist2, int distance) {
 		ArrayList<AccessibleDistrict> aDistrict1 = dist1.getAccessibleDistrict();
 		ArrayList<AccessibleDistrict> newAccessible;
-		District addDistrict;
+		District addNewDistrict;
 		int newDistance;
 		int size = aDistrict1.size();
 		int sizeNA;
 		for(int index = 0; index<size; index++) {
-			System.out.println("<--->");
-			//isAccesible = false;
-			addDistrict = aDistrict1.get(index).getDistrict();
-			newAccessible = addDistrict.getAccessibleDistrict();
+			addNewDistrict = aDistrict1.get(index).getDistrict();
+			newAccessible = addNewDistrict.getAccessibleDistrict();
 			sizeNA = newAccessible.size();
 			for(int j=0; j<sizeNA;j++) {
-				if((newAccessible.get(j).getDistrict() != dist2) && (newAccessible.get(j).getDistrict() != dist1) && (addDistrict != dist2)) {
-					System.out.println("newAccessible "+ newAccessible.get(j).getDistrict() + " et dist 1 = " + dist1 + " et dist2 = "+dist2 );
+				if((newAccessible.get(j).getDistrict() != dist2) && (newAccessible.get(j).getDistrict() != dist1) && (addNewDistrict != dist2)) {
 					if(!containsDistrict(newAccessible, dist2)) {
-						System.out.println("add");
-						newDistance = distance + 10;
-						addDistrict.addAccessibleDistrict(dist2, newDistance);
+						System.out.println("\n----" + dist2 );
+						newDistance = distance + correspondingLineDistance(dist1.getLines(), dist1, addNewDistrict);
+						addNewDistrict.addAccessibleDistrict(dist2, newDistance);
 					}
 				}
 			}
 		}
 	}
 	
+	public int correspondingLineDistance(ArrayList<Line> line, District d1, District d2) {
+		System.out.println("d1 : " + d1 +" d2 : " + d2);
+		int minDist = 99;
+		for(int index = 0; index < line.size(); index ++) { 
+			District fd = line.get(index).getFirstDistrict();
+			District sd = line.get(index).getSecondDistrict();
+			System.out.println("fd : " + fd +" sd : " + sd);
+			if((fd == d1 && sd == d2) || (fd == d2 && sd == d1)) {
+				if(minDist>line.get(index).getDistance()) {
+					minDist = line.get(index).getDistance();
+					System.out.println(" New Distance min = "+ line.get(index).getDistance());
+				}
+			}
+		}
+		return minDist;
+	}
 	
 	public boolean containsDistrict(ArrayList<AccessibleDistrict> aDistrict, District d) {
 		for(int i=0; i<aDistrict.size();i++) {
