@@ -97,7 +97,7 @@ public class Grid extends JPanel{
 		int calNbStation = 0;
 		int i = a;
 		int j = b;
-			//for(int i=0; i<nbrLine; i++) {
+			//for(int i=0; i<nbrLine; i++) { 
 				//for(int j=0; j<nbrRow; j++) {
 					if(grid[i][j] != null) {
 						for(int k= i-1;k<=i+1;k++) {
