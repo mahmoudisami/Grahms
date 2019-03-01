@@ -105,7 +105,7 @@ public class Grid extends JPanel{
 								if((grid[k][j-1] != null && grid[k][j-1].isResidential())) {
 									calNbRes++;
 								}
-								if((grid[k][j-1] != null && grid[k][j-1].isStation())) {
+								if((grid[k][j-1] != null && grid[k][j-1].isStation() && grid[k][j-1].isResidential())) {
 									calNbStation++;
 								}
 							}
@@ -115,7 +115,7 @@ public class Grid extends JPanel{
 								if(grid[l][j] != null && grid[l][j] != grid[a][b] && grid[l][j].isResidential()) {
 									calNbRes++;
 								}
-								if(grid[l][j] != null && grid[l][j] != grid[a][b] && grid[l][j].isStation()) {
+								if(grid[l][j] != null && grid[l][j] != grid[a][b] && grid[l][j].isStation() && grid[l][j].isResidential()) {
 									calNbStation++;
 								}
 							}
@@ -125,7 +125,7 @@ public class Grid extends JPanel{
 								if(grid[m][j+1] != null && grid[m][j+1].isResidential()) {
 									calNbRes++;
 								}
-								if(grid[m][j+1] != null && grid[m][j+1].isStation()) {
+								if(grid[m][j+1] != null && grid[m][j+1].isStation() && grid[m][j+1].isResidential()) {
 									calNbStation++;
 								}
 							}
