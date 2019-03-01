@@ -14,8 +14,12 @@ import data.District;
 public class Grid extends JPanel{
 	
 	public JPanel myGridScreen;
-	int gridSize = 8;
-	District[][] grid = new District[gridSize][gridSize];
+	int width = 18;
+	int height = 12;
+	int sizeScreenX = 900;
+	int sizeScreenY = 600;
+	
+	District[][] grid = new District[width][height];
 	public Image img;
 	int caseX, caseY, caseWidth;
 	private JPanel districtPanel;
@@ -34,18 +38,18 @@ public class Grid extends JPanel{
 			e.printStackTrace();
 		}
 		
-		for(int lig=0;lig<gridSize;lig++){
-			for(int col=0;col<gridSize;col++){
+		for(int lig=0;lig<width;lig++){
+			for(int col=0;col<height;col++){
 				grid[lig][col] = null;
 			}
 		}
-		setBounds(10, 10, 610, 610);
+		setBounds(10, 10, 900, 600);
 		addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e) {
 				int x=e.getX();
                 int y=e.getY();
-                caseX = getCase(x, gridSize); // Retourne la case cliquee en X
-                caseY = getCase(y, gridSize); // Retourne la case cliquee en Y
+                caseX = getCaseX(x, width); // Retourne la case cliquee en X
+                caseY = getCaseY(y, height); // Retourne la case cliquee en Y
                 System.out.println(caseX+","+caseY); // Affichage
                 neighbourCalculator(caseX,caseY);
                 if(grid[caseX][caseY]== null){
@@ -64,30 +68,36 @@ public class Grid extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.setColor(Color.black);
-		caseWidth = getWidth()/gridSize;
-		
+		caseWidth = getHeight()/height;
+	/*	
 		//Dessin des lignes de la grille
-		for(int i=0; i<gridSize+1; i++){
+		for(int i=0; i<width+1; i++){
 			g.drawLine(caseWidth*i, 0, caseWidth*i, getHeight());
 			g.drawLine(0, caseWidth*i, getWidth(), caseWidth*i);
 		}
-		
+		*/
 		//Affichage des images de terrain nu sur les cases vides
-		int size = 610/gridSize;
-		for(int x=0; x<gridSize; x++){
-			for(int y=0; y<gridSize; y++){
+		int sizeX = sizeScreenX/width;
+		int sizeY = sizeScreenY/height;
+		for(int x=0; x<width; x++){
+			for(int y=0; y<height; y++){
 				if (grid[x][y] == null) {
-					g.drawImage(img, 1+(caseWidth*x), 1+(caseWidth*y), size-1, size-1, this);
-				} else {
-					g.drawImage(grid[x][y].getImg(), 1+(caseWidth*x), 1+(caseWidth*y), size-1, size-1, this);
+					g.drawImage(img, 1+(caseWidth*x), 1+(caseWidth*y), sizeX-1, sizeY-1, this);
+				}else {
+					g.drawImage(grid[x][y].getImg(), 1+(caseWidth*x), 1+(caseWidth*y), sizeX-1, sizeY-1, this);
 				}
 			}
 		}
 	}
 	
-	public int getCase(int coordinate, int numberOfSquare) {
-        int divider = 610 / numberOfSquare;
-        int position = (int) Math.floor(coordinate / divider);
+	public int getCaseX(int coordinateX, int numberOfSquare) {
+        int divider = sizeScreenX / numberOfSquare;
+        int position = (int) Math.floor(coordinateX / divider);
+        return position;
+    }
+	public int getCaseY(int coordinateY, int numberOfSquare) {
+        int divider = sizeScreenY / numberOfSquare;
+        int position = (int) Math.floor(coordinateY / divider);
         return position;
     }
 	public void neighbourCalculator(int a, int b) {
@@ -101,7 +111,7 @@ public class Grid extends JPanel{
 				//for(int j=0; j<nbrRow; j++) {
 					if(grid[i][j] != null) {
 						for(int k= i-1;k<=i+1;k++) {
-							if(k>=0 && k<=gridSize && j-1>=0 && j-1<gridSize ) {
+							if(k>=0 && k<=width && j-1>=0 && j-1<height ) {
 								if((grid[k][j-1] != null && grid[k][j-1].isResidential())) {
 									calNbRes++;
 								}
@@ -111,7 +121,7 @@ public class Grid extends JPanel{
 							}
 						}
 						for(int l= i-1;l<=i+1;l++) {
-							if(l>=0 && l<=gridSize && j>=0 && j<gridSize ) {
+							if(l>=0 && l<=width && j>=0 && j<height ) {
 								if(grid[l][j] != null && grid[l][j] != grid[a][b] && grid[l][j].isResidential()) {
 									calNbRes++;
 								}
@@ -121,7 +131,7 @@ public class Grid extends JPanel{
 							}
 						}
 						for(int m= i-1;m<= i+1;m++) {
-							if(m>=0 && m<=gridSize && j+1>=0 && j+1<gridSize ) {
+							if(m>=0 && m<=width && j+1>=0 && j+1<height ) {
 								if(grid[m][j+1] != null && grid[m][j+1].isResidential()) {
 									calNbRes++;
 								}
