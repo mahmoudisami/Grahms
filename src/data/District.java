@@ -55,8 +55,8 @@ public class District {
 		return actualPeople;
 	}
 	
-	public void setActualPeople(int newActualPeople) {
-		actualPeople = newActualPeople;
+	public void changeActualPeople(int newActualPeople) {
+		actualPeople += newActualPeople;
 	}
 	
 	public void addPeople(int newPopulation) {
@@ -72,6 +72,14 @@ public class District {
 	}
 	
 	public boolean isResidential() {
+		return false;
+	}
+	
+	public boolean isCommercial() {
+		return false;
+	}
+	
+	public boolean isService() {
 		return false;
 	}
 	

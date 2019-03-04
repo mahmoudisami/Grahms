@@ -1,8 +1,10 @@
 package moteur;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import data.*;
 import ihm.*;
-import moteur.*;
 
 public class GameProgress {
 	
@@ -40,12 +42,25 @@ public class GameProgress {
 		for(int i=0; i<nbrLine; i++) {
 			for(int j=0; j<nbrRow; j++) {
 				if(map[i][j] != null && map[i][j].isResidential()) {
-					map[i][j].setActualPeople(0); // Partent au travail
-					/*
-					 * Attente du tps de trajet
-					 * Ajout d'actualPeople Commercial & résid
-					 * 
-					 */
+					ArrayList<AccessibleDistrict> aDistrict = map[i][j].getAccessibleDistrict();
+					Iterator<AccessibleDistrict> ite = aDistrict.iterator();
+					AccessibleDistrict visitedDistrict;
+					while(ite.hasNext()) {
+						visitedDistrict = ite.next();
+						if(visitedDistrict.getDistrict().isCommercial()) {
+							/* on envoie x habitants travailler
+							 * Calcul du temps de trajet par rapport à la distance
+							 * On ajoute les nouveaux travailleurs au quartier concerné
+							 */
+						}
+						else if(visitedDistrict.getDistrict().isService()){
+							/* on envoie x habitants travailler
+							 * Calcul du temps de trajet par rapport à la distance
+							 * On ajoute les nouveaux travailleurs au quartier concerné
+							 */
+						}
+						
+					}
 				}
 			}
 		}
@@ -55,7 +70,7 @@ public class GameProgress {
 		for(int i=0; i<nbrLine; i++) {
 			for(int j=0; j<nbrRow; j++) {
 				if(map[i][j] != null && !map[i][j].isResidential()) {
-					map[i][j].setActualPeople(0); // Partent du travail
+					map[i][j].changeActualPeople(0); // Partent du travail
 					/*
 					 * Attente du tps de trajet
 					 * Ajout ajout des travailleurs dans le quartier résid

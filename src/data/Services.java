@@ -39,4 +39,8 @@ public class Services extends District{
 	public int getMaintenanceCost() {
 		return Const.MAINTENANCE_COST_SERV;
 	}
+	
+	public boolean isService() {
+		return true;
+	}
 }

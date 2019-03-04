@@ -38,5 +38,8 @@ public class Commercial extends District{
 		size++;
 	}
 	
+	public boolean isCommercial() {
+		return true;
+	}
 	
 }

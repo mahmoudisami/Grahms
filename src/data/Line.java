@@ -1,5 +1,7 @@
 package data;
 
+import moteur.DistrictLinker;
+
 public class Line {
 
 	private District firstDistrict;
