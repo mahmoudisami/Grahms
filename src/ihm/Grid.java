@@ -38,8 +38,8 @@ public class Grid extends JPanel{
 			e.printStackTrace();
 		}
 		
-		for(int lig=0;lig<width;lig++){
-			for(int col=0;col<height;col++){
+		for(int lig=0;lig<width-10;lig++){
+			for(int col=0;col<height-10;col++){
 				grid[lig][col] = null;
 			}
 		}
@@ -48,18 +48,23 @@ public class Grid extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				int x=e.getX();
                 int y=e.getY();
-                caseX = getCaseX(x, width); // Retourne la case cliquee en X
-                caseY = getCaseY(y, height); // Retourne la case cliquee en Y
-                System.out.println(caseX+","+caseY); // Affichage
-                neighbourCalculator(caseX,caseY);
-                if(grid[caseX][caseY]== null){
-                	subwayPanel.setVisible(false);
-                	infoDistrictPanel.setVisible(false);
-                	districtPanel.setVisible(true);
-                }else{
-                	districtPanel.setVisible(false);
-                	subwayPanel.setVisible(true);
-                	infoDistrictPanel.setVisible(true);
+                // Verify that the coordinates clicked are on map
+                if(x < sizeScreenX && y < sizeScreenY ) {
+                	
+	                caseX = getCaseX(x, width); // Return the X of clicked case
+	                caseY = getCaseY(y, height); // Return the Y of clicked case
+	                System.out.println(caseX+","+caseY); // Affichage
+	                neighbourCalculator(caseX,caseY);
+	                if(grid[caseX][caseY]== null){
+	                	subwayPanel.setVisible(false);
+	                	infoDistrictPanel.setVisible(false);
+	                	districtPanel.setVisible(true);
+	                }else{
+	                	districtPanel.setVisible(false);
+	                	subwayPanel.setVisible(true);
+	                	infoDistrictPanel.setVisible(true);
+	                }
+	                
                 }
 			}
 		});
@@ -69,13 +74,13 @@ public class Grid extends JPanel{
 		super.paintComponent(g);
 		g.setColor(Color.black);
 		caseWidth = getHeight()/height;
-	/*	
+	
 		//Dessin des lignes de la grille
 		for(int i=0; i<width+1; i++){
-			g.drawLine(caseWidth*i, 0, caseWidth*i, getHeight());
-			g.drawLine(0, caseWidth*i, getWidth(), caseWidth*i);
+			g.drawLine(caseWidth*i, 0, caseWidth*i, sizeScreenY);
+			g.drawLine(0, caseWidth*i, sizeScreenX, caseWidth*i);
 		}
-		*/
+	
 		//Affichage des images de terrain nu sur les cases vides
 		int sizeX = sizeScreenX/width;
 		int sizeY = sizeScreenY/height;
