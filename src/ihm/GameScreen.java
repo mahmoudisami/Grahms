@@ -105,47 +105,9 @@ public class GameScreen extends JFrame implements Runnable{
 		Font fontTitle = new Font("TimesRoman", Font.PLAIN, 18);
 		Font fontInfo = new Font("Yu Gothic UI Semibold", Font.PLAIN, 15);
 		Font fontDate = new Font("Tahoma", Font.PLAIN, 14);
-//		try {
-//			img = ImageIO.read(new File("src/image/land.jpg"));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		gamePanel = new JPanel(){
-//			public void paintComponent(Graphics g){
-//				super.paintComponent(g);
-//				g.setColor(Color.black);
-//				int uniteX = getWidth()/5;
-//				int uniteY = getHeight()/5;
-//				//Dessin de la grille.
-//				for(int i=0; i<6; i++){
-//					g.drawLine(uniteX*i, 0, uniteX*i, getHeight());
-//					g.drawLine(0, uniteY*i, getWidth(), uniteY*i);
-//				}
-//				//Affichage des images de terrain nu sur les cases vides.
-//				for(int x=0; x<5; x++){
-//					for(int y=0; y<5; y++){
-//						g.drawImage(img, 1+(122*x), 1+(122*y), 120, 120, this);
-//					}
-//				}
-//			}
-//		};
-//		gamePanel.setBounds(10, 10, 610, 610);
-//		contentPane.add(gamePanel);
-//		gamePanel.addMouseListener(new MouseAdapter() {
-//            public void mouseClicked(java.awt.event.MouseEvent e) {
-//                int x=e.getX();
-//                int y=e.getY();
-//                //System.out.println(x+","+y); // Coordonnees cliquees
-//                int caseX = getCase(x, 5); // Retourne la case cliquee en X
-//                int caseY = getCase(y, 5); // Retourne la case cliquee en Y
-//                System.out.println(caseX+","+caseY); // Affichage
-//                districtPanel.setVisible(true);
-//            }
-//        });
 		
 		JPanel infoVillePanel = new JPanel();
-		infoVillePanel.setBounds(974, 10, 208, 208);
+		infoVillePanel.setBounds(922, 10, 260, 208);
 		contentPane.add(infoVillePanel);
 		infoVillePanel.setLayout(null);
 		
@@ -155,9 +117,9 @@ public class GameScreen extends JFrame implements Runnable{
 		lblCity.setBounds(10, 0, 188, 25);
 		infoVillePanel.add(lblCity);
 		
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setBounds(10, 117, 188, 14);
-		infoVillePanel.add(progressBar);
+		JProgressBar bar_SatisfactionCity = new JProgressBar();
+		bar_SatisfactionCity.setBounds(112, 104, 138, 20);
+		infoVillePanel.add(bar_SatisfactionCity);
 		
 		JLabel lblTotalPopulation = new JLabel("Total Population :");
 		lblTotalPopulation.setBounds(10, 30, 126, 20);
@@ -189,34 +151,34 @@ public class GameScreen extends JFrame implements Runnable{
 		infoVillePanel.add(btnHistoric);
 		
 		JLabel lblGlobalMoney = new JLabel("Global Money :");
-		lblGlobalMoney.setBounds(10, 59, 109, 20);
+		lblGlobalMoney.setBounds(10, 65, 109, 20);
 		lblGlobalMoney.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		infoVillePanel.add(lblGlobalMoney);
 		
 		
-		JLabel lblCityPop = new JLabel("inser POP");
+		JLabel lblCityPop = new JLabel("20");
 		lblCityPop.setFont(fontInfo);
-		lblCityPop.setBounds(140, 30, 58, 20);
+		lblCityPop.setBounds(150, 30, 100, 20);
 		infoVillePanel.add(lblCityPop);
 		
 		lblValGlobalMoney = new JLabel(""+money.getMoney());
 		lblValGlobalMoney.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
-		lblValGlobalMoney.setBounds(117, 59, 81, 20);
+		lblValGlobalMoney.setBounds(134, 65, 90, 20);
 		infoVillePanel.add(lblValGlobalMoney);
 		
 		JLabel lblHistoric = new JLabel("Historic :");
 		lblHistoric.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
-		lblHistoric.setBounds(10, 177, 70, 20);
+		lblHistoric.setBounds(10, 159, 70, 20);
 		infoVillePanel.add(lblHistoric);
 		
 		JLabel lblSatisfaction = new JLabel("Satisfaction :");
 		lblSatisfaction.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
-		lblSatisfaction.setBounds(10, 86, 117, 20);
+		lblSatisfaction.setBounds(10, 104, 90, 20);
 		infoVillePanel.add(lblSatisfaction);
 		
 		// Informations of City
 		JPanel infoDistrictPanel = new JPanel();
-		infoDistrictPanel.setBounds(976, 229, 206, 127);
+		infoDistrictPanel.setBounds(922, 229, 260, 127);
 		contentPane.add(infoDistrictPanel);
 		infoDistrictPanel.setLayout(null);
 		infoDistrictPanel.setVisible(false);
@@ -233,13 +195,9 @@ public class GameScreen extends JFrame implements Runnable{
 		infoDistrictPanel.add(lblPopulation);
 		
 		JLabel lblDistrictSatisfaction = new JLabel("Satisfaction :");
-		lblDistrictSatisfaction.setBounds(10, 69, 117, 20);
+		lblDistrictSatisfaction.setBounds(10, 83, 117, 20);
 		lblDistrictSatisfaction.setFont(fontInfo);
 		infoDistrictPanel.add(lblDistrictSatisfaction);
-		
-		JProgressBar progressBar_1 = new JProgressBar();
-		progressBar_1.setBounds(10, 100, 186, 14);
-		infoDistrictPanel.add(progressBar_1);
 		
 		JLabel lblValDistrictPop = new JLabel("inser POP");
 		lblValDistrictPop.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
@@ -248,12 +206,12 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		// This Pane is visible when case without District is clicked
 		districtPanel = new JPanel();
-		districtPanel.setBounds(976, 373, 206, 192);
+		districtPanel.setBounds(922, 373, 260, 192);
 		contentPane.add(districtPanel);
 		districtPanel.setLayout(null);
 		
 		btnResDistrict = new JButton("Residential District");
-		btnResDistrict.setBounds(10, 11, 186, 50);
+		btnResDistrict.setBounds(34, 11, 186, 50);
 		btnResDistrict.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -270,7 +228,7 @@ public class GameScreen extends JFrame implements Runnable{
 		districtPanel.add(btnResDistrict);
 		
 		btnComDistrict = new JButton("Commercial District");
-		btnComDistrict.setBounds(10, 72, 186, 50);
+		btnComDistrict.setBounds(34, 72, 186, 50);
 		btnComDistrict.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -288,7 +246,7 @@ public class GameScreen extends JFrame implements Runnable{
 		districtPanel.add(btnComDistrict);
 		
 		btnServDistrict = new JButton("Services District");
-		btnServDistrict.setBounds(10, 133, 186, 50);
+		btnServDistrict.setBounds(34, 133, 186, 50);
 		btnServDistrict.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -308,12 +266,12 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		// This Pane is visible when a District is clicked
 		subwayPanel = new JPanel();
-		subwayPanel.setBounds(976, 367, 208, 263);
+		subwayPanel.setBounds(922, 367, 262, 263);
 		contentPane.add(subwayPanel);
 		subwayPanel.setLayout(null);
 		
 		btnAddStation = new JButton("Add Station");
-		btnAddStation.setBounds(10, 11, 188, 52);
+		btnAddStation.setBounds(34, 11, 188, 52);
 		btnAddStation.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -325,15 +283,15 @@ public class GameScreen extends JFrame implements Runnable{
 		subwayPanel.add(btnAddStation);
 		
 		btnAddLine = new JButton("Add Line");
-		btnAddLine.setBounds(10, 74, 188, 52);
+		btnAddLine.setBounds(34, 74, 188, 52);
 		subwayPanel.add(btnAddLine);
 		
 		JButton btnUpgradeDistrict = new JButton("<html>Upgrade<br>\r\n&nbsp;Station<html>");
-		btnUpgradeDistrict.setBounds(10, 137, 188, 52);
+		btnUpgradeDistrict.setBounds(34, 137, 188, 52);
 		subwayPanel.add(btnUpgradeDistrict);
 		
 		JButton destroyButton = new JButton("Destroy");
-		destroyButton.setBounds(10, 200, 188, 52);
+		destroyButton.setBounds(34, 200, 188, 52);
 		destroyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {	
@@ -374,7 +332,11 @@ public class GameScreen extends JFrame implements Runnable{
 		infoDistrictPanel.setVisible(false);
 		
 		myGrid = new Grid(districtPanel, subwayPanel, infoDistrictPanel);
-		myGrid.setBounds(10, 10, 954, 610);
+		
+		JProgressBar bar_SatisfactionDistrict = new JProgressBar();
+		bar_SatisfactionDistrict.setBounds(113, 83, 138, 20);
+		infoDistrictPanel.add(bar_SatisfactionDistrict);
+		myGrid.setBounds(10, 10, 902, 602);
 		myGrid.setGridscreen(contentPane);
 		contentPane.add(myGrid);
 		myGrid.setLayout(null);
@@ -388,7 +350,7 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		JLabel label_1 = new JLabel("Speed :");
 		label_1.setFont(fontDate);
-		label_1.setBounds(691, 11, 54, 17);
+		label_1.setBounds(691, 10, 54, 19);
 		datePanel.add(label_1);
 		
 		// Speed Buttons
@@ -402,7 +364,7 @@ public class GameScreen extends JFrame implements Runnable{
 			}
 		});
 		btnAccelerate.setFont(fontDate);
-		btnAccelerate.setBounds(748, 11, 94, 22);
+		btnAccelerate.setBounds(748, 8, 94, 22);
 		datePanel.add(btnAccelerate);
 		
 		btnSlowDown = new JButton("<<  x1");
@@ -415,31 +377,37 @@ public class GameScreen extends JFrame implements Runnable{
 			}
 		});
 		btnSlowDown.setFont(fontDate);
-		btnSlowDown.setBounds(748, 11, 94, 22);
+		btnSlowDown.setBounds(748, 8, 94, 22);
 		datePanel.add(btnSlowDown);
 		
 		lblDay = new JLabel("of "+clock.getMonthName());
-		lblDay.setBounds(143, 13, 88, 17);
+		lblDay.setFont(fontDate);
+		lblDay.setBounds(198, 10, 74, 19);
 		datePanel.add(lblDay);
 		
 		lblYears = new JLabel(""+clock.getYear());
-		lblYears.setBounds(205, 14, 46, 14);
+		lblYears.setFont(fontDate);
+		lblYears.setBounds(282, 10, 46, 19);
 		datePanel.add(lblYears);
 		
 		lblHour = new JLabel(clock.displayTime());
-		lblHour.setBounds(10, 14, 46, 14);
+		lblHour.setFont(fontDate);
+		lblHour.setBounds(10, 10, 46, 19);
 		datePanel.add(lblHour);
 		
 		lblDayofWeek = new JLabel(clock.getDayName());
-		lblDayofWeek.setBounds(58, 14, 46, 14);
+		lblDayofWeek.setFont(fontDate);
+		lblDayofWeek.setBounds(58, 10, 74, 19);
 		datePanel.add(lblDayofWeek);
 		
 		lblDaysgone = new JLabel("Days Gone : "+clock.getDayCpt());
-		lblDaysgone.setBounds(241, 14, 94, 14);
+		lblDaysgone.setFont(fontDate);
+		lblDaysgone.setBounds(338, 10, 94, 19);
 		datePanel.add(lblDaysgone);
 		
 		lblDayNumber = new JLabel(clock.getDay());
-		lblDayNumber.setBounds(114, 14, 46, 14);
+		lblDayNumber.setFont(fontDate);
+		lblDayNumber.setBounds(142, 10, 46, 19);
 		datePanel.add(lblDayNumber);
 		
 		Thread windowThread = new Thread(instance);
