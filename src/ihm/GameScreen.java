@@ -73,7 +73,7 @@ public class GameScreen extends JFrame implements Runnable{
 	
 	private GameProgress game;
 	
-	private long speed = 30;
+	private long speed = 300;
 	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -127,9 +127,9 @@ public class GameScreen extends JFrame implements Runnable{
 		infoVillePanel.add(lblTotalPopulation);
 		
 		JButton btnHistoric = new JButton();
+		btnHistoric.setBackground(Color.WHITE);
 		btnHistoric.setIcon(new ImageIcon(GameScreen.class.getResource("/image/Diary.png")));
 		btnHistoric.setBounds(102, 146, 51, 51);
-		btnHistoric.setBackground(Color.WHITE);
 		
 		btnHistoric.addActionListener(new ActionListener() {
 			@Override
@@ -344,7 +344,7 @@ public class GameScreen extends JFrame implements Runnable{
 		game = new GameProgress(clock, money, myGrid);
 		
 		JPanel datePanel = new JPanel();
-		datePanel.setBounds(10, 620, 878, 40);
+		datePanel.setBounds(10, 620, 902, 40);
 		contentPane.add(datePanel);
 		datePanel.setLayout(null);
 		
@@ -358,26 +358,26 @@ public class GameScreen extends JFrame implements Runnable{
 		btnAccelerate = new JButton(">> x10");
 		btnAccelerate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				speed = 3;
+				speed = 30;
 				btnSlowDown.setVisible(true);
 				btnAccelerate.setVisible(false);
 			}
 		});
 		btnAccelerate.setFont(fontDate);
-		btnAccelerate.setBounds(748, 8, 94, 22);
+		btnAccelerate.setBounds(748, 8, 94, 24);
 		datePanel.add(btnAccelerate);
 		
 		btnSlowDown = new JButton("<<  x1");
 		btnSlowDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				speed = 30;
+				speed = 300;
 				btnAccelerate.setVisible(true);
 				btnSlowDown.setVisible(false);
 				
 			}
 		});
 		btnSlowDown.setFont(fontDate);
-		btnSlowDown.setBounds(748, 8, 94, 22);
+		btnSlowDown.setBounds(748, 8, 94, 24);
 		datePanel.add(btnSlowDown);
 		
 		lblDay = new JLabel("of "+clock.getMonthName());
@@ -402,7 +402,7 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		lblDaysgone = new JLabel("Days Gone : "+clock.getDayCpt());
 		lblDaysgone.setFont(fontDate);
-		lblDaysgone.setBounds(338, 10, 94, 19);
+		lblDaysgone.setBounds(338, 10, 128, 19);
 		datePanel.add(lblDaysgone);
 		
 		lblDayNumber = new JLabel(clock.getDay());
