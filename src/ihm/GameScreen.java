@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -284,6 +285,16 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		btnAddLine = new JButton("Add Line");
 		btnAddLine.setBounds(34, 74, 188, 52);
+		btnAddLine.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				addMouseListener(new MouseAdapter(){
+					public void mouseClicked(MouseEvent e) {
+						
+					}
+				});
+			}
+		});
 		subwayPanel.add(btnAddLine);
 		
 		JButton btnUpgradeDistrict = new JButton("<html>Upgrade<br>\r\n&nbsp;Station<html>");
