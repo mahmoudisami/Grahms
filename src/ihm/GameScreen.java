@@ -289,8 +289,9 @@ public class GameScreen extends JFrame implements Runnable{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				addMouseListener(new MouseAdapter(){
-					
-					
+					public void mousePressed(MouseEvent e) {
+					//a faire voir discord
+					}	
 				});
 			}
 		});
