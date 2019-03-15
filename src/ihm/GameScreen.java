@@ -289,9 +289,8 @@ public class GameScreen extends JFrame implements Runnable{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				addMouseListener(new MouseAdapter(){
-					public void mouseClicked(MouseEvent e) {
-						
-					}
+					
+					
 				});
 			}
 		});
