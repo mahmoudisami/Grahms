@@ -39,7 +39,7 @@ public class TestCalculator {
 		System.out.println("------------------------------------------");
 		District dist = grid[2][2];
 		for(int i = 0; i<dist.getAccessibleDistrict().size();i++) {
-			System.out.println(dist.getAccessibleDistrict().get(i).getDistrict().toString() + "  " + dist.getAccessibleDistrict().get(i).getDistance());	
+			//System.out.println(dist.getAccessibleDistrict().get(i).getDistrict().toString() + "  " + dist.getAccessibleDistrict().get(i).getDistance());	
 		}
 		
 	}

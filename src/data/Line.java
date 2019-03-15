@@ -1,5 +1,6 @@
 package data;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import moteur.DistrictLinker;
@@ -11,6 +12,7 @@ public class Line {
 	private int distance;
 	private boolean isVisible;
 	private ArrayList<Coordinates> coo = new ArrayList<Coordinates>();
+	private Color color;
 	
 	public Line(District d1, District d2, int distance, boolean isVisible, ArrayList<Coordinates> coo) {
 		firstDistrict = d1;
@@ -20,6 +22,7 @@ public class Line {
 		this.coo = coo;
 		d1.addLine(this);
 		d2.addLine(this);
+		color = new Color((float)Math.random(), (float)Math.random(), (float)Math.random());
 	}
 	
 	public int getDistance() {
@@ -48,5 +51,8 @@ public class Line {
 	
 	public ArrayList<Coordinates> getVisitedCoordonates(){
 		return coo;
+	}
+	public Color getColor() {
+		return color;
 	}
 }
