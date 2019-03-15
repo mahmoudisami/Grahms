@@ -74,12 +74,12 @@ public class DistrictLinker {
 	}
 	
 	public int correspondingLineDistance(ArrayList<Line> line, District d1, District d2) {
-		System.out.println("d1 : " + d1 +" d2 : " + d2);
+		//System.out.println("d1 : " + d1 +" d2 : " + d2);
 		int minDist = 99;
 		for(int index = 0; index < line.size(); index ++) { 
 			District fd = line.get(index).getFirstDistrict();
 			District sd = line.get(index).getSecondDistrict();
-			System.out.println("fd : " + fd +" sd : " + sd);
+			//System.out.println("fd : " + fd +" sd : " + sd);
 			if((fd == d1 && sd == d2) || (fd == d2 && sd == d1)) {
 				if(minDist>line.get(index).getDistance()) {
 					minDist = line.get(index).getDistance();

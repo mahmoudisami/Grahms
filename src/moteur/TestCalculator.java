@@ -24,17 +24,17 @@ public class TestCalculator {
 		grid[3][3] = new Residential();
 		grid[4][4] = new Commercial();
 		
-		Line line1 = new Line(grid[0][0],grid[1][0],1,true);
-		Line line2 = new Line(grid[0][0],grid[2][2],3,true);
-		Line line3 = new Line(grid[1][1],grid[2][2],2,true);
-		Line line4 = new Line(grid[2][2],grid[3][3],10,true);
-		Line line5 = new Line(grid[4][4],grid[3][3],1,true);
+		Line line1 = new Line(grid[0][0],grid[1][0],1,true, null);
+		Line line2 = new Line(grid[0][0],grid[2][2],3,true, null);
+		Line line3 = new Line(grid[1][1],grid[2][2],2,true, null);
+		Line line4 = new Line(grid[2][2],grid[3][3],10,true, null);
+		Line line5 = new Line(grid[4][4],grid[3][3],1,true, null);
 		
 		distLink.linkDistrict(line1);
 		distLink.linkDistrict(line2);
 		distLink.linkDistrict(line3);
 		distLink.linkDistrict(line4);
-		distLink.linkDistrict(line5);
+		//distLink.linkDistrict(line5);
 		
 		System.out.println("------------------------------------------");
 		District dist = grid[2][2];
