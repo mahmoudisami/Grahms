@@ -10,7 +10,7 @@ public class Line {
 	private District secondDistrict;
 	private int distance;
 	private boolean isVisible;
-	private ArrayList<Coordinates> coo;
+	private ArrayList<Coordinates> coo = new ArrayList<Coordinates>();
 	
 	public Line(District d1, District d2, int distance, boolean isVisible, ArrayList<Coordinates> coo) {
 		firstDistrict = d1;
@@ -44,5 +44,9 @@ public class Line {
 	
 	public boolean isVisible() {
 		return isVisible;
+	}
+	
+	public ArrayList<Coordinates> getVisitedCoordonates(){
+		return coo;
 	}
 }

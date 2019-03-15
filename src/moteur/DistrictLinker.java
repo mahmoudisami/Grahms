@@ -3,10 +3,7 @@ package moteur;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import data.AccessibleDistrict;
-import data.District;
-import data.Line;
-import data.Station;
+import data.*;
 
 public class DistrictLinker {
 
@@ -97,5 +94,40 @@ public class DistrictLinker {
 			}
 		}
 		return false;
+	}
+	
+	public void stationModification(District[][] dist, ArrayList<Line> lineList, District concernedDistrict) { // Quand une station est crée sur une potentielle ligne
+		Iterator<Line> listIterator = lineList.iterator();
+		ArrayList<Coordinates> currentLineCoordinates = new ArrayList<>();
+		ArrayList<Coordinates> newLineCoordinates = new ArrayList<>();
+		Line currentLine;
+		Coordinates coo;
+		while(listIterator.hasNext()) {
+			currentLine = listIterator.next();
+			currentLineCoordinates = currentLine.getVisitedCoordonates();
+			for(int index = 0; index < currentLineCoordinates.size();index++) {
+				coo = currentLineCoordinates.get(index);
+				if(dist[coo.getX()][coo.getY()] == concernedDistrict) {
+					newLineCoordinates = visitedCoordinates(0, index, currentLine);
+					Line newLine1 = new Line(currentLine.getFirstDistrict(),concernedDistrict,index, true, newLineCoordinates); 
+					newLineCoordinates = visitedCoordinates(index, currentLineCoordinates.size(), currentLine);
+					Line newLine2 = new Line(currentLine.getSecondDistrict(),concernedDistrict,currentLineCoordinates.size() - index, true, newLineCoordinates);
+					lineList.add(newLine1);
+					lineList.add(newLine2);
+					linkDistrict(newLine1);
+					linkDistrict(newLine2);
+					currentLine = null;
+					lineList.remove(currentLine);
+				}
+			}
+		}
+	}
+	
+	public ArrayList<Coordinates> visitedCoordinates(int startIndex,int lastIndex, Line line){
+		ArrayList<Coordinates> visited = new ArrayList<>();
+		for(int index = startIndex; index < lastIndex; index ++) {
+			visited.add(line.getVisitedCoordonates().get(index));
+		}
+		return visited;
 	}
 }
