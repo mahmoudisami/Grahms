@@ -7,21 +7,31 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+
+import data.Coordinates;
 import data.District;
+import data.Line;
 
 public class Grid extends JPanel{
 	
 	public JPanel myGridScreen;
 	int width = 18;
 	int height = 12;
-	int sizeScreenX = 900;
-	int sizeScreenY = 600;
+	public int sizeScreenX = 900;
+	public int sizeScreenY = 600;
+	boolean addLineBool = false;
+	boolean addLineBoolChangedToTrue = false;	//TRUE si on viens de passer AddLineBool de FALSE à TRUE, sinon FALSE
+	ArrayList<Coordinates> lineCoo;
+	ArrayList<Line> allLines = new ArrayList<Line>();
 	
 	District[][] grid = new District[width][height];
 	public Image img;
 	int caseX, caseY, caseWidth;
+	int previousCaseX, previousCaseY;
 	private JPanel districtPanel;
 	private JPanel subwayPanel;
 	private JPanel infoDistrictPanel;
@@ -44,28 +54,85 @@ public class Grid extends JPanel{
 			}
 		}
 		setBounds(10, 10, 900, 600);
-		addMouseListener(new MouseAdapter(){
+		
+		
+		
+		addMouseListener(new MouseAdapter(){	
 			public void mouseClicked(MouseEvent e) {
-				int x=e.getX();
-                int y=e.getY();
-                // Verify that the coordinates clicked are on map
-                if(x < sizeScreenX && y < sizeScreenY ) {
-                	
-	                caseX = getCaseX(x, width); // Return the X of clicked case
-	                caseY = getCaseY(y, height); // Return the Y of clicked case
-	                System.out.println(caseX+","+caseY); // Affichage
-	                neighbourCalculator(caseX,caseY);
-	                if(grid[caseX][caseY]== null){
-	                	subwayPanel.setVisible(false);
-	                	infoDistrictPanel.setVisible(false);
-	                	districtPanel.setVisible(true);
-	                }else{
-	                	districtPanel.setVisible(false);
-	                	subwayPanel.setVisible(true);
-	                	infoDistrictPanel.setVisible(true);
+				boolean crossBool = false;		//False par defaut, True si on click sur une case deja ajoutee dans l'arrayList
+				//MouseEvent Branche classique.
+				if ( getAddLineBool() == false){
+					System.out.println("Branche classique");
+					int x=e.getX();
+	                int y=e.getY();
+	                // Verify that the coordinates clicked are on map
+	                if(x < sizeScreenX && y < sizeScreenY ) {
+	                	
+	                	previousCaseX = caseX;
+	                	previousCaseY = caseY;
+		                caseX = getCaseX(x, width); // Return the X of clicked case
+		                caseY = getCaseY(y, height); // Return the Y of clicked case
+		                System.out.println("Previous: "+previousCaseX+","+previousCaseY);
+		                System.out.println("Current: "+caseX+","+caseY); // Affichage
+		                neighbourCalculator(caseX,caseY);
+		                if(grid[caseX][caseY]== null){
+		                	subwayPanel.setVisible(false);
+		                	infoDistrictPanel.setVisible(false);
+		                	districtPanel.setVisible(true);
+		                }else{
+		                	districtPanel.setVisible(false);
+		                	subwayPanel.setVisible(true);
+		                	infoDistrictPanel.setVisible(true);
+		                }
 	                }
-	                
-                }
+	            // MouseEvent Branche pour la création de ligne.
+	            }else{
+	            	if(addLineBoolChangedToTrue == true){
+	            		lineCoo = new ArrayList<Coordinates>();
+	            		Coordinates coo = new Coordinates(caseX, caseY);
+	            		lineCoo.add(coo);
+	            		setAddLineBoolChangedToTrue(false);
+	            	}
+	            	System.out.println("Branche addLine");
+					int x=e.getX();
+					int y=e.getY();
+					if(x < sizeScreenX && y < sizeScreenY ) {
+						previousCaseX = caseX;
+	                	previousCaseY = caseY;
+		                caseX = getCaseX(x, width); // Return the X of clicked case
+		                caseY = getCaseY(y, height); // Return the Y of clicked case
+		                System.out.println("Previous: "+previousCaseX+","+previousCaseY);
+		                System.out.println("Current: "+caseX+","+caseY); // Affichage
+		                Coordinates coo = new Coordinates(caseX, caseY);
+		                if(caseX != previousCaseX || caseY != previousCaseY){
+		                	for(int i=0;i<lineCoo.size();i++){
+		                		if(lineCoo.get(i).getX() == coo.getX() && lineCoo.get(i).getY() == coo.getY()){
+		                			System.out.println("Cette case a deja ete selectionnee, creation de ligne annulee");
+		                			crossBool = true;
+		                			setAddLineBool(false);
+		                		}
+		                	}
+		                	if(crossBool == false){
+		                		if(((lineCoo.get(lineCoo.size()-1).getX() == caseX-1 || lineCoo.get(lineCoo.size()-1).getX() == caseX+1) && lineCoo.get(lineCoo.size()-1).getY() == caseY) || ((lineCoo.get(lineCoo.size()-1).getY() == caseY-1 || lineCoo.get(lineCoo.size()-1).getY() == caseY+1) && lineCoo.get(lineCoo.size()-1).getX() == caseX)){
+		                			lineCoo.add(coo);
+		                		}else{
+		                			System.out.println("Cette case n'est pas adjacente a la precedente, creation de ligne annulee");
+		                			setAddLineBool(false);
+		                		}
+		                	}
+		                }
+		                
+		                for(int i=0;i<lineCoo.size();i++){
+		                	System.out.println("ArrayList N°"+i+" : "+lineCoo.get(i).getX()+" et "+lineCoo.get(i).getY());
+		                }
+		                if(grid[caseX][caseY] != null && grid[caseX][caseY].isStation() == true && (caseX != previousCaseX || caseY != previousCaseY)){
+		                	setAddLineBool(false);
+		                	System.out.println("Ligne completee avec succes");
+		                	Line lineCompleted = new Line(grid[lineCoo.get(0).getX()][lineCoo.get(0).getY()], grid[lineCoo.get(lineCoo.size()-1).getX()][lineCoo.get(lineCoo.size()-1).getY()], lineCoo.size()-1, true, lineCoo);
+		                	allLines.add(lineCompleted);
+		                }
+					}
+	            }
 			}
 		});
 	}
@@ -166,6 +233,30 @@ public class Grid extends JPanel{
 	
 	public int getCoordsY() {
 		return caseY;
+	}
+	
+	public int getPreviousCoordsX() {
+		return previousCaseX;
+	}
+	
+	public int getPreviousCoordsY() {
+		return previousCaseY;
+	}
+	
+	public boolean getAddLineBool(){
+		return addLineBool;
+	}
+	
+	public void setAddLineBool(boolean newBool){
+		addLineBool = newBool;
+	}
+	
+	public boolean getAddLineBoolChangedToTrue(){
+		return addLineBoolChangedToTrue;
+	}
+	
+	public void setAddLineBoolChangedToTrue(boolean newBool){
+		addLineBoolChangedToTrue = newBool;
 	}
 	
 	public District[][] getMapTab() {

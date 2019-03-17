@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import data.Commercial;
+import data.Coordinates;
 import data.Money;
 import data.Residential;
 import data.Services;
@@ -25,6 +26,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -288,13 +290,12 @@ public class GameScreen extends JFrame implements Runnable{
 		btnAddLine.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				addMouseListener(new MouseAdapter(){
-					public void mousePressed(MouseEvent e) {
-					//a faire voir discord
-					}	
-				});
+				myGrid.setAddLineBool(true);
+				myGrid.setAddLineBoolChangedToTrue(true);
+				System.out.println("AddLine Button clicked");
 			}
 		});
+		
 		subwayPanel.add(btnAddLine);
 		
 		JButton btnUpgradeDistrict = new JButton("<html>Upgrade<br>\r\n&nbsp;Station<html>");
