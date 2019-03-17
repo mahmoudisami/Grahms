@@ -179,48 +179,87 @@ public class Grid extends JPanel{
 		int calNbStation = 0;
 		int i = a;
 		int j = b;
-			//for(int i=0; i<nbrLine; i++) { 
-				//for(int j=0; j<nbrRow; j++) {
-					if(grid[i][j] != null) {
-						for(int k= i-1;k<=i+1;k++) {
-							if(k>=0 && k<=width && j-1>=0 && j-1<height ) {
-								if((grid[k][j-1] != null && grid[k][j-1].isResidential())) {
-									calNbRes++;
-								}
-								if((grid[k][j-1] != null && grid[k][j-1].isStation() && grid[k][j-1].isResidential())) {
-									calNbStation++;
-								}
-							}
-						}
-						for(int l= i-1;l<=i+1;l++) {
-							if(l>=0 && l<=width && j>=0 && j<height ) {
-								if(grid[l][j] != null && grid[l][j] != grid[a][b] && grid[l][j].isResidential()) {
-									calNbRes++;
-								}
-								if(grid[l][j] != null && grid[l][j] != grid[a][b] && grid[l][j].isStation() && grid[l][j].isResidential()) {
-									calNbStation++;
-								}
-							}
-						}
-						for(int m= i-1;m<= i+1;m++) {
-							if(m>=0 && m<=width && j+1>=0 && j+1<height ) {
-								if(grid[m][j+1] != null && grid[m][j+1].isResidential()) {
-									calNbRes++;
-								}
-								if(grid[m][j+1] != null && grid[m][j+1].isStation() && grid[m][j+1].isResidential()) {
-									calNbStation++;
-								}
-							}
-						}
-						System.out.println("grid["+i+"]["+j+"] got "+calNbRes+" residential neighborhood(s) nearby");
-						System.out.println("grid["+i+"]["+j+"] got "+calNbStation+" station(s) nearby");
-						
-						if(grid[i][j].isStation()) {
-							System.out.println("grid["+i+"]["+j+"] got his own station ");
-						}
-					}
-					
+		
+		if((grid[i][j] != null && grid[i][j].isResidential())) {
+			
+			if(i-1 > 0 && j-1 > 0) {
+				if((grid[i-1][j-1] != null && grid[i-1][j-1].isResidential())) {
+					calNbRes++;
 				}
+				if((grid[i-1][j-1] != null && grid[i-1][j-1].isStation() && grid[i-1][j-1].isResidential())) {
+					calNbStation++;
+				}
+			}
+			if ( i+1 < width && j-1 > 0) {
+				if((grid[i+1][j-1] != null && grid[i+1][j-1].isResidential())) {
+					calNbRes++;
+				}
+				if((grid[i+1][j-1] != null && grid[i+1][j-1].isStation() && grid[i+1][j-1].isResidential())) {
+					calNbStation++;
+				}
+			}
+			if(i-1 > 0 && j+1 < height) {
+				if((grid[i-1][j+1] != null && grid[i-1][j+1].isResidential())) {
+					calNbRes++;
+				}
+				if((grid[i-1][j+1] != null && grid[i-1][j+1].isStation() && grid[i-1][j+1].isResidential())) {
+					calNbStation++;
+				}
+			}
+			if( i-1 > 0) {
+				if((grid[i-1][j] != null && grid[i-1][j].isResidential())) {
+					calNbRes++;
+				}
+				if((grid[i-1][j] != null && grid[i-1][j].isStation() && grid[i-1][j].isResidential())) {
+					calNbStation++;
+				}	
+			}
+			if(i+1 < width) {
+				if((grid[i+1][j] != null && grid[i+1][j].isResidential())) {
+					calNbRes++;
+				}
+				if((grid[i+1][j] != null && grid[i+1][j].isStation() && grid[i+1][j].isResidential())) {
+					calNbStation++;
+				}
+			}
+			if( j-1 > 0) {
+				if((grid[i][j-1] != null && grid[i][j-1].isResidential())) {
+					calNbRes++;
+				}
+				if((grid[i][j-1] != null && grid[i][j-1].isStation() && grid[i][j-1].isResidential())) {
+					calNbStation++;
+				}	
+			}
+			if(j+1 < height) {
+				if((grid[i][j+1] != null && grid[i][j+1].isResidential())) {
+					calNbRes++;
+				}
+				if((grid[i][j+1] != null && grid[i][j+1].isStation() && grid[i][j+1].isResidential())) {
+					calNbStation++;
+				}
+			
+			
+			}
+			if(i+1 < width && j+1 < height) {
+				if((grid[i+1][j+1] != null && grid[i+1][j+1].isResidential())) {
+					calNbRes++;
+				}
+				if((grid[i+1][j+1] != null && grid[i+1][j+1].isStation() && grid[i+1][j+1].isResidential())) {
+					calNbStation++;
+				}
+			}
+			System.out.println("\n|///////////////////////////////////////////////////////////////////////|");
+			System.out.println("|\tgrid["+i+"]["+j+"] got "+calNbRes+" residential neighborhood(s) nearby\t\t|");
+			System.out.println("|\t\tgrid["+i+"]["+j+"] got "+calNbStation+" station(s) nearby\t\t\t|");
+				
+			if(grid[a][b] != null && grid[a][b].isStation()) {
+				System.out.println("|\t\tgrid["+i+"]["+j+"] got his own station\t\t\t\t|");
+			}
+			System.out.println("|///////////////////////////////////////////////////////////////////////|");
+		}
+				//-----------------------------------------------------------------//
+					
+	}
 			//}
 		//}
 	public void setGridscreen(JPanel contentPane){
