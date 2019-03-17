@@ -115,22 +115,23 @@ public class Grid extends JPanel{
 		                	if(crossBool == false){
 		                		if(((lineCoo.get(lineCoo.size()-1).getX() == caseX-1 || lineCoo.get(lineCoo.size()-1).getX() == caseX+1) && lineCoo.get(lineCoo.size()-1).getY() == caseY) || ((lineCoo.get(lineCoo.size()-1).getY() == caseY-1 || lineCoo.get(lineCoo.size()-1).getY() == caseY+1) && lineCoo.get(lineCoo.size()-1).getX() == caseX)){
 		                			lineCoo.add(coo);
+		                			for(int i=0;i<lineCoo.size();i++){
+		    		                	System.out.println("ArrayList N°"+i+" : "+lineCoo.get(i).getX()+" et "+lineCoo.get(i).getY());
+		    		                }
+		                			if(grid[caseX][caseY] != null && grid[caseX][caseY].isStation() == true && (caseX != previousCaseX || caseY != previousCaseY)){
+		                				setAddLineBool(false);
+		                				System.out.println("Ligne completee avec succes");
+		                				Line lineCompleted = new Line(grid[lineCoo.get(0).getX()][lineCoo.get(0).getY()], grid[lineCoo.get(lineCoo.size()-1).getX()][lineCoo.get(lineCoo.size()-1).getY()], lineCoo.size()-1, true, lineCoo);
+		                				allLines.add(lineCompleted);
+		                			}
 		                		}else{
 		                			System.out.println("Cette case n'est pas adjacente a la precedente, creation de ligne annulee");
 		                			setAddLineBool(false);
 		                		}
+		                		
 		                	}
 		                }
 		                
-		                for(int i=0;i<lineCoo.size();i++){
-		                	System.out.println("ArrayList N°"+i+" : "+lineCoo.get(i).getX()+" et "+lineCoo.get(i).getY());
-		                }
-		                if(grid[caseX][caseY] != null && grid[caseX][caseY].isStation() == true && (caseX != previousCaseX || caseY != previousCaseY)){
-		                	setAddLineBool(false);
-		                	System.out.println("Ligne completee avec succes");
-		                	Line lineCompleted = new Line(grid[lineCoo.get(0).getX()][lineCoo.get(0).getY()], grid[lineCoo.get(lineCoo.size()-1).getX()][lineCoo.get(lineCoo.size()-1).getY()], lineCoo.size()-1, true, lineCoo);
-		                	allLines.add(lineCompleted);
-		                }
 					}
 	            }
 			}
