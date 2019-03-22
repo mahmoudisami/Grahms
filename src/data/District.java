@@ -21,6 +21,7 @@ public class District {
 		satisfaction = 50;
 		isStation = false;
 		accessibleDistrictList.clear();
+		actualPeople = 50;
 	}
 	
 	public boolean createStation() {
