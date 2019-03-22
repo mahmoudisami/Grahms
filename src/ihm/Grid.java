@@ -123,6 +123,7 @@ public class Grid extends JPanel{
 		                				System.out.println("Ligne completee avec succes");
 		                				Line lineCompleted = new Line(grid[lineCoo.get(0).getX()][lineCoo.get(0).getY()], grid[lineCoo.get(lineCoo.size()-1).getX()][lineCoo.get(lineCoo.size()-1).getY()], lineCoo.size()-1, true, lineCoo);
 		                				allLines.add(lineCompleted);
+		                				repaint();
 		                			}
 		                		}else{
 		                			System.out.println("Cette case n'est pas adjacente a la precedente, creation de ligne annulee");
@@ -142,13 +143,13 @@ public class Grid extends JPanel{
 		super.paintComponent(g);
 		g.setColor(Color.black);
 		caseWidth = getHeight()/height;
-	
+		
 		//Dessin des lignes de la grille
 		for(int i=0; i<width+1; i++){
 			g.drawLine(caseWidth*i, 0, caseWidth*i, sizeScreenY);
 			g.drawLine(0, caseWidth*i, sizeScreenX, caseWidth*i);
 		}
-	
+		
 		//Affichage des images de terrain nu sur les cases vides
 		int sizeX = sizeScreenX/width;
 		int sizeY = sizeScreenY/height;
@@ -161,8 +162,32 @@ public class Grid extends JPanel{
 				}
 			}
 		}
+		drawSubwayLine(g, caseWidth);
 	}
 	
+	public void drawSubwayLine(Graphics g, int caseWidth){
+		int xPixel, yPixel, xNextPixel, yNextPixel;
+		ArrayList<Coordinates> lineCoords;
+		String Orientation;
+		Color color;
+		for(int i=0; i<allLines.size();i++) {
+			lineCoords = allLines.get(i).getVisitedCoordonates();
+			color = allLines.get(i).getColor();
+			for(int j = 0; j < lineCoords.size()-1; j++) {
+				
+			
+				xPixel = (lineCoords.get(j).getX()+1 )*(caseWidth) - (caseWidth/2);
+				yPixel = (lineCoords.get(j).getY()+1 )*(caseWidth) - (caseWidth/2);
+				xNextPixel = (lineCoords.get(j+1).getX()+1 )*(caseWidth) - (caseWidth/2);
+				yNextPixel = (lineCoords.get(j+1).getY()+1 )*(caseWidth) - (caseWidth/2);
+					System.out.println("Coordonnée pixel case :"+xPixel +" / "+ yPixel);
+					g.setColor(color);
+					g.drawLine(xPixel,yPixel, xNextPixel, yNextPixel);
+			}
+			
+		}
+		g.setColor(Color.black);
+	}
 	public int getCaseX(int coordinateX, int numberOfSquare) {
         int divider = sizeScreenX / numberOfSquare;
         int position = (int) Math.floor(coordinateX / divider);
