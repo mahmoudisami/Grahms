@@ -70,13 +70,13 @@ public class Grid extends JPanel{
 	                int y=e.getY();
 	                // Verify that the coordinates clicked are on map
 	                if(x < sizeScreenX && y < sizeScreenY ) {
-	                	
 	                	previousCaseX = caseX;
 	                	previousCaseY = caseY;
 		                caseX = getCaseX(x, width); // Return the X of clicked case
 		                caseY = getCaseY(y, height); // Return the Y of clicked case
 		                System.out.println("Previous: "+previousCaseX+","+previousCaseY);
 		                System.out.println("Current: "+caseX+","+caseY); // Affichage
+		                drawCaseSelected(caseX,caseX);
 		                neighbourCalculator(caseX,caseY);
 		                if(grid[caseX][caseY]== null){
 		                	subwayPanel.setVisible(false);
@@ -142,7 +142,8 @@ public class Grid extends JPanel{
 			}
 		});
 	}
-	
+	public void drawCaseSelected(int caseX, int caseY) {
+	}
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.setColor(Color.black);
