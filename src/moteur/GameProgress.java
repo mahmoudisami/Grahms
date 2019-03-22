@@ -1,6 +1,7 @@
 package moteur;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import data.*;
@@ -16,6 +17,10 @@ public class GameProgress {
 	private Grid grid;
 	private District[][] map;
 	private int nbrLine, nbrRow;
+	private HashMap<Integer, Integer> commercialWorker = new HashMap<>();
+	private HashMap<Integer, Integer> serviceWorker = new HashMap<>();
+	private HashMap<District, HashMap<Integer, Integer>> commercialWorkerByDistrict = new HashMap<>();
+	private HashMap<District, HashMap<Integer, Integer>> serviceWorkerByDistrict = new HashMap<>();
 	
 	public GameProgress(Clock clock, Money money, Grid grid) {
 		this.clock = clock;
@@ -33,6 +38,15 @@ public class GameProgress {
 		if(clock.getHour().equals("07") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
 			goWork();
 		}
+		if(clock.getHour().equals("08") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
+			arriveWork(0);
+		}
+		if(clock.getHour().equals("09") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
+			arriveWork(1);
+		}
+		if(clock.getHour().equals("10") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
+			arriveWork(2);
+		}
 		if(clock.getHour().equals("16") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
 			goHome();
 		}
@@ -42,25 +56,8 @@ public class GameProgress {
 		for(int i=0; i<nbrLine; i++) {
 			for(int j=0; j<nbrRow; j++) {
 				if(map[i][j] != null && map[i][j].isResidential()) {
-					ArrayList<AccessibleDistrict> aDistrict = map[i][j].getAccessibleDistrict();
-					Iterator<AccessibleDistrict> ite = aDistrict.iterator();
-					AccessibleDistrict visitedDistrict;
-					while(ite.hasNext()) {
-						visitedDistrict = ite.next();
-						if(visitedDistrict.getDistrict().isCommercial()) {
-							/* on envoie x habitants travailler
-							 * Calcul du temps de trajet par rapport à la distance
-							 * On ajoute les nouveaux travailleurs au quartier concerné
-							 */
-						}
-						else if(visitedDistrict.getDistrict().isService()){
-							/* on envoie x habitants travailler
-							 * Calcul du temps de trajet par rapport à la distance
-							 * On ajoute les nouveaux travailleurs au quartier concerné
-							 */
-						}
-						
-					}
+					System.out.println("Send to work");
+					sendToWork(map[i][j]);
 				}
 			}
 		}
@@ -73,7 +70,7 @@ public class GameProgress {
 					map[i][j].changeActualPeople(0); // Partent du travail
 					/*
 					 * Attente du tps de trajet
-					 * Ajout ajout des travailleurs dans le quartier résid
+					 * Ajout ajout des travailleurs dans le quartier rï¿½sid
 					 * 
 					 */
 				}
@@ -81,7 +78,78 @@ public class GameProgress {
 		}
 	}
 	
+	public void sendToWork(District dist) {
+		int commercial = (int) (dist.getActualPeople()*0.66);
+		int service = dist.getActualPeople()-commercial;
+		int remain;
+		int index;
+		for(index = 0; index < 3; index ++) { //Numero du train, 1 par heure
+			if(commercial >= 500) { // 500 Ã©tant la limite par train
+				commercial -= 500;
+				System.out.println("500 Parti du commercial");
+				commercialWorker.put(index, 500);
+			}else if(commercial > 0) {
+				commercialWorker.put(index, commercial);
+				System.out.println(commercial + " Parti au commercial");
+				commercial = 0;
+			}
+			else {
+				commercialWorker.put(index, 0); 
+			}
+			if(service >= 500) {
+				service -= 500;
+				serviceWorker.put(index, 500);
+			}else if(service > 0) {
+				serviceWorker.put(index, service);
+				System.out.println(service + " Parti au Service");
+				service = 0;
+			}
+			else {
+				serviceWorker.put(index, 0); 
+			}
+		}
+		commercialWorkerByDistrict.put(dist, commercialWorker); // On lie aux quartiers les dÃ©placements
+		serviceWorkerByDistrict.put(dist, serviceWorker); 
+		remain = commercial + service; // habitants restants
+		if(remain > 0) {
+			/*
+			 * Gerer la satisfaction par rapport au nombre restant d'habitants
+			 */
+		}
+	}
 	
+	public void arriveWork(int trainNumber) {
+		System.out.println("DÃ©part num " + trainNumber +"------");
+		boolean isDoneComm = false;
+		boolean isDoneServ = false;
+		District cWorkingDistrict;
+		District sWorkingDistrict;
+		for(int i=0; i<nbrLine; i++) {
+			for(int j=0; j<nbrRow; j++) {
+				if(map[i][j] != null && map[i][j].isResidential()) {
+					ArrayList<AccessibleDistrict> aDistrict = map[i][j].getAccessibleDistrict();
+					AccessibleDistrict visitedDistrict;
+					System.out.println(map[i][j]);
+					for(int index = 0; index < aDistrict.size(); index ++) {
+						visitedDistrict = aDistrict.get(index); 
+						//System.out.println(visitedDistrict.getDistrict());
+						if(!isDoneComm && visitedDistrict.getDistrict().isCommercial()) { // Quartier commercial ou ils vont travailler
+							cWorkingDistrict = visitedDistrict.getDistrict();				
+							cWorkingDistrict.addPeople(commercialWorkerByDistrict.get(map[i][j]).get(trainNumber));
+							isDoneComm = true;
+							System.out.println("Bien arrivÃ© au comm " + commercialWorkerByDistrict.get(map[i][j]).get(trainNumber));
+						}
+						if(!isDoneServ && visitedDistrict.getDistrict().isService()) { // Quartier commercial ou ils vont travailler
+							sWorkingDistrict = visitedDistrict.getDistrict();				
+							sWorkingDistrict.addPeople(serviceWorkerByDistrict.get(map[i][j]).get(trainNumber));
+							isDoneServ = true;
+							System.out.println("Bien arrivÃ© au serv");
+						}
+					}
+				}
+			}
+		}
+	}
 	
 	public void historicCalculator() {
 		tmpMoney = fin.districtCalculatorCost(grid.getMapTab());
