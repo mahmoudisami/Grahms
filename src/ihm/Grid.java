@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import data.Coordinates;
 import data.District;
 import data.Line;
+import moteur.DistrictLinker;
 
 public class Grid extends JPanel{
 	
@@ -23,6 +24,8 @@ public class Grid extends JPanel{
 	int height = 12;
 	public int sizeScreenX = 900;
 	public int sizeScreenY = 600;
+	
+	private DistrictLinker districtLinker = new DistrictLinker();
 	boolean addLineBool = false;
 	boolean addLineBoolChangedToTrue = false;	//TRUE si on viens de passer AddLineBool de FALSE à TRUE, sinon FALSE
 	ArrayList<Coordinates> lineCoo;
@@ -122,6 +125,7 @@ public class Grid extends JPanel{
 		                				setAddLineBool(false);
 		                				System.out.println("Ligne completee avec succes");
 		                				Line lineCompleted = new Line(grid[lineCoo.get(0).getX()][lineCoo.get(0).getY()], grid[lineCoo.get(lineCoo.size()-1).getX()][lineCoo.get(lineCoo.size()-1).getY()], lineCoo.size()-1, true, lineCoo);
+		                				districtLinker.linkDistrict(lineCompleted);
 		                				allLines.add(lineCompleted);
 		                				repaint();
 		                			}
