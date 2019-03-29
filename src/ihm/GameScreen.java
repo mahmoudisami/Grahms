@@ -327,12 +327,14 @@ public class GameScreen extends JFrame implements Runnable{
 				if (nom == null || (nom != null && ("".equals(nom)))){
 				}
 				else if (nom.equals("District")) {
+					myGrid.destroyLines(myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()], myGrid);
 					myGrid.setMapTab(myGrid.getCoordsX(),myGrid.getCoordsY(),null);
 					subwayPanel.setVisible(false);
 					infoDistrictPanel.setVisible(false);
 					districtPanel.setVisible(true);
 					myGrid.repaint();
 				} else if (nom.equals("Station")) {
+					myGrid.destroyLines(myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()], myGrid);
 					myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()].deleteStation();
 					myGrid.repaint();
 				}

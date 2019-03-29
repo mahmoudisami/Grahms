@@ -292,6 +292,20 @@ public class Grid extends JPanel{
 	}
 			//}
 		//}
+	public void destroyLines(District clickedDistrict,Grid myGrid){
+		int i = 0;
+		while(i < myGrid.getAllLines().size()) {
+			if (clickedDistrict == myGrid.getAllLines().get(i).getFirstDistrict()){
+				myGrid.getAllLines().remove(i);
+			}
+			else if (clickedDistrict == myGrid.getAllLines().get(i).getSecondDistrict()){
+				myGrid.getAllLines().remove(i);
+			} else {
+				i++;
+			}
+		}
+	}
+	
 	public void setGridscreen(JPanel contentPane){
 		myGridScreen = contentPane;
 	}
@@ -314,6 +328,10 @@ public class Grid extends JPanel{
 	
 	public boolean getAddLineBool(){
 		return addLineBool;
+	}
+	
+	public ArrayList<Line> getAllLines(){
+		return allLines;
 	}
 	
 	public void setAddLineBool(boolean newBool){
