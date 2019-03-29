@@ -187,6 +187,14 @@ public class Grid extends JPanel{
 					System.out.println("Coordonnee pixel case : "+xPixel +" / "+ yPixel);
 					g.setColor(color);
 					g.drawLine(xPixel,yPixel, xNextPixel, yNextPixel);
+					g.drawLine(xPixel+1,yPixel, xNextPixel+1, yNextPixel);
+                    g.drawLine(xPixel-1,yPixel, xNextPixel-1, yNextPixel);
+                    g.drawLine(xPixel,yPixel+1, xNextPixel, yNextPixel+1);
+                    g.drawLine(xPixel,yPixel-1, xNextPixel, yNextPixel-1);
+                    g.drawLine(xPixel+2,yPixel, xNextPixel+2, yNextPixel);
+                    g.drawLine(xPixel-2,yPixel, xNextPixel-2, yNextPixel);
+                    g.drawLine(xPixel,yPixel+2, xNextPixel, yNextPixel+2);
+                    g.drawLine(xPixel,yPixel-2, xNextPixel, yNextPixel-2);
 			}
 			
 		}
