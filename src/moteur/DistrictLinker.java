@@ -24,7 +24,7 @@ public class DistrictLinker {
 	
 	public void addAD(District dist1, District dist2,int distance) {
 		dist1.addAccessibleDistrict(dist2, distance);
-		//System.out.println("Ajout de "+ dist2 +" dans " + dist1);
+		System.out.println("Ajout de "+ dist2 +" dans " + dist1);
 		ArrayList<AccessibleDistrict> aDistrict1 = dist1.getAccessibleDistrict();
 		ArrayList<AccessibleDistrict> aDistrict2 = dist2.getAccessibleDistrict();
 		Boolean isAccessible;

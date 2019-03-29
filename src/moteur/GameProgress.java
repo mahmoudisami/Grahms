@@ -90,7 +90,7 @@ public class GameProgress {
 							sWorkingDistrict = visitedDistrict.getDistrict();				
 							sWorkingDistrict.setPeople(0);
 							isDoneServ = true;
-							System.out.println("Bien parti du service");
+							System.out.println(sWorkingDistrict.getActualPeople() + "Bien parti du service");
 						}
 					}
 				}
@@ -119,6 +119,11 @@ public class GameProgress {
 				}
 			}
 		}
+		else {
+			for(index = 0; index < 3; index ++) {
+				commercialWorker.put(index, 0);
+			}
+		}
 		if(canWorkServ(dist)) {
 			for(index = 0; index < 3; index ++) {
 				if(service >= 500) {
@@ -132,6 +137,11 @@ public class GameProgress {
 				else {
 					serviceWorker.put(index, 0); 
 				}
+			}
+		}
+		else {
+			for(index = 0; index < 3; index ++) {
+				serviceWorker.put(index, 0);
 			}
 		}
 		commercialWorkerByDistrict.put(dist, commercialWorker); // On lie aux quartiers les déplacements
@@ -176,7 +186,6 @@ public class GameProgress {
 				if(map[i][j] != null && map[i][j].isResidential()) {
 					ArrayList<AccessibleDistrict> aDistrict = map[i][j].getAccessibleDistrict();
 					AccessibleDistrict visitedDistrict;
-					System.out.println(map[i][j]);
 					for(int index = 0; index < aDistrict.size(); index ++) {
 						visitedDistrict = aDistrict.get(index); 
 						//System.out.println(visitedDistrict.getDistrict());
