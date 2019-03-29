@@ -72,6 +72,11 @@ public class District {
 		return satisfaction;
 	}
 	
+	public void setSatisfaction(int num) {
+		if(satisfaction <= 100) {
+			satisfaction = satisfaction + num;
+		}
+	}
 	public boolean isResidential() {
 		return false;
 	}

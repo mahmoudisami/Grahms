@@ -21,6 +21,8 @@ public class GameProgress {
 	private HashMap<Integer, Integer> serviceWorker = new HashMap<>();
 	private HashMap<District, HashMap<Integer, Integer>> commercialWorkerByDistrict = new HashMap<>();
 	private HashMap<District, HashMap<Integer, Integer>> serviceWorkerByDistrict = new HashMap<>();
+	int width = 18;
+	int height = 12;
 	
 	public GameProgress(Clock clock, Money money, Grid grid) {
 		this.clock = clock;
@@ -49,6 +51,9 @@ public class GameProgress {
 		}
 		if(clock.getHour().equals("16") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
 			goHome();
+		}
+		if(clock.getDayPos()==1 && clock.getHour().equals("1")) { //Call the function every Monday at 1am
+			happinessCalculator();
 		}
 	}
 	
@@ -163,6 +168,117 @@ public class GameProgress {
 		money.withDraw(tmpMoney);
 		historicText += "-" + tmpMoney + " Entretien des stations \n";
 	}
+	
+	public void happinessCalculator() {
+		for(int i=0; i<nbrLine; i++) {
+			for(int j=0; j<nbrRow; j++) {
+				if(map[i][j] != null && map[i][j].isResidential()) {
+					neighbourCalculator(i,j);
+				}
+			}
+		}
+	}
+	
+	public void neighbourCalculator(int a, int b) {
+		int calNbRes = 0;
+		int calNbServ = 0;
+		int calNbShop = 0;
+		int calNbStation = 0;
+		boolean gotHisOwnStation = false;
+		int i = a;
+		int j = b;
+		
+		if((map[i][j] != null && map[i][j].isResidential())) {
+			
+			if(i-1 > 0 && j-1 > 0) {
+				if((map[i-1][j-1] != null && map[i-1][j-1].isResidential())) {
+					calNbRes++;
+				}
+				if((map[i-1][j-1] != null && map[i-1][j-1].isStation() && map[i-1][j-1].isResidential())) {
+					calNbStation++;
+				}
+			}
+			if ( i+1 < width && j-1 > 0) {
+				if((map[i+1][j-1] != null && map[i+1][j-1].isResidential())) {
+					calNbRes++;
+				}
+				if((map[i+1][j-1] != null && map[i+1][j-1].isStation() && map[i+1][j-1].isResidential())) {
+					calNbStation++;
+				}
+			}
+			if(i-1 > 0 && j+1 < height) {
+				if((map[i-1][j+1] != null && map[i-1][j+1].isResidential())) {
+					calNbRes++;
+				}
+				if((map[i-1][j+1] != null && map[i-1][j+1].isStation() && map[i-1][j+1].isResidential())) {
+					calNbStation++;
+				}
+			}
+			if( i-1 > 0) {
+				if((map[i-1][j] != null && map[i-1][j].isResidential())) {
+					calNbRes++;
+				}
+				if((map[i-1][j] != null && map[i-1][j].isStation() && map[i-1][j].isResidential())) {
+					calNbStation++;
+				}	
+			}
+			if(i+1 < width) {
+				if((map[i+1][j] != null && map[i+1][j].isResidential())) {
+					calNbRes++;
+				}
+				if((map[i+1][j] != null && map[i+1][j].isStation() && map[i+1][j].isResidential())) {
+					calNbStation++;
+				}
+			}
+			if( j-1 > 0) {
+				if((map[i][j-1] != null && map[i][j-1].isResidential())) {
+					calNbRes++;
+				}
+				if((map[i][j-1] != null && map[i][j-1].isStation() && map[i][j-1].isResidential())) {
+					calNbStation++;
+				}	
+			}
+			if(j+1 < height) {
+				if((map[i][j+1] != null && map[i][j+1].isResidential())) {
+					calNbRes++;
+				}
+				if((map[i][j+1] != null && map[i][j+1].isStation() && map[i][j+1].isResidential())) {
+					calNbStation++;
+				}
+			
+			
+			}
+			if(i+1 < width && j+1 < height) {
+				if((map[i+1][j+1] != null && map[i+1][j+1].isResidential())) {
+					calNbRes++;
+				}
+				if((map[i+1][j+1] != null && map[i+1][j+1].isStation() && map[i+1][j+1].isResidential())) {
+					calNbStation++;
+				}
+			}
+				
+			if(map[i][j] != null && map[i][j].isStation()) {
+				gotHisOwnStation = true;
+			}
+			
+			if (gotHisOwnStation == false && calNbStation == 0) {
+				map[i][j].setSatisfaction(-10); //if the district dont have his own station and no statio nearby, the satisfaction will decrease by 10
+			}
+			
+			if(gotHisOwnStation == true) {
+				map[i][j].setSatisfaction(10);
+			}
+			
+			if (gotHisOwnStation == false && calNbStation > 0 && calNbStation <= 4) {
+				map[i][j].setSatisfaction(5);
+			}
+			
+			if (gotHisOwnStation == false && calNbStation >= 5 && calNbStation <= 9) {
+				map[i][j].setSatisfaction(5);
+			}
+		}	
+	}
+	
 	
 	public String getHistoricText() {
 		return historicText;
