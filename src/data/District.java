@@ -56,12 +56,12 @@ public class District {
 		return actualPeople;
 	}
 	
-	public void changeActualPeople(int newActualPeople) {
-		actualPeople += newActualPeople;
-	}
-	
 	public void addPeople(int newPopulation) {
 		actualPeople += newPopulation;
+	}
+	
+	public void setPeople(int newPopulation) {
+		actualPeople = newPopulation;
 	}
 	
 	public int getMaintenanceCost() {
