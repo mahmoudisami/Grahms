@@ -17,7 +17,8 @@ public class Commercial extends District{
 
 	public Commercial() {
 		super(Const.GAIN_COM,0); 
-		size = 1; // Taille de depart 
+		size = 1; // Taille de depart
+		actualPeople = 0;
 	}
 	
 	public BufferedImage getImg() {
