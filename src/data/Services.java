@@ -15,7 +15,8 @@ public class Services extends District{
 	 
 	public Services() {
 		super(Const.GAIN_SERV,Const.COST_SERV);
-		size = 1; // Taille de depart 
+		size = 1; // Taille de depart
+		actualPeople = 0;
 	}
 	
 	public BufferedImage getImg() {
