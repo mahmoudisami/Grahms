@@ -23,6 +23,7 @@ public class GameProgress {
 	private HashMap<District, HashMap<Integer, Integer>> serviceWorkerByDistrict = new HashMap<>();
 	int width = 18;
 	int height = 12;
+	private int cumul;
 	
 	public GameProgress(Clock clock, Money money, Grid grid) {
 		this.clock = clock;
@@ -31,10 +32,13 @@ public class GameProgress {
 		map = grid.getMapTab();
 		nbrLine = map.length;
 		nbrRow = map[0].length;
+		cumul = 0;
 	}
 	
 	public void launchGameProgress () {
 		if(clock.getDayPos()==7 && clock.getHour().equals("23")) { //Chaque dimanche a 23h
+			System.out.println("cumul = "+ cumul);
+			cumul = 0;
 			historicCalculator();
 		}
 		if(clock.getHour().equals("07") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
@@ -50,6 +54,7 @@ public class GameProgress {
 			arriveWork(2);
 		}
 		if(clock.getHour().equals("16") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
+			cumulMoney();
 			goHome();
 		}
 		if(clock.getDayPos()==1 && clock.getHour().equals("1")) { //Call the function every Monday at 1am
@@ -63,6 +68,21 @@ public class GameProgress {
 				if(map[i][j] != null && map[i][j].isResidential()) {
 					System.out.println("Send to work");
 					sendToWork(map[i][j]);
+				}
+			}
+		}
+	}
+	
+	public void cumulMoney() {
+		District cWorkingDistrict;
+		District sWorkingDistrict;
+		for(int i=0; i<nbrLine; i++) {
+			for(int j=0; j<nbrRow; j++) {
+				if(map[i][j] != null && map[i][j].isResidential()) {
+					for(int index =0; index<3; index ++) {
+						cumul += commercialWorkerByDistrict.get(map[i][j]).get(index);
+						cumul += serviceWorkerByDistrict.get(map[i][j]).get(index);
+					}
 				}
 			}
 		}
@@ -193,13 +213,13 @@ public class GameProgress {
 							cWorkingDistrict = visitedDistrict.getDistrict();				
 							cWorkingDistrict.addPeople(commercialWorkerByDistrict.get(map[i][j]).get(trainNumber));
 							isDoneComm = true;
-							System.out.println("Bien arrivé au comm ");
+							System.out.println(commercialWorkerByDistrict.get(map[i][j]).get(trainNumber)+ " Bien arrivé au comm ");
 						}
 						if(!isDoneServ && visitedDistrict.getDistrict().isService()) { // Quartier commercial ou ils vont travailler
 							sWorkingDistrict = visitedDistrict.getDistrict();				
 							sWorkingDistrict.addPeople(serviceWorkerByDistrict.get(map[i][j]).get(trainNumber));
 							isDoneServ = true;
-							System.out.println("Bien arrivé au serv");
+							System.out.println(serviceWorkerByDistrict.get(map[i][j]).get(trainNumber) +" Bien arrivé au serv");
 						}
 					}
 				}
