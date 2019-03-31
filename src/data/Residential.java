@@ -25,7 +25,6 @@ public class Residential extends District{
 	public Residential() { 
 		super(Const.GAIN_RES,0); 
 		size = 1; // Taille de depart
-		happinessLevel = 50; // 50/100 is the default level 
 		isStation = false;
 	}
 	
@@ -90,15 +89,7 @@ public class Residential extends District{
 	public boolean isResidential() {
 		return true;
 	}
-	/*
-	public int getHappLevel() {
-		return happinessLevel;
-	}
 	
-	public void setHappLevel(int newLvl) {
-		happinessLevel = happinessLevel + newLvl;
-	}
-	*/
 	public int getSize() {
 		return size;
 	}

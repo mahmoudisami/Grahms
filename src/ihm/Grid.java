@@ -1,6 +1,7 @@
 package ihm;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -10,7 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 
 import data.Coordinates;
 import data.District;
@@ -64,6 +67,9 @@ public class Grid extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				boolean crossBool = false;		//False par defaut, True si on click sur une case deja ajoutee dans l'arrayList
 				//MouseEvent Branche classique.
+				int happinessLevel = 0;
+				int popNumber;
+				String popNumberLb;
 				if ( getAddLineBool() == false){
 					System.out.println("Branche classique");
 					int x=e.getX();
@@ -85,7 +91,28 @@ public class Grid extends JPanel{
 		                }else{
 		                	districtPanel.setVisible(false);
 		                	subwayPanel.setVisible(true);
-		                	infoDistrictPanel.setVisible(true);
+
+		                	if(grid[caseX][caseY].isResidential()) {
+		                		popNumber = grid[caseX][caseY].getActualPeople();
+		                		popNumberLb = Integer.toString(popNumber);
+		                		JLabel lblValDistrictPop = new JLabel(popNumberLb);
+		                		lblValDistrictPop.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
+		                		lblValDistrictPop.setBounds(113, 38, 83, 20);
+		                		infoDistrictPanel.add(lblValDistrictPop);
+		                		
+		                		JProgressBar bar_SatisfactionDistrict = new JProgressBar();
+		                		bar_SatisfactionDistrict.setBounds(113, 83, 138, 20);
+			            		happinessLevel = grid[caseX][caseY].getSatisfaction();
+			            		bar_SatisfactionDistrict.setValue(happinessLevel);
+			            		bar_SatisfactionDistrict.setStringPainted(true);
+			            		infoDistrictPanel.add(bar_SatisfactionDistrict);
+			            		
+			            		infoDistrictPanel.setVisible(true);
+		                	}else {
+		                		
+		                		infoDistrictPanel.setVisible(false);
+		                	}
+		                	
 		                }
 	                }
 	            // MouseEvent Branche pour la création de ligne.

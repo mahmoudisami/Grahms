@@ -13,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 
 import data.Commercial;
 import data.Coordinates;
+import data.District;
 import data.Money;
 import data.Residential;
 import data.Services;
@@ -65,6 +66,16 @@ public class GameScreen extends JFrame implements Runnable{
 	private JLabel lblDayofWeek;
 	private JLabel lblDaysgone;
 	private JLabel lblDayNumber;
+	
+	private JLabel lblCityPop;
+	private JLabel lblGlobalMoney;
+	private JLabel lblHistoric;
+	private JLabel lblSatisfaction;
+	
+	private JPanel infoDistrictPanel;
+	private JLabel lblPopulation;
+	private JLabel lblDistrict;
+	
 	private GameScreen instance = this;
 	
 	private Money money = new Money();
@@ -76,6 +87,11 @@ public class GameScreen extends JFrame implements Runnable{
 	
 	private GameProgress game;
 	
+	private Grid grid;
+	private District[][] map;
+	private int nbrLine = 18, nbrRow = 12;
+	private int nbPopTotal = 0;
+	private String nbPopTotalLb;
 	private long speed = 300;
 	 
 	public static void main(String[] args) {
@@ -153,13 +169,13 @@ public class GameScreen extends JFrame implements Runnable{
 		});
 		infoVillePanel.add(btnHistoric);
 		
-		JLabel lblGlobalMoney = new JLabel("Global Money :");
+		lblGlobalMoney = new JLabel("Global Money :");
 		lblGlobalMoney.setBounds(10, 65, 109, 20);
 		lblGlobalMoney.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		infoVillePanel.add(lblGlobalMoney);
 		
 		
-		JLabel lblCityPop = new JLabel("20");
+		lblCityPop = new JLabel();
 		lblCityPop.setFont(fontInfo);
 		lblCityPop.setBounds(150, 30, 100, 20);
 		infoVillePanel.add(lblCityPop);
@@ -169,30 +185,30 @@ public class GameScreen extends JFrame implements Runnable{
 		lblValGlobalMoney.setBounds(134, 65, 90, 20);
 		infoVillePanel.add(lblValGlobalMoney);
 		
-		JLabel lblHistoric = new JLabel("Historic :");
+		lblHistoric = new JLabel("Historic :");
 		lblHistoric.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		lblHistoric.setBounds(10, 159, 70, 20);
 		infoVillePanel.add(lblHistoric);
 		
-		JLabel lblSatisfaction = new JLabel("Satisfaction :");
+		lblSatisfaction = new JLabel("Satisfaction :");
 		lblSatisfaction.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		lblSatisfaction.setBounds(10, 104, 90, 20);
 		infoVillePanel.add(lblSatisfaction);
 		
 		// Informations of City
-		JPanel infoDistrictPanel = new JPanel();
+		infoDistrictPanel = new JPanel();
 		infoDistrictPanel.setBounds(922, 229, 260, 127);
 		contentPane.add(infoDistrictPanel);
 		infoDistrictPanel.setLayout(null);
 		infoDistrictPanel.setVisible(false);
 		
-		JLabel lblDistrict = new JLabel("DISTRICT");
+		lblDistrict = new JLabel("DISTRICT");
 		lblDistrict.setFont(fontTitle);
 		lblDistrict.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDistrict.setBounds(10, 0, 186, 27);
 		infoDistrictPanel.add(lblDistrict);
 		
-		JLabel lblPopulation = new JLabel("Population :");
+		lblPopulation = new JLabel("Population :");
 		lblPopulation.setBounds(10, 38, 94, 20);
 		lblPopulation.setFont(fontInfo);
 		infoDistrictPanel.add(lblPopulation);
@@ -202,10 +218,7 @@ public class GameScreen extends JFrame implements Runnable{
 		lblDistrictSatisfaction.setFont(fontInfo);
 		infoDistrictPanel.add(lblDistrictSatisfaction);
 		
-		JLabel lblValDistrictPop = new JLabel("inser POP");
-		lblValDistrictPop.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
-		lblValDistrictPop.setBounds(113, 38, 83, 20);
-		infoDistrictPanel.add(lblValDistrictPop);
+		
 		
 		// This Pane is visible when case without District is clicked
 		districtPanel = new JPanel();
@@ -223,7 +236,7 @@ public class GameScreen extends JFrame implements Runnable{
 					money.withDraw(myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getCost());
 					districtPanel.setVisible(false);
                 	subwayPanel.setVisible(true);
-                	infoDistrictPanel.setVisible(true);
+                	infoDistrictPanel.setVisible(false);
 				}
 				myGrid.repaint();
 			}
@@ -240,7 +253,7 @@ public class GameScreen extends JFrame implements Runnable{
 					money.withDraw(myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getCost());
 					districtPanel.setVisible(false);
                 	subwayPanel.setVisible(true);
-                	infoDistrictPanel.setVisible(true);
+                	infoDistrictPanel.setVisible(false);
 				}
 				myGrid.repaint();
 			}
@@ -258,7 +271,7 @@ public class GameScreen extends JFrame implements Runnable{
 					money.withDraw(myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getCost());
 					districtPanel.setVisible(false);
                 	subwayPanel.setVisible(true);
-                	infoDistrictPanel.setVisible(true);
+                	infoDistrictPanel.setVisible(false);
 				}
 				myGrid.repaint();
 			}
@@ -347,9 +360,7 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		myGrid = new Grid(districtPanel, subwayPanel, infoDistrictPanel);
 		
-		JProgressBar bar_SatisfactionDistrict = new JProgressBar();
-		bar_SatisfactionDistrict.setBounds(113, 83, 138, 20);
-		infoDistrictPanel.add(bar_SatisfactionDistrict);
+		
 		myGrid.setBounds(10, 10, 902, 602);
 		myGrid.setGridscreen(contentPane);
 		contentPane.add(myGrid);
@@ -446,7 +457,22 @@ public class GameScreen extends JFrame implements Runnable{
 			lblDayNumber.setText(clock.getDay());
 			lblValGlobalMoney.setText(""+money.getMoney());
 			
+			/*
+				for(int i=0; i<nbrLine; i++) {
+					for(int j=0; j<nbrRow; j++) {
+						if(map[i][j].isResidential()) {
+							nbPopTotal = nbPopTotal + map[i][j].getActualPeople();
+						}else {
+							lblCityPop.setText("0");
+						}
+					}
+				}
+							nbPopTotalLb = Integer.toString(nbPopTotal);
+							lblCityPop.setText("nbPopTotalLb");
+		*/
+			
 		}
+		
 	}
 	
 	public int getCase(int coordinate, int numberOfSquare) {
