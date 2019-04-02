@@ -14,7 +14,9 @@ import javax.swing.border.EmptyBorder;
 import data.Commercial;
 import data.Coordinates;
 import data.District;
+import data.HappinessTotal;
 import data.Money;
+import data.PopulationTotal;
 import data.Residential;
 import data.Services;
 import data.Station;
@@ -75,10 +77,12 @@ public class GameScreen extends JFrame implements Runnable{
 	private JPanel infoDistrictPanel;
 	private JLabel lblPopulation;
 	private JLabel lblDistrict;
-	
+	private JProgressBar bar_SatisfactionCity; 
 	private GameScreen instance = this;
 	
 	private Money money = new Money();
+	private PopulationTotal popTotal = new PopulationTotal();
+	private HappinessTotal happTol = new HappinessTotal();
 	private String[] destroyString;
 	
 	public Image img;
@@ -93,6 +97,7 @@ public class GameScreen extends JFrame implements Runnable{
 	private int nbPopTotal = 0;
 	private String nbPopTotalLb;
 	private long speed = 300;
+	private int tmpPop,tmpHapp;
 	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -239,6 +244,7 @@ public class GameScreen extends JFrame implements Runnable{
                 	infoDistrictPanel.setVisible(false);
 				}
 				myGrid.repaint();
+				popTotal.addPopulationTotal(50);
 			}
 		});
 		districtPanel.add(btnResDistrict);
@@ -341,6 +347,8 @@ public class GameScreen extends JFrame implements Runnable{
 				}
 				else if (nom.equals("District")) {
 					myGrid.destroyLines(myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()], myGrid);
+					tmpPop = myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getActualPeople();
+					popTotal.wdPopulationTotal(tmpPop);
 					myGrid.setMapTab(myGrid.getCoordsX(),myGrid.getCoordsY(),null);
 					subwayPanel.setVisible(false);
 					infoDistrictPanel.setVisible(false);
@@ -456,20 +464,9 @@ public class GameScreen extends JFrame implements Runnable{
 			lblDaysgone.setText("Days Gone : "+clock.getDayCpt());
 			lblDayNumber.setText(clock.getDay());
 			lblValGlobalMoney.setText(""+money.getMoney());
-			
-			/*
-				for(int i=0; i<nbrLine; i++) {
-					for(int j=0; j<nbrRow; j++) {
-						if(map[i][j].isResidential()) {
-							nbPopTotal = nbPopTotal + map[i][j].getActualPeople();
-						}else {
-							lblCityPop.setText("0");
-						}
-					}
-				}
-							nbPopTotalLb = Integer.toString(nbPopTotal);
-							lblCityPop.setText("nbPopTotalLb");
-		*/
+			lblCityPop.setText(""+popTotal.getPopulationTotal());
+			/*tmpHapp = happTol.getHappinessTotal();
+			bar_SatisfactionCity.setValue(tmpHapp);*/
 			
 		}
 		

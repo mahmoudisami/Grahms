@@ -11,6 +11,7 @@ public class GameProgress {
 	
 	private Clock clock;
 	private Money money;
+	private HappinessTotal happTotal;
 	private FinancialCalculator fin = new FinancialCalculator();
 	private int tmpMoney;
 	private String historicText ="";
@@ -23,7 +24,7 @@ public class GameProgress {
 	private HashMap<District, HashMap<Integer, Integer>> serviceWorkerByDistrict = new HashMap<>();
 	int width = 18;
 	int height = 12;
-	private int cumul;
+	private int cumul,tmpHapp;
 	
 	public GameProgress(Clock clock, Money money, Grid grid) {
 		this.clock = clock;
@@ -61,6 +62,12 @@ public class GameProgress {
 		if(clock.getDayPos()==1 && clock.getHour().equals("1")) { //Call the function every Monday at 1am
 			happinessCalculator();
 		}
+		/*
+		if(clock.getHour().equals("01")) {
+			tmpHapp = calHappinessTotal();
+			happTotal.setHappinessTotal(tmpHapp);
+		}
+		*/
 	}
 	
 	public void goWork() {
@@ -182,6 +189,28 @@ public class GameProgress {
 		}
 	}
 	
+	public int calHappinessTotal() {
+		int somme = 0;
+		int counter = 0;
+		int happinessTotal = 0;
+
+		for(int i=0; i<nbrLine; i++) {
+			for(int j=0; j<nbrRow; j++) {
+				if(map[i][j] != null) {
+					if(map[i][j].isResidential()) {
+						counter++;
+						somme = map[i][j].getSatisfaction() + somme;
+					}
+					happinessTotal = somme/counter;
+				}else {
+					happinessTotal = 0;
+				}
+			}
+		}
+			return happinessTotal;
+		
+				
+	}
 	public boolean canWorkComm(District dist){
 		ArrayList<AccessibleDistrict> aDist = dist.getAccessibleDistrict();
 		for(int index = 0; index<aDist.size(); index ++ ) {
