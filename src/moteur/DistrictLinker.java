@@ -97,21 +97,21 @@ public class DistrictLinker {
 	}
 	
 	public void stationModification(District[][] dist, ArrayList<Line> lineList, District concernedDistrict) { // Quand une station est crée sur une potentielle ligne
-		Iterator<Line> listIterator = lineList.iterator();
 		ArrayList<Coordinates> currentLineCoordinates = new ArrayList<>();
 		ArrayList<Coordinates> newLineCoordinates = new ArrayList<>();
 		Line currentLine;
 		Coordinates coo;
-		while(listIterator.hasNext()) {
-			currentLine = listIterator.next();
+		int size = lineList.size();
+		for(int index = 0; index < size; index ++) {
+			currentLine = lineList.get(index);
 			currentLineCoordinates = currentLine.getVisitedCoordonates();
-			for(int index = 0; index < currentLineCoordinates.size();index++) {
-				coo = currentLineCoordinates.get(index);
+			for(int j = 0; j < currentLineCoordinates.size();j++) {
+				coo = currentLineCoordinates.get(j);
 				if(dist[coo.getX()][coo.getY()] == concernedDistrict) {
-					newLineCoordinates = visitedCoordinates(0, index, currentLine);
-					Line newLine1 = new Line(currentLine.getFirstDistrict(),concernedDistrict,index, true, newLineCoordinates); 
-					newLineCoordinates = visitedCoordinates(index, currentLineCoordinates.size(), currentLine);
-					Line newLine2 = new Line(currentLine.getSecondDistrict(),concernedDistrict,currentLineCoordinates.size() - index, true, newLineCoordinates);
+					newLineCoordinates = visitedCoordinates(0, j, currentLine);
+					Line newLine1 = new Line(currentLine.getFirstDistrict(),concernedDistrict,j, true, newLineCoordinates); 
+					newLineCoordinates = visitedCoordinates(j, currentLineCoordinates.size(), currentLine);
+					Line newLine2 = new Line(currentLine.getSecondDistrict(),concernedDistrict,currentLineCoordinates.size() - j, true, newLineCoordinates);
 					lineList.add(newLine1);
 					lineList.add(newLine2);
 					linkDistrict(newLine1);

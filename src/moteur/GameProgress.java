@@ -55,6 +55,7 @@ public class GameProgress {
 		}
 		if(clock.getHour().equals("16") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
 			cumulMoney();
+			addMoney();
 			goHome();
 		}
 		if(clock.getDayPos()==1 && clock.getHour().equals("1")) { //Call the function every Monday at 1am
@@ -74,18 +75,25 @@ public class GameProgress {
 	}
 	
 	public void cumulMoney() {
-		District cWorkingDistrict;
-		District sWorkingDistrict;
 		for(int i=0; i<nbrLine; i++) {
 			for(int j=0; j<nbrRow; j++) {
 				if(map[i][j] != null && map[i][j].isResidential()) {
 					for(int index =0; index<3; index ++) {
-						cumul += commercialWorkerByDistrict.get(map[i][j]).get(index);
-						cumul += serviceWorkerByDistrict.get(map[i][j]).get(index);
+						if(commercialWorkerByDistrict.get(map[i][j]) != null) {
+							cumul += commercialWorkerByDistrict.get(map[i][j]).get(index);
+						}
+						if(serviceWorkerByDistrict.get(map[i][j]) != null) {
+							cumul += serviceWorkerByDistrict.get(map[i][j]).get(index);
+						}
 					}
 				}
 			}
 		}
+	}
+	
+	public void addMoney() {
+		int earnedMoney = (int)(cumul/2);
+		money.addMoney(earnedMoney);
 	}
 	
 	public void goHome() {

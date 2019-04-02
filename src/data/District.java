@@ -115,6 +115,7 @@ public class District {
 		AccessibleDistrict aDistrict = new AccessibleDistrict(dist, distance);
 		Line newLine = new Line(this,dist,distance, false, null);
 		addLine(newLine);
+		System.out.println("it works");
 		accessibleDistrictList.add(aDistrict);
 	}
 	

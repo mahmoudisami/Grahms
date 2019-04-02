@@ -154,6 +154,7 @@ public class Grid extends JPanel{
 		                				Line lineCompleted = new Line(grid[lineCoo.get(0).getX()][lineCoo.get(0).getY()], grid[lineCoo.get(lineCoo.size()-1).getX()][lineCoo.get(lineCoo.size()-1).getY()], lineCoo.size()-1, true, lineCoo);
 		                				districtLinker.linkDistrict(lineCompleted);
 		                				allLines.add(lineCompleted);
+		                				districtLinker.stationModification(grid, allLines,grid[lineCoo.get(0).getX()][lineCoo.get(0).getY()]);
 		                				repaint();
 		                			}
 		                		}else{
