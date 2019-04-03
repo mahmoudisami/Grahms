@@ -200,7 +200,6 @@ public class Grid extends JPanel{
 	public void drawSubwayLine(Graphics g, int caseWidth){
 		int xPixel, yPixel, xNextPixel, yNextPixel;
 		ArrayList<Coordinates> lineCoords;
-		String Orientation;
 		Color color;
 		for(int i=0; i<allLines.size();i++) {
 			lineCoords = allLines.get(i).getVisitedCoordonates();
