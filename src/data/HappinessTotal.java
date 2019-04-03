@@ -2,11 +2,6 @@ package data;
 
 public class HappinessTotal {
 	private int happinessTotal = 0;
-	private int somme;
-	private int counter = 0;
-
-	private District[][] map;
-	private int nbrLine = 18, nbrRow = 12;
 	public HappinessTotal() {
 		
 	}

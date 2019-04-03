@@ -18,10 +18,11 @@ public class District {
 	public District(int gain,int cost) {
 		this.gain = gain;
 		this.cost = cost;
-		satisfaction = 50;
+		
 		isStation = false;
 		accessibleDistrictList.clear();
 		actualPeople = 50;
+		satisfaction = 50;
 	}
 	
 	public boolean createStation() {
@@ -73,10 +74,9 @@ public class District {
 	}
 	
 	public void setSatisfaction(int num) {
-		if(satisfaction <= 100) {
-			satisfaction = satisfaction + num;
-		}
+		satisfaction = satisfaction + num;
 	}
+	
 	public boolean isResidential() {
 		return false;
 	}
