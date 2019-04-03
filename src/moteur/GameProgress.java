@@ -39,7 +39,6 @@ public class GameProgress {
 	public void launchGameProgress () {
 		if(clock.getDayPos()==7 && clock.getHour().equals("23")) { //Chaque dimanche a 23h
 			System.out.println("cumul = "+ cumul);
-			cumul = 0;
 			historicCalculator();
 		}
 		if(clock.getHour().equals("07") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
@@ -56,7 +55,6 @@ public class GameProgress {
 		}
 		if(clock.getHour().equals("16") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
 			cumulMoney();
-			addMoney();
 			goHome();
 		}
 		if(clock.getDayPos()==1 && clock.getHour().equals("1")) { //Call the function every Monday at 1am
@@ -269,10 +267,15 @@ public class GameProgress {
 		money.withDraw(tmpMoney);
 		historicText += "------------ "+ clock.getDay() +" "+ clock.getMonthName() +"------------\n";
 		historicText += "-" + tmpMoney + " Entretien des quartiers\n";
-		tmpMoney = fin.districtCalculatorGain(grid.getMapTab());
-		money.addMoney(tmpMoney);
-		historicText += "+" + tmpMoney + " Gain des quartiers \n";
+		
+		/*tmpMoney = fin.districtCalculatorGain(grid.getMapTab());
+		money.addMoney(tmpMoney);*/
+		addMoney();
+		historicText += "+" + (int)(cumul/2) + " Gain des quartiers commerciaux et services \n";
+		cumul = 0;
+		
 		tmpMoney = fin.stationCalculatorCost(grid.getMapTab());
+		
 		money.withDraw(tmpMoney);
 		historicText += "-" + tmpMoney + " Entretien des stations \n";
 	}

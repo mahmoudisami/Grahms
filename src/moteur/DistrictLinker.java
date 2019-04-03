@@ -54,11 +54,24 @@ public class DistrictLinker {
 		int newDistance;
 		int size = aDistrict1.size();
 		int sizeNA;
-		for(int index = 0; index<size; index++) {
+		int index, j;
+		boolean isAccessible = false;
+		for(index = 0; index<size; index++) {
+			
+			for(j = 0; j < dist2.getAccessibleDistrict().size(); j++) {
+				if(dist2.getAccessibleDistrict().get(j).getDistrict() == aDistrict1.get(index).getDistrict()) {
+					isAccessible = true;
+				}
+			}
+			if(!isAccessible) {
+				dist2.addAccessibleDistrict(aDistrict1.get(index).getDistrict(), distance + aDistrict1.get(index).getDistance());
+				isAccessible = false;
+			}
+			
 			addNewDistrict = aDistrict1.get(index).getDistrict();
 			newAccessible = addNewDistrict.getAccessibleDistrict();
 			sizeNA = newAccessible.size();
-			for(int j=0; j<sizeNA;j++) {
+			for(j=0; j<sizeNA;j++) {
 				if((newAccessible.get(j).getDistrict() != dist2) && (newAccessible.get(j).getDistrict() != dist1) && (addNewDistrict != dist2)) {
 					if(!containsDistrict(newAccessible, dist2)) {
 						System.out.println("\n----" + dist2 );
@@ -109,6 +122,7 @@ public class DistrictLinker {
 				coo = currentLineCoordinates.get(j);
 				if(dist[coo.getX()][coo.getY()] == concernedDistrict) {
 					newLineCoordinates = visitedCoordinates(0, j, currentLine);
+					System.out.println("j =" +j);
 					Line newLine1 = new Line(currentLine.getFirstDistrict(),concernedDistrict,j, true, newLineCoordinates); 
 					newLineCoordinates = visitedCoordinates(j, currentLineCoordinates.size(), currentLine);
 					Line newLine2 = new Line(currentLine.getSecondDistrict(),concernedDistrict,currentLineCoordinates.size() - j, true, newLineCoordinates);
