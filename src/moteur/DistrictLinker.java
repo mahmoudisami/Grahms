@@ -18,12 +18,12 @@ public class DistrictLinker {
 		System.out.println("----"+ d1 +"  " + d2+"----");
 		addAD(d1,d2,distance);
 		addAD(d2,d1,distance);
-		refreshAD(d2,d1, distance);
-		refreshAD(d1,d2, distance);
+		refreshAD(d2,d1, distance, true);
+		refreshAD(d1,d2, distance, true);
 	}
 	
 	public void addAD(District dist1, District dist2,int distance) {
-		dist1.addAccessibleDistrict(dist2, distance);
+		dist1.addAccessibleDistrict(dist2, distance, true);
 		System.out.println("Ajout de "+ dist2 +" dans " + dist1);
 		ArrayList<AccessibleDistrict> aDistrict1 = dist1.getAccessibleDistrict();
 		ArrayList<AccessibleDistrict> aDistrict2 = dist2.getAccessibleDistrict();
@@ -42,12 +42,12 @@ public class DistrictLinker {
 				newDistance = distance + aDistrict1.get(index).getDistance();
 				newDistrict = aDistrict1.get(index).getDistrict();
 				//System.out.println("..Ajout de: "+ newDistrict + " dans " + dist2 + " avec dist1 = "+dist1 +" et distance " + newDistance);
-				dist2.addAccessibleDistrict(newDistrict, newDistance);
+				dist2.addAccessibleDistrict(newDistrict, newDistance,true);
 			}
 		}
 	}
 	
-	public void refreshAD(District dist1, District dist2, int distance) {
+	public void refreshAD(District dist1, District dist2, int distance,boolean line) {
 		ArrayList<AccessibleDistrict> aDistrict1 = dist1.getAccessibleDistrict();
 		ArrayList<AccessibleDistrict> newAccessible;
 		District addNewDistrict;
@@ -64,7 +64,7 @@ public class DistrictLinker {
 				}
 			}
 			if(!isAccessible) {
-				dist2.addAccessibleDistrict(aDistrict1.get(index).getDistrict(), distance + aDistrict1.get(index).getDistance());
+				dist2.addAccessibleDistrict(aDistrict1.get(index).getDistrict(), distance + aDistrict1.get(index).getDistance(),line);
 				isAccessible = false;
 			}
 			
@@ -76,7 +76,7 @@ public class DistrictLinker {
 					if(!containsDistrict(newAccessible, dist2)) {
 						System.out.println("\n----" + dist2 );
 						newDistance = distance + correspondingLineDistance(dist1.getLines(), dist1, addNewDistrict);
-						addNewDistrict.addAccessibleDistrict(dist2, newDistance);
+						addNewDistrict.addAccessibleDistrict(dist2, newDistance,line);
 					}
 				}
 			}

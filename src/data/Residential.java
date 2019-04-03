@@ -23,7 +23,7 @@ public class Residential extends District{
 	
 	
 	public Residential() { 
-		super(Const.GAIN_RES,0); 
+		super(0); 
 		size = 1; // Taille de depart
 		isStation = false;
 	}
