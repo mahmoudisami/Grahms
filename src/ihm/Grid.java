@@ -28,24 +28,26 @@ public class Grid extends JPanel{
 	public int sizeScreenX = 900;
 	public int sizeScreenY = 600;
 	
-	private DistrictLinker districtLinker = new DistrictLinker();
+	public DistrictLinker districtLinker = new DistrictLinker();
 	boolean addLineBool = false;
 	boolean addLineBoolChangedToTrue = false;	//TRUE si on viens de passer AddLineBool de FALSE à TRUE, sinon FALSE
 	ArrayList<Coordinates> lineCoo;
 	ArrayList<Line> allLines = new ArrayList<Line>();
 	
-	District[][] grid = new District[width][height];
+	public District[][] grid = new District[width][height];
 	public Image img;
 	int caseX, caseY, caseWidth;
 	int previousCaseX, previousCaseY;
 	private JPanel districtPanel;
-	private JPanel subwayPanel;
+	private JPanel subwayPanel;		//Panel for district without station
+	private JPanel subwayPanel2;	//Panel for district with station
 	private JPanel infoDistrictPanel;
 	
 	
-	public Grid(JPanel districtPanel, JPanel subwayPanel, JPanel infoDistrictPanel){
+	public Grid(JPanel districtPanel, JPanel subwayPanel, JPanel subwayPanel2, JPanel infoDistrictPanel){
 		this.districtPanel = districtPanel;
 		this.subwayPanel = subwayPanel;
+		this.subwayPanel2 = subwayPanel2;
 		this.infoDistrictPanel = infoDistrictPanel;
 		
 		try {
@@ -86,12 +88,20 @@ public class Grid extends JPanel{
 		                neighbourCalculator(caseX,caseY);
 		                if(grid[caseX][caseY]== null){
 		                	subwayPanel.setVisible(false);
+		                	subwayPanel2.setVisible(false);
 		                	infoDistrictPanel.setVisible(false);
 		                	districtPanel.setVisible(true);
 		                }else{
-		                	districtPanel.setVisible(false);
-		                	subwayPanel.setVisible(true);
-
+		                	if(grid[caseX][caseY].isStation()){
+		                		districtPanel.setVisible(false);
+			                	subwayPanel2.setVisible(true);
+			                	subwayPanel.setVisible(false);
+		                	}else{
+		                		districtPanel.setVisible(false);
+			                	subwayPanel.setVisible(true);
+			                	subwayPanel2.setVisible(false);
+		                	}
+		                	
 		                	if(grid[caseX][caseY].isResidential()) {
 		                		popNumber = grid[caseX][caseY].getActualPeople();
 		                		popNumberLb = Integer.toString(popNumber);
@@ -154,7 +164,6 @@ public class Grid extends JPanel{
 		                				Line lineCompleted = new Line(grid[lineCoo.get(0).getX()][lineCoo.get(0).getY()], grid[lineCoo.get(lineCoo.size()-1).getX()][lineCoo.get(lineCoo.size()-1).getY()], lineCoo.size()-1, true, lineCoo);
 		                				districtLinker.linkDistrict(lineCompleted);
 		                				allLines.add(lineCompleted);
-		                				districtLinker.stationModification(grid, allLines,grid[lineCoo.get(0).getX()][lineCoo.get(0).getY()]);
 		                				repaint();
 		                			}
 		                		}else{
@@ -200,14 +209,11 @@ public class Grid extends JPanel{
 	public void drawSubwayLine(Graphics g, int caseWidth){
 		int xPixel, yPixel, xNextPixel, yNextPixel;
 		ArrayList<Coordinates> lineCoords;
-		String Orientation;
 		Color color;
 		for(int i=0; i<allLines.size();i++) {
 			lineCoords = allLines.get(i).getVisitedCoordonates();
 			color = allLines.get(i).getColor();
 			for(int j = 0; j < lineCoords.size()-1; j++) {
-				
-			
 				xPixel = (lineCoords.get(j).getX()+1 )*(caseWidth) - (caseWidth/2);
 				yPixel = (lineCoords.get(j).getY()+1 )*(caseWidth) - (caseWidth/2);
 				xNextPixel = (lineCoords.get(j+1).getX()+1 )*(caseWidth) - (caseWidth/2);

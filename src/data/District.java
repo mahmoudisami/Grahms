@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class District {
 
 	protected Station station;
-	private int gain;
 	private int cost;
 	protected int actualPeople;
 	private int satisfaction;
@@ -15,8 +14,7 @@ public class District {
 	protected boolean isStation;
 	private ArrayList<AccessibleDistrict> accessibleDistrictList = new ArrayList<>();
 
-	public District(int gain,int cost) {
-		this.gain = gain;
+	public District(int cost) {
 		this.cost = cost;
 		
 		isStation = false;
@@ -43,10 +41,6 @@ public class District {
 	
 	public BufferedImage getImg() {
 		return null;
-	}
-	
-	public int getGain() {
-		return gain;
 	}
 
 	public int getCost() {
@@ -111,11 +105,12 @@ public class District {
 	
 	public void setSecondDistrict(District dist) {}
 	
-	public void addAccessibleDistrict(District dist, int distance) {
+	public void addAccessibleDistrict(District dist, int distance, boolean line) {
 		AccessibleDistrict aDistrict = new AccessibleDistrict(dist, distance);
-		Line newLine = new Line(this,dist,distance, false, null);
-		addLine(newLine);
-		System.out.println("it works");
+		if(line) {
+			Line newLine = new Line(this,dist,distance, false, null);
+			addLine(newLine);	
+		}
 		accessibleDistrictList.add(aDistrict);
 	}
 	

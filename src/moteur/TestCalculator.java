@@ -28,7 +28,7 @@ public class TestCalculator {
 		*/
 		grid[0][0] = new Services();
 		grid[1][0] = new Residential();
-		grid[1][1] = new District(1,1);
+		grid[1][1] = new District(1);
 		grid[2][2] = new Commercial();
 		grid[3][3] = new Residential();
 		grid[4][4] = new Commercial();
