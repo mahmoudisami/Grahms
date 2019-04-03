@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+
 import data.*;
 import ihm.*;
 
@@ -27,11 +31,12 @@ public class GameProgress {
 	int width = 18;
 	int height = 12;
 	private int tmpHapp;
-	
-	public GameProgress(Clock clock, Money money, Grid grid) {
+	private JPanel infoVillePanel;
+	public GameProgress(Clock clock, Money money, Grid grid,JPanel infoVillePanel) {
 		this.clock = clock;
 		this.money = money;
 		this.grid = grid;
+		this.infoVillePanel = infoVillePanel;
 		map = grid.getMapTab();
 		allLines = grid.getAllLines();
 		nbrLine = map.length;
@@ -61,15 +66,11 @@ public class GameProgress {
 			fin.cumulMoney(map,commercialWorkerByDistrict, serviceWorkerByDistrict);
 			goHome();
 		}
-		if(clock.getDayPos()==1 && clock.getHour().equals("1")) { //Call the function every Monday at 1am
+		if(clock.getDayPos()==7 && clock.getHour().equals("01")) { //Call the function every Monday at 1am
 			happinessCalculator();
 		}
-		/*
-		if(clock.getHour().equals("01")) {
-			tmpHapp = calHappinessTotal();
-			happTotal.setHappinessTotal(tmpHapp);
-		}
-		*/
+		 calHappinessTotal();
+		
 	}
 	
 	public void goWork() {
@@ -162,27 +163,48 @@ public class GameProgress {
 		}
 	}
 	
-	public int calHappinessTotal() {
+	public void calHappinessTotal() {
 		int somme = 0;
 		int counter = 0;
 		int happinessTotal = 0;
-
-		for(int i=0; i<nbrLine; i++) {
-			for(int j=0; j<nbrRow; j++) {
-				if(map[i][j] != null) {
-					if(map[i][j].isResidential()) {
+		
+		if(gotDistrict()) {
+			for(int i=0; i<nbrLine; i++) {
+				for(int j=0; j<nbrRow; j++) {
+						if(map[i][j] != null && map[i][j].isResidential()) {
 						counter++;
 						somme = map[i][j].getSatisfaction() + somme;
 					}
-					happinessTotal = somme/counter;
-				}else {
-					happinessTotal = 0;
+					
 				}
 			}
+			if(counter != 0) {
+				happinessTotal = somme/counter;
+			}else {
+				happinessTotal = 0;
+			}
+			
+			JProgressBar bar_SatisfactionCity = new JProgressBar();
+			bar_SatisfactionCity.setBounds(112, 104, 138, 20);
+			bar_SatisfactionCity.setValue(happinessTotal);
+			bar_SatisfactionCity.setStringPainted(true);
+			infoVillePanel.add(bar_SatisfactionCity);
+			//happTotal.setHappinessTotal(happinessTotal);
+			//System.out.println(happinessTotal);
+					
 		}
-			return happinessTotal;
 		
-				
+	}
+
+	public boolean gotDistrict() {
+		for(int i=0; i<nbrLine; i++) {
+			for(int j=0; j<nbrRow; j++) {
+					if(map[i][j] != null && map[i][j].isResidential()) {
+						return true;
+					}
+			}
+		}
+		return false;
 	}
 	public boolean canWorkComm(District dist){
 		ArrayList<AccessibleDistrict> aDist = dist.getAccessibleDistrict();
@@ -348,20 +370,20 @@ public class GameProgress {
 			}
 			
 			if (gotHisOwnStation == false && calNbStation == 0) {
-				map[i][j].setSatisfaction(-10); //if the district dont have his own station and no statio nearby, the satisfaction will decrease by 10
+				map[i][j].setSatisfaction(-10); //if the district dont have his own station and no station nearby, the satisfaction will decrease by 10
+				System.out.println("Satisfaction level on map["+i+"]["+j+"] has decreased by 10");
 			}
 			
 			if(gotHisOwnStation == true) {
 				map[i][j].setSatisfaction(10);
+				System.out.println("Satisfaction level on map["+i+"]["+j+"] has increased by 10");
 			}
 			
-			if (gotHisOwnStation == false && calNbStation > 0 && calNbStation <= 4) {
+			if (gotHisOwnStation == false && calNbStation > 0 && calNbStation <= 9) {
 				map[i][j].setSatisfaction(5);
+				System.out.println("Satisfaction level on map["+i+"]["+j+"] has increased by 5");
 			}
 			
-			if (gotHisOwnStation == false && calNbStation >= 5 && calNbStation <= 9) {
-				map[i][j].setSatisfaction(5);
-			}
 		}	
 	}
 	

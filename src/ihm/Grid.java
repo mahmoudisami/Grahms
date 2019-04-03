@@ -323,7 +323,8 @@ public class Grid extends JPanel{
 			System.out.println("\n|///////////////////////////////////////////////////////////////////////|");
 			System.out.println("|\tgrid["+i+"]["+j+"] got "+calNbRes+" residential neighborhood(s) nearby\t\t|");
 			System.out.println("|\t\tgrid["+i+"]["+j+"] got "+calNbStation+" station(s) nearby\t\t\t|");
-				
+			System.out.println("|\t\tgrid["+i+"]["+j+"] got "+grid[i][j].getSatisfaction()+" satisfaction\t\t\t\t|");
+			
 			if(grid[a][b] != null && grid[a][b].isStation()) {
 				System.out.println("|\t\tgrid["+i+"]["+j+"] got his own station\t\t\t\t|");
 			}

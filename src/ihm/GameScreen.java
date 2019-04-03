@@ -73,7 +73,7 @@ public class GameScreen extends JFrame implements Runnable{
 	private JLabel lblGlobalMoney;
 	private JLabel lblHistoric;
 	private JLabel lblSatisfaction;
-	
+	private JPanel infoVillePanel; 
 	private JPanel infoDistrictPanel;
 	private JLabel lblPopulation;
 	private JLabel lblDistrict;
@@ -141,11 +141,11 @@ public class GameScreen extends JFrame implements Runnable{
 		lblCity.setFont(fontTitle);
 		lblCity.setBounds(10, 0, 188, 25);
 		infoVillePanel.add(lblCity);
-		
+		/*
 		JProgressBar bar_SatisfactionCity = new JProgressBar();
 		bar_SatisfactionCity.setBounds(112, 104, 138, 20);
 		infoVillePanel.add(bar_SatisfactionCity);
-		
+		*/
 		JLabel lblTotalPopulation = new JLabel("Total Population :");
 		lblTotalPopulation.setBounds(10, 30, 126, 20);
 		lblTotalPopulation.setFont(fontInfo);
@@ -245,7 +245,8 @@ public class GameScreen extends JFrame implements Runnable{
                 	infoDistrictPanel.setVisible(false);
 				}
 				myGrid.repaint();
-				popTotal.addPopulationTotal(50);
+				tmpPop = myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getActualPeople();
+				popTotal.addPopulationTotal(tmpPop);
 			}
 		});
 		districtPanel.add(btnResDistrict);
@@ -435,7 +436,7 @@ public class GameScreen extends JFrame implements Runnable{
 		contentPane.add(myGrid);
 		myGrid.setLayout(null);
 		
-		game = new GameProgress(clock, money, myGrid);
+		game = new GameProgress(clock, money, myGrid, infoVillePanel);
 		
 		JPanel datePanel = new JPanel();
 		datePanel.setBounds(10, 620, 902, 40);
