@@ -121,7 +121,7 @@ public class DistrictLinker {
 			for(int j = 0; j < currentLineCoordinates.size();j++) {
 				coo = currentLineCoordinates.get(j);
 				if(dist[coo.getX()][coo.getY()] == concernedDistrict) {
-					newLineCoordinates = visitedCoordinates(0, j, currentLine);
+					newLineCoordinates = visitedCoordinates(0, j+1, currentLine);
 					System.out.println("j =" +j);
 					Line newLine1 = new Line(currentLine.getFirstDistrict(),concernedDistrict,j, true, newLineCoordinates); 
 					newLineCoordinates = visitedCoordinates(j, currentLineCoordinates.size(), currentLine);
