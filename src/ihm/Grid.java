@@ -28,13 +28,13 @@ public class Grid extends JPanel{
 	public int sizeScreenX = 900;
 	public int sizeScreenY = 600;
 	
-	private DistrictLinker districtLinker = new DistrictLinker();
+	public DistrictLinker districtLinker = new DistrictLinker();
 	boolean addLineBool = false;
 	boolean addLineBoolChangedToTrue = false;	//TRUE si on viens de passer AddLineBool de FALSE à TRUE, sinon FALSE
 	ArrayList<Coordinates> lineCoo;
 	ArrayList<Line> allLines = new ArrayList<Line>();
 	
-	District[][] grid = new District[width][height];
+	public District[][] grid = new District[width][height];
 	public Image img;
 	int caseX, caseY, caseWidth;
 	int previousCaseX, previousCaseY;
@@ -154,7 +154,6 @@ public class Grid extends JPanel{
 		                				Line lineCompleted = new Line(grid[lineCoo.get(0).getX()][lineCoo.get(0).getY()], grid[lineCoo.get(lineCoo.size()-1).getX()][lineCoo.get(lineCoo.size()-1).getY()], lineCoo.size()-1, true, lineCoo);
 		                				districtLinker.linkDistrict(lineCompleted);
 		                				allLines.add(lineCompleted);
-		                				districtLinker.stationModification(grid, allLines,grid[lineCoo.get(0).getX()][lineCoo.get(0).getY()]);
 		                				repaint();
 		                			}
 		                		}else{
