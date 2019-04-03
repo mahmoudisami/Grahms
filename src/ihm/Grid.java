@@ -205,8 +205,6 @@ public class Grid extends JPanel{
 			lineCoords = allLines.get(i).getVisitedCoordonates();
 			color = allLines.get(i).getColor();
 			for(int j = 0; j < lineCoords.size()-1; j++) {
-				
-			
 				xPixel = (lineCoords.get(j).getX()+1 )*(caseWidth) - (caseWidth/2);
 				yPixel = (lineCoords.get(j).getY()+1 )*(caseWidth) - (caseWidth/2);
 				xNextPixel = (lineCoords.get(j+1).getX()+1 )*(caseWidth) - (caseWidth/2);
