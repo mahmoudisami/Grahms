@@ -44,7 +44,6 @@ public class GameProgress {
 		}
 		if(clock.getHour().equals("01")) {
 			initDistrict();
-			System.out.println("-----------");
 		}
 		if(clock.getHour().equals("07") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
 			goWork();
@@ -77,7 +76,6 @@ public class GameProgress {
 		for(int i=0; i<nbrLine; i++) {
 			for(int j=0; j<nbrRow; j++) {
 				if(map[i][j] != null && map[i][j].isResidential()) {
-					System.out.println("Send to work");
 					sendToWork(map[i][j]);
 				}
 			}
@@ -95,10 +93,8 @@ public class GameProgress {
 					AccessibleDistrict visitedDistrict;
 					for(int index = 0; index < aDistrict.size(); index ++) {
 						visitedDistrict = aDistrict.get(index); 
-						//System.out.println(visitedDistrict.getDistrict());
 						if(!isDoneComm && visitedDistrict.getDistrict().isCommercial()) { // Quartier commercial ou ils vont travailler
 							cWorkingDistrict = visitedDistrict.getDistrict();				
-							System.out.println(cWorkingDistrict.getActualPeople() +"Bien parti du commercial");
 							cWorkingDistrict.setPeople(0);
 							isDoneComm = true;
 						}
@@ -106,7 +102,6 @@ public class GameProgress {
 							sWorkingDistrict = visitedDistrict.getDistrict();				
 							sWorkingDistrict.setPeople(0);
 							isDoneServ = true;
-							System.out.println(sWorkingDistrict.getActualPeople() + "Bien parti du service");
 						}
 					}
 				}
@@ -123,11 +118,9 @@ public class GameProgress {
 			for(index = 0; index < 3; index ++) { //Numero du train, 1 par heure
 				if(commercial >= 500) { // 500 étant la limite par train
 					commercial -= 500;
-					System.out.println("500 Parti du commercial");
 					commercialWorker.put(index, 500);
 				}else if(commercial > 0) {
 					commercialWorker.put(index, commercial);
-					System.out.println(commercial + " Parti au commercial");
 					commercial = 0;
 				}
 				else {
@@ -147,7 +140,6 @@ public class GameProgress {
 					serviceWorker.put(index, 500);
 				}else if(service > 0) {
 					serviceWorker.put(index, service);
-					System.out.println(service + " Parti au Service");
 					service = 0;
 				}
 				else {
@@ -199,7 +191,6 @@ public class GameProgress {
 				return true;
 			}
 		}
-		System.out.println("Les habitants ne peuvent pas travailler dans un commerce");
 		return false;
 	}
 	
@@ -210,7 +201,6 @@ public class GameProgress {
 				return true;
 			}
 		}
-		System.out.println("Les habitants ne peuvent pas travailler dans un service");
 		return false;
 	}
 	
@@ -226,18 +216,15 @@ public class GameProgress {
 					AccessibleDistrict visitedDistrict;
 					for(int index = 0; index < aDistrict.size(); index ++) {
 						visitedDistrict = aDistrict.get(index); 
-						//System.out.println(visitedDistrict.getDistrict());
 						if(!isDoneComm && visitedDistrict.getDistrict().isCommercial()) { // Quartier commercial ou ils vont travailler
 							cWorkingDistrict = visitedDistrict.getDistrict();				
 							cWorkingDistrict.addPeople(commercialWorkerByDistrict.get(map[i][j]).get(trainNumber));
 							isDoneComm = true;
-							System.out.println(commercialWorkerByDistrict.get(map[i][j]).get(trainNumber)+ " Bien arrivé au comm ");
 						}
 						if(!isDoneServ && visitedDistrict.getDistrict().isService()) { // Quartier commercial ou ils vont travailler
 							sWorkingDistrict = visitedDistrict.getDistrict();				
 							sWorkingDistrict.addPeople(serviceWorkerByDistrict.get(map[i][j]).get(trainNumber));
 							isDoneServ = true;
-							System.out.println(serviceWorkerByDistrict.get(map[i][j]).get(trainNumber) +" Bien arrivé au serv");
 						}
 					}
 				}
@@ -389,7 +376,6 @@ public class GameProgress {
 			for(int y = 0; y<nbrRow; y++) {
 				dist = map[x][y];
 				if(dist != null) {
-					System.out.println("Quartier init");
 					if(x!=0 && map[x-1][y] != null) {
 						if(map[x-1][y].isStation()) {
 							dist.addAccessibleDistrict(map[x-1][y], 1,false);
