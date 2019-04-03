@@ -62,8 +62,12 @@ public class Grid extends JPanel{
 			}
 		}
 		setBounds(10, 10, 900, 600);
+		JProgressBar bar_SatisfactionDistrict = new JProgressBar();
+		bar_SatisfactionDistrict.setBounds(113, 83, 138, 20);
 		
-		
+		JLabel lblValDistrictPop = new JLabel();
+		lblValDistrictPop.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
+		lblValDistrictPop.setBounds(113, 38, 83, 20);
 		
 		addMouseListener(new MouseAdapter(){	
 			public void mouseClicked(MouseEvent e) {
@@ -72,6 +76,8 @@ public class Grid extends JPanel{
 				int happinessLevel = 0;
 				int popNumber;
 				String popNumberLb;
+				
+        		
 				if ( getAddLineBool() == false){
 					System.out.println("Branche classique");
 					int x=e.getX();
@@ -102,21 +108,16 @@ public class Grid extends JPanel{
 			                	subwayPanel2.setVisible(false);
 		                	}
 		                	
-		                	if(grid[caseX][caseY].isResidential()) {
+		                	if(grid[caseX][caseY].isResidential()) { //If residential = show panel for district
 		                		popNumber = grid[caseX][caseY].getActualPeople();
 		                		popNumberLb = Integer.toString(popNumber);
-		                		JLabel lblValDistrictPop = new JLabel(popNumberLb);
-		                		lblValDistrictPop.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
-		                		lblValDistrictPop.setBounds(113, 38, 83, 20);
+		                		lblValDistrictPop.setText(popNumberLb);
 		                		infoDistrictPanel.add(lblValDistrictPop);
 		                		
-		                		JProgressBar bar_SatisfactionDistrict = new JProgressBar();
-		                		bar_SatisfactionDistrict.setBounds(113, 83, 138, 20);
 			            		happinessLevel = grid[caseX][caseY].getSatisfaction();
 			            		bar_SatisfactionDistrict.setValue(happinessLevel);
 			            		bar_SatisfactionDistrict.setStringPainted(true);
 			            		infoDistrictPanel.add(bar_SatisfactionDistrict);
-			            		
 			            		infoDistrictPanel.setVisible(true);
 		                	}else {
 		                		

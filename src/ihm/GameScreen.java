@@ -509,6 +509,7 @@ public class GameScreen extends JFrame implements Runnable{
 		windowThread.start();
 	}
 
+	
 	@Override
 	public void run() {
 		while (true) {
