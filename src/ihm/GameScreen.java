@@ -87,7 +87,8 @@ public class GameScreen extends JFrame implements Runnable{
 	
 	public Image img;
 	private JPanel districtPanel;
-	private JPanel subwayPanel;
+	private JPanel subwayPanel;		//Panel for district without station
+	private JPanel subwayPanel2;	//Panel for district with station
 	
 	private GameProgress game;
 	
@@ -292,6 +293,11 @@ public class GameScreen extends JFrame implements Runnable{
 		contentPane.add(subwayPanel);
 		subwayPanel.setLayout(null);
 		
+		subwayPanel2 = new JPanel();
+		subwayPanel2.setBounds(922, 367, 262, 263);
+		contentPane.add(subwayPanel2);
+		subwayPanel2.setLayout(null);
+		
 		btnAddStation = new JButton("Add Station");
 		btnAddStation.setBounds(34, 11, 188, 52);
 		btnAddStation.addActionListener(new ActionListener() {
@@ -301,12 +307,14 @@ public class GameScreen extends JFrame implements Runnable{
 				money.withDraw(myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getStation().getConstructionCost());
 				myGrid.districtLinker.stationModification(myGrid.grid, myGrid.allLines, myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()]);
 				myGrid.repaint();
+				subwayPanel.setVisible(false);
+				subwayPanel2.setVisible(true);
 			}
 		});
 		subwayPanel.add(btnAddStation);
 		
 		btnAddLine = new JButton("Add Line");
-		btnAddLine.setBounds(34, 74, 188, 52);
+		btnAddLine.setBounds(34, 11, 188, 52);
 		btnAddLine.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -316,14 +324,17 @@ public class GameScreen extends JFrame implements Runnable{
 			}
 		});
 		
-		subwayPanel.add(btnAddLine);
+		subwayPanel2.add(btnAddLine);
 		
 		JButton btnUpgradeDistrict = new JButton("<html>Upgrade<br>\r\n&nbsp;Station<html>");
-		btnUpgradeDistrict.setBounds(34, 137, 188, 52);
+		btnUpgradeDistrict.setBounds(34, 74, 188, 52);
 		subwayPanel.add(btnUpgradeDistrict);
+		JButton btnUpgradeDistrict2 = new JButton("<html>Upgrade<br>\r\n&nbsp;Station<html>");
+		btnUpgradeDistrict2.setBounds(34, 74, 188, 52);
+		subwayPanel2.add(btnUpgradeDistrict2);
 		
 		JButton destroyButton = new JButton("Destroy");
-		destroyButton.setBounds(34, 200, 188, 52);
+		destroyButton.setBounds(34, 137, 188, 52);
 		destroyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {	
@@ -352,6 +363,7 @@ public class GameScreen extends JFrame implements Runnable{
 					popTotal.wdPopulationTotal(tmpPop);
 					myGrid.setMapTab(myGrid.getCoordsX(),myGrid.getCoordsY(),null);
 					subwayPanel.setVisible(false);
+					subwayPanel2.setVisible(false);
 					infoDistrictPanel.setVisible(false);
 					districtPanel.setVisible(true);
 					myGrid.repaint();
@@ -359,15 +371,63 @@ public class GameScreen extends JFrame implements Runnable{
 					myGrid.destroyLines(myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()], myGrid);
 					myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()].deleteStation();
 					myGrid.repaint();
+					subwayPanel2.setVisible(false);
+					subwayPanel.setVisible(true);
 				}
 			}
 		});
 		subwayPanel.add(destroyButton);
 		
+		JButton destroyButton2 = new JButton("Destroy");
+		destroyButton2.setBounds(34, 137, 188, 52);
+		destroyButton2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {	
+				if (myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].isStation() == true) {
+					destroyString = new String[2];
+					destroyString[0] = "District";
+					destroyString[1] = "Station";
+				} else {
+					destroyString = new String[1];
+					destroyString[0] = "District";
+				}
+				JOptionPane destroyChoice = new JOptionPane();
+				String nom = (String)destroyChoice.showInputDialog(null, 
+				  "What would you destroy?",
+				  "Select",
+				  JOptionPane.WARNING_MESSAGE,
+				  null,
+				  destroyString,
+				  destroyString[0]);
+
+				if (nom == null || (nom != null && ("".equals(nom)))){
+				}
+				else if (nom.equals("District")) {
+					myGrid.destroyLines(myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()], myGrid);
+					tmpPop = myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getActualPeople();
+					popTotal.wdPopulationTotal(tmpPop);
+					myGrid.setMapTab(myGrid.getCoordsX(),myGrid.getCoordsY(),null);
+					subwayPanel.setVisible(false);
+					subwayPanel2.setVisible(false);
+					infoDistrictPanel.setVisible(false);
+					districtPanel.setVisible(true);
+					myGrid.repaint();
+				} else if (nom.equals("Station")) {
+					myGrid.destroyLines(myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()], myGrid);
+					myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()].deleteStation();
+					myGrid.repaint();
+					subwayPanel2.setVisible(false);
+					subwayPanel.setVisible(true);
+				}
+			}
+		});
+		subwayPanel2.add(destroyButton2);
+		
 		subwayPanel.setVisible(false);
+		subwayPanel2.setVisible(false);
 		infoDistrictPanel.setVisible(false);
 		
-		myGrid = new Grid(districtPanel, subwayPanel, infoDistrictPanel);
+		myGrid = new Grid(districtPanel, subwayPanel, subwayPanel2, infoDistrictPanel);
 		
 		
 		myGrid.setBounds(10, 10, 902, 602);

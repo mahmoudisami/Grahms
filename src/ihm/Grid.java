@@ -39,13 +39,15 @@ public class Grid extends JPanel{
 	int caseX, caseY, caseWidth;
 	int previousCaseX, previousCaseY;
 	private JPanel districtPanel;
-	private JPanel subwayPanel;
+	private JPanel subwayPanel;		//Panel for district without station
+	private JPanel subwayPanel2;	//Panel for district with station
 	private JPanel infoDistrictPanel;
 	
 	
-	public Grid(JPanel districtPanel, JPanel subwayPanel, JPanel infoDistrictPanel){
+	public Grid(JPanel districtPanel, JPanel subwayPanel, JPanel subwayPanel2, JPanel infoDistrictPanel){
 		this.districtPanel = districtPanel;
 		this.subwayPanel = subwayPanel;
+		this.subwayPanel2 = subwayPanel2;
 		this.infoDistrictPanel = infoDistrictPanel;
 		
 		try {
@@ -86,12 +88,20 @@ public class Grid extends JPanel{
 		                neighbourCalculator(caseX,caseY);
 		                if(grid[caseX][caseY]== null){
 		                	subwayPanel.setVisible(false);
+		                	subwayPanel2.setVisible(false);
 		                	infoDistrictPanel.setVisible(false);
 		                	districtPanel.setVisible(true);
 		                }else{
-		                	districtPanel.setVisible(false);
-		                	subwayPanel.setVisible(true);
-
+		                	if(grid[caseX][caseY].isStation()){
+		                		districtPanel.setVisible(false);
+			                	subwayPanel2.setVisible(true);
+			                	subwayPanel.setVisible(false);
+		                	}else{
+		                		districtPanel.setVisible(false);
+			                	subwayPanel.setVisible(true);
+			                	subwayPanel2.setVisible(false);
+		                	}
+		                	
 		                	if(grid[caseX][caseY].isResidential()) {
 		                		popNumber = grid[caseX][caseY].getActualPeople();
 		                		popNumberLb = Integer.toString(popNumber);
