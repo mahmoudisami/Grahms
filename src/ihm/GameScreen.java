@@ -80,7 +80,7 @@ public class GameScreen extends JFrame implements Runnable{
 	private JProgressBar bar_SatisfactionCity; 
 	private GameScreen instance = this;
 	
-	private Money money = new Money();
+	public Money money = new Money();
 	private PopulationTotal popTotal = new PopulationTotal();
 	private HappinessTotal happTol = new HappinessTotal();
 	private String[] destroyString;
@@ -431,7 +431,7 @@ public class GameScreen extends JFrame implements Runnable{
 		subwayPanel2.setVisible(false);
 		infoDistrictPanel.setVisible(false);
 		
-		myGrid = new Grid(districtPanel, subwayPanel, subwayPanel2, infoDistrictPanel);
+		myGrid = new Grid(districtPanel, subwayPanel, subwayPanel2, infoDistrictPanel, money);
 		
 		
 		myGrid.setBounds(10, 10, 902, 602);
@@ -512,6 +512,10 @@ public class GameScreen extends JFrame implements Runnable{
 		windowThread.start();
 	}
 
+	public Money getMoney() {
+		return money;
+	}
+	
 	
 	@Override
 	public void run() {

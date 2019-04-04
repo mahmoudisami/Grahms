@@ -15,9 +15,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
+import data.Const;
 import data.Coordinates;
 import data.District;
 import data.Line;
+import data.Money;
 import moteur.DistrictLinker;
 
 public class Grid extends JPanel{
@@ -33,6 +35,7 @@ public class Grid extends JPanel{
 	boolean addLineBoolChangedToTrue = false;	//TRUE si on viens de passer AddLineBool de FALSE à TRUE, sinon FALSE
 	ArrayList<Coordinates> lineCoo;
 	ArrayList<Line> allLines = new ArrayList<Line>();
+	private Money money;
 	
 	public District[][] grid = new District[width][height];
 	public Image img;
@@ -44,11 +47,12 @@ public class Grid extends JPanel{
 	private JPanel infoDistrictPanel;
 	
 	
-	public Grid(JPanel districtPanel, JPanel subwayPanel, JPanel subwayPanel2, JPanel infoDistrictPanel){
+	public Grid(JPanel districtPanel, JPanel subwayPanel, JPanel subwayPanel2, JPanel infoDistrictPanel,Money money){
 		this.districtPanel = districtPanel;
 		this.subwayPanel = subwayPanel;
 		this.subwayPanel2 = subwayPanel2;
 		this.infoDistrictPanel = infoDistrictPanel;
+		this.money = money;
 		
 		try {
 			img = ImageIO.read(new File("src/image/land.png"));
@@ -162,6 +166,7 @@ public class Grid extends JPanel{
 		                			if(grid[caseX][caseY] != null && grid[caseX][caseY].isStation() == true && (caseX != previousCaseX || caseY != previousCaseY)){
 		                				setAddLineBool(false);
 		                				System.out.println("Ligne completee avec succes");
+		                				money.withDraw((lineCoo.size() -1 )*Const.MAINTENANCE_COST_LINE);
 		                				Line lineCompleted = new Line(grid[lineCoo.get(0).getX()][lineCoo.get(0).getY()], grid[lineCoo.get(lineCoo.size()-1).getX()][lineCoo.get(lineCoo.size()-1).getY()], lineCoo.size()-1, true, lineCoo);
 		                				districtLinker.linkDistrict(lineCompleted);
 		                				allLines.add(lineCompleted);
