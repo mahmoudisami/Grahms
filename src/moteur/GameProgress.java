@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+
 import data.*;
 import ihm.*;
 
@@ -11,11 +15,14 @@ public class GameProgress {
 	
 	private Clock clock;
 	private Money money;
+	private HappinessTotal happTotal;
 	private FinancialCalculator fin = new FinancialCalculator();
 	private int tmpMoney;
 	private String historicText ="";
 	private Grid grid;
 	private District[][] map;
+	private ArrayList<Line> allLines;
+	private DistrictLinker dlink = new DistrictLinker();
 	private int nbrLine, nbrRow;
 	private HashMap<Integer, Integer> commercialWorker = new HashMap<>();
 	private HashMap<Integer, Integer> serviceWorker = new HashMap<>();
@@ -23,45 +30,62 @@ public class GameProgress {
 	private HashMap<District, HashMap<Integer, Integer>> serviceWorkerByDistrict = new HashMap<>();
 	int width = 18;
 	int height = 12;
+	private int tmpHapp;
+	private JPanel infoVillePanel;
+	private JProgressBar bar_SatisfactionCity = new JProgressBar();
 	
-	public GameProgress(Clock clock, Money money, Grid grid) {
+	public GameProgress(Clock clock, Money money, Grid grid,JPanel infoVillePanel) {
 		this.clock = clock;
 		this.money = money;
 		this.grid = grid;
+		this.infoVillePanel = infoVillePanel;
 		map = grid.getMapTab();
+		allLines = grid.getAllLines();
 		nbrLine = map.length;
 		nbrRow = map[0].length;
+		
+		bar_SatisfactionCity.setBounds(112, 104, 138, 20);
 	}
 	
 	public void launchGameProgress () {
 		if(clock.getDayPos()==7 && clock.getHour().equals("23")) { //Chaque dimanche a 23h
 			historicCalculator();
 		}
-		if(clock.getHour().equals("07") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
-			goWork();
+		if(clock.getHour().equals("01")) {
+			initDistrict();
 		}
-		if(clock.getHour().equals("08") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
-			arriveWork(0);
+		if(clock.getDayPos() != 7 && clock.getDayPos() != 6) {
+			if(clock.getHour().equals("07")) {
+				goWork();
+			}
+			if(clock.getHour().equals("08") ) {
+				arriveWork(0);
+			}
+			if(clock.getHour().equals("09") ) {
+				arriveWork(1);
+			}
+			if(clock.getHour().equals("10") ) {
+				arriveWork(2);
+			}
+			if(clock.getHour().equals("16") ) {
+				fin.cumulMoney(map,commercialWorkerByDistrict, serviceWorkerByDistrict);
+				goHome();
+			}
 		}
-		if(clock.getHour().equals("09") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
-			arriveWork(1);
-		}
-		if(clock.getHour().equals("10") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
-			arriveWork(2);
-		}
-		if(clock.getHour().equals("16") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
-			goHome();
-		}
-		if(clock.getDayPos()==1 && clock.getHour().equals("1")) { //Call the function every Monday at 1am
+		if(clock.getDayPos()==7 && clock.getHour().equals("01")) { //Call the function every Monday at 1am
 			happinessCalculator();
 		}
+		if(clock.getDayPos() == 6 && clock.getHour().equals("10")) {
+			servicesNeeds();
+		}
+		 calHappinessTotal();
+		
 	}
 	
 	public void goWork() {
 		for(int i=0; i<nbrLine; i++) {
 			for(int j=0; j<nbrRow; j++) {
 				if(map[i][j] != null && map[i][j].isResidential()) {
-					System.out.println("Send to work");
 					sendToWork(map[i][j]);
 				}
 			}
@@ -79,10 +103,8 @@ public class GameProgress {
 					AccessibleDistrict visitedDistrict;
 					for(int index = 0; index < aDistrict.size(); index ++) {
 						visitedDistrict = aDistrict.get(index); 
-						//System.out.println(visitedDistrict.getDistrict());
 						if(!isDoneComm && visitedDistrict.getDistrict().isCommercial()) { // Quartier commercial ou ils vont travailler
 							cWorkingDistrict = visitedDistrict.getDistrict();				
-							System.out.println(cWorkingDistrict.getActualPeople() +"Bien parti du commercial");
 							cWorkingDistrict.setPeople(0);
 							isDoneComm = true;
 						}
@@ -90,7 +112,6 @@ public class GameProgress {
 							sWorkingDistrict = visitedDistrict.getDistrict();				
 							sWorkingDistrict.setPeople(0);
 							isDoneServ = true;
-							System.out.println(sWorkingDistrict.getActualPeople() + "Bien parti du service");
 						}
 					}
 				}
@@ -107,12 +128,12 @@ public class GameProgress {
 			for(index = 0; index < 3; index ++) { //Numero du train, 1 par heure
 				if(commercial >= 500) { // 500 Ã©tant la limite par train
 					commercial -= 500;
-					System.out.println("500 Parti du commercial");
 					commercialWorker.put(index, 500);
+					dist.setSatisfaction(1);
 				}else if(commercial > 0) {
 					commercialWorker.put(index, commercial);
-					System.out.println(commercial + " Parti au commercial");
 					commercial = 0;
+					dist.setSatisfaction(2);
 				}
 				else {
 					commercialWorker.put(index, 0); 
@@ -129,10 +150,11 @@ public class GameProgress {
 				if(service >= 500) {
 					service -= 500;
 					serviceWorker.put(index, 500);
+					dist.setSatisfaction(1);
 				}else if(service > 0) {
 					serviceWorker.put(index, service);
-					System.out.println(service + " Parti au Service");
 					service = 0;
+					dist.setSatisfaction(2);
 				}
 				else {
 					serviceWorker.put(index, 0); 
@@ -148,12 +170,96 @@ public class GameProgress {
 		serviceWorkerByDistrict.put(dist, serviceWorker); 
 		remain = commercial + service; // habitants restants
 		if(remain > 0) {
-			/*
-			 * Gerer la satisfaction par rapport au nombre restant d'habitants
-			 */
+			dist.setSatisfaction(-5);
 		}
 	}
 	
+	public void servicesNeeds() {
+		int i,j;
+		int popRemain;
+		District dist;
+		for(i=0; i<nbrLine;i++) {
+			for(j=0; j<nbrRow;j++) {
+				dist = map[i][j];
+				if(dist != null && dist.isResidential()) {
+					popRemain = dist.getActualPeople();
+					if(canWorkServ(dist)) {
+						ArrayList<AccessibleDistrict> aDist = dist.getAccessibleDistrict();
+						for(int index = 0; index<aDist.size(); index ++ ) {
+							if(aDist.get(index).getDistrict().isService()) {
+								if(popRemain > 500) {
+									popRemain -= 500;
+									//Augmenter la satisfaction de 1
+									map[i][j].setSatisfaction(1);
+									System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has increased by 1");
+								}
+								else if(popRemain > 0) {
+									popRemain = 0;
+									//Augmenter la satisfaction de 5
+									map[i][j].setSatisfaction(5);
+									System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has increased by 5");
+								}
+							}
+						}
+						if(popRemain != 0) {
+							//Réduire la satisfaction de 2
+							map[i][j].setSatisfaction(-2);
+							System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has decreased by 2");
+						}
+					}
+					else {
+						//Réduire satisfaction de 5
+						map[i][j].setSatisfaction(-5);
+						System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has decreased by 5");
+					}
+				}
+			}
+		}
+	}
+	
+	public void calHappinessTotal() {
+		int somme = 0;
+		int counter = 0;
+		int happinessTotal = 0;
+		
+		//if(gotDistrict()) {
+			for(int i=0; i<nbrLine; i++) {
+				for(int j=0; j<nbrRow; j++) {
+						if(map[i][j] != null && map[i][j].isResidential()) {
+						counter++;
+						somme = map[i][j].getSatisfaction() + somme;
+					}
+					
+				}
+			}
+			if(counter != 0) {
+				happinessTotal = somme/counter;
+			}else {
+				happinessTotal = 0;
+			}
+			
+			
+			bar_SatisfactionCity.setValue(happinessTotal);
+			bar_SatisfactionCity.setStringPainted(true);
+			infoVillePanel.add(bar_SatisfactionCity);
+			//happTotal.setHappinessTotal(happinessTotal);
+			//System.out.println(happinessTotal);
+					
+		//}
+			grid.repaint();
+		
+	}
+
+	public boolean gotDistrict() {
+		for(int i=0; i<nbrLine; i++) {
+			for(int j=0; j<nbrRow; j++) {
+					if(map[i][j] != null && map[i][j].isResidential()) {
+						return true;
+					}
+			}
+		}
+		return false;
+	}
 	public boolean canWorkComm(District dist){
 		ArrayList<AccessibleDistrict> aDist = dist.getAccessibleDistrict();
 		for(int index = 0; index<aDist.size(); index ++ ) {
@@ -161,7 +267,6 @@ public class GameProgress {
 				return true;
 			}
 		}
-		System.out.println("Les habitants ne peuvent pas travailler dans un commerce");
 		return false;
 	}
 	
@@ -172,7 +277,6 @@ public class GameProgress {
 				return true;
 			}
 		}
-		System.out.println("Les habitants ne peuvent pas travailler dans un service");
 		return false;
 	}
 	
@@ -188,18 +292,15 @@ public class GameProgress {
 					AccessibleDistrict visitedDistrict;
 					for(int index = 0; index < aDistrict.size(); index ++) {
 						visitedDistrict = aDistrict.get(index); 
-						//System.out.println(visitedDistrict.getDistrict());
 						if(!isDoneComm && visitedDistrict.getDistrict().isCommercial()) { // Quartier commercial ou ils vont travailler
 							cWorkingDistrict = visitedDistrict.getDistrict();				
 							cWorkingDistrict.addPeople(commercialWorkerByDistrict.get(map[i][j]).get(trainNumber));
 							isDoneComm = true;
-							System.out.println("Bien arrivÃ© au comm ");
 						}
 						if(!isDoneServ && visitedDistrict.getDistrict().isService()) { // Quartier commercial ou ils vont travailler
 							sWorkingDistrict = visitedDistrict.getDistrict();				
 							sWorkingDistrict.addPeople(serviceWorkerByDistrict.get(map[i][j]).get(trainNumber));
 							isDoneServ = true;
-							System.out.println("Bien arrivÃ© au serv");
 						}
 					}
 				}
@@ -208,16 +309,26 @@ public class GameProgress {
 	}
 	
 	public void historicCalculator() {
-		tmpMoney = fin.districtCalculatorCost(grid.getMapTab());
+		tmpMoney = fin.districtCalculatorCost(map);
 		money.withDraw(tmpMoney);
 		historicText += "------------ "+ clock.getDay() +" "+ clock.getMonthName() +"------------\n";
 		historicText += "-" + tmpMoney + " Entretien des quartiers\n";
-		tmpMoney = fin.districtCalculatorGain(grid.getMapTab());
+		
+		tmpMoney = fin.calculatorGainCS();
 		money.addMoney(tmpMoney);
-		historicText += "+" + tmpMoney + " Gain des quartiers \n";
-		tmpMoney = fin.stationCalculatorCost(grid.getMapTab());
+		historicText += "+" + tmpMoney + " Gain des quartiers commerciaux et services \n";
+		
+		tmpMoney = fin.calculatorGainResidential(map);
+		money.addMoney(tmpMoney);
+		historicText += "+" + tmpMoney + " Gain des impots résidentiels \n";
+		
+		tmpMoney = fin.stationCalculatorCost(map);
 		money.withDraw(tmpMoney);
 		historicText += "-" + tmpMoney + " Entretien des stations \n";
+		
+		tmpMoney = fin.lineCalculatorCost(allLines);
+		money.withDraw(tmpMoney);
+		historicText += "-" + tmpMoney + " Entretien des lignes \n";
 	}
 	
 	public void happinessCalculator() {
@@ -312,27 +423,102 @@ public class GameProgress {
 				gotHisOwnStation = true;
 			}
 			
-			if (gotHisOwnStation == false && calNbStation == 0) {
-				map[i][j].setSatisfaction(-10); //if the district dont have his own station and no statio nearby, the satisfaction will decrease by 10
+			if (gotHisOwnStation == false && calNbStation == 0 && map[i][j].getUpdateStatusNoStation() == 0) {
+				map[i][j].setSatisfaction(-10); //if the district dont have his own station and no station nearby, the satisfaction will decrease by 10
+				map[i][j].setUpdateStatusNoStationTrue();
+				//map[i][j].setUpdateStatusGotStationFalse();
+				System.out.println("Satisfaction level on map["+i+"]["+j+"] has decreased by 10");
+				//grid.repaint();
 			}
 			
-			if(gotHisOwnStation == true) {
+			if(gotHisOwnStation == true && map[i][j].getUpdateStatusGotStation() == 0) {
 				map[i][j].setSatisfaction(10);
+				map[i][j].setUpdateStatusGotStationTrue();
+				//map[i][j].setUpdateStatusNoStationFalse(); //set var to 0
+				System.out.println("Satisfaction level on map["+i+"]["+j+"] has increased by 10");
+				//grid.repaint();
 			}
 			
-			if (gotHisOwnStation == false && calNbStation > 0 && calNbStation <= 4) {
+			if (calNbStation > 0 && calNbStation <= 9 && map[i][j].getUpdateStatusGotStationNearby() == 0) {
 				map[i][j].setSatisfaction(5);
+				map[i][j].setUpdateStatusGotStationNearbyTrue();
+				//map[i][j].setUpdateStatusNoStationNearbyFalse();
+				System.out.println("Satisfaction level on map["+i+"]["+j+"] has increased by 5");
+				//grid.repaint();
 			}
 			
-			if (gotHisOwnStation == false && calNbStation >= 5 && calNbStation <= 9) {
+			if(calNbStation == 0 && map[i][j].getUpdateStatusNoStationNearby() == 0) {
 				map[i][j].setSatisfaction(5);
+				map[i][j].setUpdateStatusNoStationNearbyTrue();
+				//map[i][j].setUpdateStatusGotStationNearbyFalse();
+				System.out.println("Satisfaction level on map["+i+"]["+j+"] has decreased by 5");
 			}
+			
 		}	
 	}
 	
 	
 	public String getHistoricText() {
 		return historicText;
+	}
+	
+	public void initDistrict() {
+		District dist;
+		for(int x = 0; x<nbrLine; x++) {
+			for(int y = 0; y<nbrRow; y++) {
+				dist = map[x][y];
+				if(dist != null) {
+					if(x!=0 && map[x-1][y] != null) {
+						if(map[x-1][y].isStation()) {
+							dist.addAccessibleDistrict(map[x-1][y], 1,false);
+							dlink.refreshAD(map[x-1][y], dist, 1,false);
+						}
+					}
+					if(y!=0  && map[x][y-1] != null) {
+						if(map[x][y-1].isStation()) {
+							dist.addAccessibleDistrict(map[x][y-1], 1,false);
+							dlink.refreshAD(map[x][y-1],dist,  1,false);
+						}
+					}
+					if(x != 0 && y != 0  && map[x-1][y-1] != null) {
+						if(map[x-1][y-1].isStation()) {
+							dist.addAccessibleDistrict(map[x-1][y-1], 1,false);
+							dlink.refreshAD(map[x-1][y-1],dist,  1,false);
+						}
+					}
+					if(x != nbrLine-1  && map[x+1][y] != null) {
+						if(map[x+1][y].isStation()) {
+							dist.addAccessibleDistrict(map[x+1][y], 1,false);
+							dlink.refreshAD(map[x+1][y],dist,  1,false);
+						}
+					}
+					if(y != nbrRow-1  && map[x][y+1] != null) {
+						if(map[x][y+1].isStation()) {
+							dist.addAccessibleDistrict(map[x][y+1], 1,false);
+							dlink.refreshAD(map[x][y+1], dist, 1,false);
+						}
+					}
+					if(x != nbrLine-1 && y != nbrRow-1  && map[x+1][y+1] != null) {
+						if(map[x+1][y+1].isStation()) {
+							dist.addAccessibleDistrict(map[x+1][y+1], 1,false);
+							dlink.refreshAD( map[x+1][y+1],dist,  1,false);
+						}
+					}
+					if(x != 0 && y != nbrRow-1  && map[x-1][y+1] != null) {
+						if(map[x-1][y+1].isStation()) {
+							dist.addAccessibleDistrict(map[x-1][y+1], 1,false);
+							dlink.refreshAD(map[x-1][y+1],dist,  1,false);
+						}
+					}
+					if(x != nbrLine-1 && y != 0  && map[x+1][y-1] != null) {
+						if(map[x+1][y-1].isStation()) {
+							dist.addAccessibleDistrict(map[x+1][y-1], 1,false);
+							dlink.refreshAD(map[x+1][y-1],dist,  1,false);
+						}
+					}
+				}
+			}
+		}
 	}
 }
 

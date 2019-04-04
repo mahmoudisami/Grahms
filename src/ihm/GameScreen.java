@@ -13,7 +13,10 @@ import javax.swing.border.EmptyBorder;
 
 import data.Commercial;
 import data.Coordinates;
+import data.District;
+import data.HappinessTotal;
 import data.Money;
+import data.PopulationTotal;
 import data.Residential;
 import data.Services;
 import data.Station;
@@ -65,18 +68,37 @@ public class GameScreen extends JFrame implements Runnable{
 	private JLabel lblDayofWeek;
 	private JLabel lblDaysgone;
 	private JLabel lblDayNumber;
+	
+	private JLabel lblCityPop;
+	private JLabel lblGlobalMoney;
+	private JLabel lblHistoric;
+	private JLabel lblSatisfaction;
+	private JPanel infoVillePanel; 
+	private JPanel infoDistrictPanel;
+	private JLabel lblPopulation;
+	private JLabel lblDistrict;
+	private JProgressBar bar_SatisfactionCity; 
 	private GameScreen instance = this;
 	
 	private Money money = new Money();
+	private PopulationTotal popTotal = new PopulationTotal();
+	private HappinessTotal happTol = new HappinessTotal();
 	private String[] destroyString;
 	
 	public Image img;
 	private JPanel districtPanel;
-	private JPanel subwayPanel;
+	private JPanel subwayPanel;		//Panel for district without station
+	private JPanel subwayPanel2;	//Panel for district with station
 	
 	private GameProgress game;
 	
+	private Grid grid;
+	private District[][] map;
+	private int nbrLine = 18, nbrRow = 12;
+	private int nbPopTotal = 0;
+	private String nbPopTotalLb;
 	private long speed = 300;
+	private int tmpPop,tmpHapp;
 	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -120,10 +142,11 @@ public class GameScreen extends JFrame implements Runnable{
 		lblCity.setBounds(10, 0, 188, 25);
 		infoVillePanel.add(lblCity);
 		
+		/*
 		JProgressBar bar_SatisfactionCity = new JProgressBar();
 		bar_SatisfactionCity.setBounds(112, 104, 138, 20);
 		infoVillePanel.add(bar_SatisfactionCity);
-		
+		*/
 		JLabel lblTotalPopulation = new JLabel("Total Population :");
 		lblTotalPopulation.setBounds(10, 30, 126, 20);
 		lblTotalPopulation.setFont(fontInfo);
@@ -153,13 +176,13 @@ public class GameScreen extends JFrame implements Runnable{
 		});
 		infoVillePanel.add(btnHistoric);
 		
-		JLabel lblGlobalMoney = new JLabel("Global Money :");
+		lblGlobalMoney = new JLabel("Global Money :");
 		lblGlobalMoney.setBounds(10, 65, 109, 20);
 		lblGlobalMoney.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		infoVillePanel.add(lblGlobalMoney);
 		
 		
-		JLabel lblCityPop = new JLabel("20");
+		lblCityPop = new JLabel();
 		lblCityPop.setFont(fontInfo);
 		lblCityPop.setBounds(150, 30, 100, 20);
 		infoVillePanel.add(lblCityPop);
@@ -169,30 +192,30 @@ public class GameScreen extends JFrame implements Runnable{
 		lblValGlobalMoney.setBounds(134, 65, 90, 20);
 		infoVillePanel.add(lblValGlobalMoney);
 		
-		JLabel lblHistoric = new JLabel("Historic :");
+		lblHistoric = new JLabel("Historic :");
 		lblHistoric.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		lblHistoric.setBounds(10, 159, 70, 20);
 		infoVillePanel.add(lblHistoric);
 		
-		JLabel lblSatisfaction = new JLabel("Satisfaction :");
+		lblSatisfaction = new JLabel("Satisfaction :");
 		lblSatisfaction.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		lblSatisfaction.setBounds(10, 104, 90, 20);
 		infoVillePanel.add(lblSatisfaction);
 		
 		// Informations of City
-		JPanel infoDistrictPanel = new JPanel();
+		infoDistrictPanel = new JPanel();
 		infoDistrictPanel.setBounds(922, 229, 260, 127);
 		contentPane.add(infoDistrictPanel);
 		infoDistrictPanel.setLayout(null);
 		infoDistrictPanel.setVisible(false);
 		
-		JLabel lblDistrict = new JLabel("DISTRICT");
+		lblDistrict = new JLabel("DISTRICT");
 		lblDistrict.setFont(fontTitle);
 		lblDistrict.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDistrict.setBounds(10, 0, 186, 27);
 		infoDistrictPanel.add(lblDistrict);
 		
-		JLabel lblPopulation = new JLabel("Population :");
+		lblPopulation = new JLabel("Population :");
 		lblPopulation.setBounds(10, 38, 94, 20);
 		lblPopulation.setFont(fontInfo);
 		infoDistrictPanel.add(lblPopulation);
@@ -202,10 +225,7 @@ public class GameScreen extends JFrame implements Runnable{
 		lblDistrictSatisfaction.setFont(fontInfo);
 		infoDistrictPanel.add(lblDistrictSatisfaction);
 		
-		JLabel lblValDistrictPop = new JLabel("inser POP");
-		lblValDistrictPop.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
-		lblValDistrictPop.setBounds(113, 38, 83, 20);
-		infoDistrictPanel.add(lblValDistrictPop);
+		
 		
 		// This Pane is visible when case without District is clicked
 		districtPanel = new JPanel();
@@ -223,9 +243,11 @@ public class GameScreen extends JFrame implements Runnable{
 					money.withDraw(myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getCost());
 					districtPanel.setVisible(false);
                 	subwayPanel.setVisible(true);
-                	infoDistrictPanel.setVisible(true);
+                	infoDistrictPanel.setVisible(false);
 				}
 				myGrid.repaint();
+				tmpPop = myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getActualPeople();
+				popTotal.addPopulationTotal(tmpPop);
 			}
 		});
 		districtPanel.add(btnResDistrict);
@@ -240,7 +262,7 @@ public class GameScreen extends JFrame implements Runnable{
 					money.withDraw(myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getCost());
 					districtPanel.setVisible(false);
                 	subwayPanel.setVisible(true);
-                	infoDistrictPanel.setVisible(true);
+                	infoDistrictPanel.setVisible(false);
 				}
 				myGrid.repaint();
 			}
@@ -258,7 +280,7 @@ public class GameScreen extends JFrame implements Runnable{
 					money.withDraw(myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getCost());
 					districtPanel.setVisible(false);
                 	subwayPanel.setVisible(true);
-                	infoDistrictPanel.setVisible(true);
+                	infoDistrictPanel.setVisible(false);
 				}
 				myGrid.repaint();
 			}
@@ -273,6 +295,11 @@ public class GameScreen extends JFrame implements Runnable{
 		contentPane.add(subwayPanel);
 		subwayPanel.setLayout(null);
 		
+		subwayPanel2 = new JPanel();
+		subwayPanel2.setBounds(922, 367, 262, 263);
+		contentPane.add(subwayPanel2);
+		subwayPanel2.setLayout(null);
+		
 		btnAddStation = new JButton("Add Station");
 		btnAddStation.setBounds(34, 11, 188, 52);
 		btnAddStation.addActionListener(new ActionListener() {
@@ -280,13 +307,16 @@ public class GameScreen extends JFrame implements Runnable{
 			public void actionPerformed(ActionEvent e) {
 				myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].createStation();
 				money.withDraw(myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getStation().getConstructionCost());
+				myGrid.districtLinker.stationModification(myGrid.grid, myGrid.allLines, myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()]);
 				myGrid.repaint();
+				subwayPanel.setVisible(false);
+				subwayPanel2.setVisible(true);
 			}
 		});
 		subwayPanel.add(btnAddStation);
 		
 		btnAddLine = new JButton("Add Line");
-		btnAddLine.setBounds(34, 74, 188, 52);
+		btnAddLine.setBounds(34, 11, 188, 52);
 		btnAddLine.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -296,14 +326,17 @@ public class GameScreen extends JFrame implements Runnable{
 			}
 		});
 		
-		subwayPanel.add(btnAddLine);
+		subwayPanel2.add(btnAddLine);
 		
 		JButton btnUpgradeDistrict = new JButton("<html>Upgrade<br>\r\n&nbsp;Station<html>");
-		btnUpgradeDistrict.setBounds(34, 137, 188, 52);
+		btnUpgradeDistrict.setBounds(34, 74, 188, 52);
 		subwayPanel.add(btnUpgradeDistrict);
+		JButton btnUpgradeDistrict2 = new JButton("<html>Upgrade<br>\r\n&nbsp;Station<html>");
+		btnUpgradeDistrict2.setBounds(34, 74, 188, 52);
+		subwayPanel2.add(btnUpgradeDistrict2);
 		
 		JButton destroyButton = new JButton("Destroy");
-		destroyButton.setBounds(34, 200, 188, 52);
+		destroyButton.setBounds(34, 137, 188, 52);
 		destroyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {	
@@ -327,33 +360,84 @@ public class GameScreen extends JFrame implements Runnable{
 				if (nom == null || (nom != null && ("".equals(nom)))){
 				}
 				else if (nom.equals("District")) {
+					myGrid.destroyLines(myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()], myGrid);
+					tmpPop = myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getActualPeople();
+					popTotal.wdPopulationTotal(tmpPop);
 					myGrid.setMapTab(myGrid.getCoordsX(),myGrid.getCoordsY(),null);
 					subwayPanel.setVisible(false);
+					subwayPanel2.setVisible(false);
 					infoDistrictPanel.setVisible(false);
 					districtPanel.setVisible(true);
 					myGrid.repaint();
 				} else if (nom.equals("Station")) {
+					myGrid.destroyLines(myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()], myGrid);
 					myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()].deleteStation();
 					myGrid.repaint();
+					subwayPanel2.setVisible(false);
+					subwayPanel.setVisible(true);
 				}
 			}
 		});
 		subwayPanel.add(destroyButton);
 		
+		JButton destroyButton2 = new JButton("Destroy");
+		destroyButton2.setBounds(34, 137, 188, 52);
+		destroyButton2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {	
+				if (myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].isStation() == true) {
+					destroyString = new String[2];
+					destroyString[0] = "District";
+					destroyString[1] = "Station";
+				} else {
+					destroyString = new String[1];
+					destroyString[0] = "District";
+				}
+				JOptionPane destroyChoice = new JOptionPane();
+				String nom = (String)destroyChoice.showInputDialog(null, 
+				  "What would you destroy?",
+				  "Select",
+				  JOptionPane.WARNING_MESSAGE,
+				  null,
+				  destroyString,
+				  destroyString[0]);
+
+				if (nom == null || (nom != null && ("".equals(nom)))){
+				}
+				else if (nom.equals("District")) {
+					myGrid.destroyLines(myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()], myGrid);
+					tmpPop = myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getActualPeople();
+					popTotal.wdPopulationTotal(tmpPop);
+					myGrid.setMapTab(myGrid.getCoordsX(),myGrid.getCoordsY(),null);
+					subwayPanel.setVisible(false);
+					subwayPanel2.setVisible(false);
+					infoDistrictPanel.setVisible(false);
+					districtPanel.setVisible(true);
+					myGrid.repaint();
+				} else if (nom.equals("Station")) {
+					myGrid.destroyLines(myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()], myGrid);
+					myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()].deleteStation();
+					myGrid.repaint();
+					subwayPanel2.setVisible(false);
+					subwayPanel.setVisible(true);
+				}
+			}
+		});
+		subwayPanel2.add(destroyButton2);
+		
 		subwayPanel.setVisible(false);
+		subwayPanel2.setVisible(false);
 		infoDistrictPanel.setVisible(false);
 		
-		myGrid = new Grid(districtPanel, subwayPanel, infoDistrictPanel);
+		myGrid = new Grid(districtPanel, subwayPanel, subwayPanel2, infoDistrictPanel);
 		
-		JProgressBar bar_SatisfactionDistrict = new JProgressBar();
-		bar_SatisfactionDistrict.setBounds(113, 83, 138, 20);
-		infoDistrictPanel.add(bar_SatisfactionDistrict);
+		
 		myGrid.setBounds(10, 10, 902, 602);
 		myGrid.setGridscreen(contentPane);
 		contentPane.add(myGrid);
 		myGrid.setLayout(null);
 		
-		game = new GameProgress(clock, money, myGrid);
+		game = new GameProgress(clock, money, myGrid, infoVillePanel);
 		
 		JPanel datePanel = new JPanel();
 		datePanel.setBounds(10, 620, 902, 40);
@@ -426,6 +510,7 @@ public class GameScreen extends JFrame implements Runnable{
 		windowThread.start();
 	}
 
+	
 	@Override
 	public void run() {
 		while (true) {
@@ -443,8 +528,12 @@ public class GameScreen extends JFrame implements Runnable{
 			lblDaysgone.setText("Days Gone : "+clock.getDayCpt());
 			lblDayNumber.setText(clock.getDay());
 			lblValGlobalMoney.setText(""+money.getMoney());
+			lblCityPop.setText(""+popTotal.getPopulationTotal());
+			/*tmpHapp = happTol.getHappinessTotal();
+			bar_SatisfactionCity.setValue(tmpHapp);*/
 			
 		}
+		
 	}
 	
 	public int getCase(int coordinate, int numberOfSquare) {

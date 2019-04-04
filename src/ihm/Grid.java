@@ -1,6 +1,7 @@
 package ihm;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -10,7 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 
 import data.Coordinates;
 import data.District;
@@ -25,24 +28,26 @@ public class Grid extends JPanel{
 	public int sizeScreenX = 900;
 	public int sizeScreenY = 600;
 	
-	private DistrictLinker districtLinker = new DistrictLinker();
+	public DistrictLinker districtLinker = new DistrictLinker();
 	boolean addLineBool = false;
 	boolean addLineBoolChangedToTrue = false;	//TRUE si on viens de passer AddLineBool de FALSE à TRUE, sinon FALSE
 	ArrayList<Coordinates> lineCoo;
 	ArrayList<Line> allLines = new ArrayList<Line>();
 	
-	District[][] grid = new District[width][height];
+	public District[][] grid = new District[width][height];
 	public Image img;
 	int caseX, caseY, caseWidth;
 	int previousCaseX, previousCaseY;
 	private JPanel districtPanel;
-	private JPanel subwayPanel;
+	private JPanel subwayPanel;		//Panel for district without station
+	private JPanel subwayPanel2;	//Panel for district with station
 	private JPanel infoDistrictPanel;
 	
 	
-	public Grid(JPanel districtPanel, JPanel subwayPanel, JPanel infoDistrictPanel){
+	public Grid(JPanel districtPanel, JPanel subwayPanel, JPanel subwayPanel2, JPanel infoDistrictPanel){
 		this.districtPanel = districtPanel;
 		this.subwayPanel = subwayPanel;
+		this.subwayPanel2 = subwayPanel2;
 		this.infoDistrictPanel = infoDistrictPanel;
 		
 		try {
@@ -57,13 +62,22 @@ public class Grid extends JPanel{
 			}
 		}
 		setBounds(10, 10, 900, 600);
+		JProgressBar bar_SatisfactionDistrict = new JProgressBar();
+		bar_SatisfactionDistrict.setBounds(113, 83, 138, 20);
 		
-		
+		JLabel lblValDistrictPop = new JLabel();
+		lblValDistrictPop.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
+		lblValDistrictPop.setBounds(113, 38, 83, 20);
 		
 		addMouseListener(new MouseAdapter(){	
 			public void mouseClicked(MouseEvent e) {
 				boolean crossBool = false;		//False par defaut, True si on click sur une case deja ajoutee dans l'arrayList
 				//MouseEvent Branche classique.
+				int happinessLevel = 0;
+				int popNumber;
+				String popNumberLb;
+				
+        		
 				if ( getAddLineBool() == false){
 					System.out.println("Branche classique");
 					int x=e.getX();
@@ -80,12 +94,36 @@ public class Grid extends JPanel{
 		                neighbourCalculator(caseX,caseY);
 		                if(grid[caseX][caseY]== null){
 		                	subwayPanel.setVisible(false);
+		                	subwayPanel2.setVisible(false);
 		                	infoDistrictPanel.setVisible(false);
 		                	districtPanel.setVisible(true);
 		                }else{
-		                	districtPanel.setVisible(false);
-		                	subwayPanel.setVisible(true);
-		                	infoDistrictPanel.setVisible(true);
+		                	if(grid[caseX][caseY].isStation()){
+		                		districtPanel.setVisible(false);
+			                	subwayPanel2.setVisible(true);
+			                	subwayPanel.setVisible(false);
+		                	}else{
+		                		districtPanel.setVisible(false);
+			                	subwayPanel.setVisible(true);
+			                	subwayPanel2.setVisible(false);
+		                	}
+		                	
+		                	if(grid[caseX][caseY].isResidential()) { //If residential = show panel for district
+		                		popNumber = grid[caseX][caseY].getActualPeople();
+		                		popNumberLb = Integer.toString(popNumber);
+		                		lblValDistrictPop.setText(popNumberLb);
+		                		infoDistrictPanel.add(lblValDistrictPop);
+		                		
+			            		happinessLevel = grid[caseX][caseY].getSatisfaction();
+			            		bar_SatisfactionDistrict.setValue(happinessLevel);
+			            		bar_SatisfactionDistrict.setStringPainted(true);
+			            		infoDistrictPanel.add(bar_SatisfactionDistrict);
+			            		infoDistrictPanel.setVisible(true);
+		                	}else {
+		                		
+		                		infoDistrictPanel.setVisible(false);
+		                	}
+		                	
 		                }
 	                }
 	            // MouseEvent Branche pour la création de ligne.
@@ -173,14 +211,11 @@ public class Grid extends JPanel{
 	public void drawSubwayLine(Graphics g, int caseWidth){
 		int xPixel, yPixel, xNextPixel, yNextPixel;
 		ArrayList<Coordinates> lineCoords;
-		String Orientation;
 		Color color;
 		for(int i=0; i<allLines.size();i++) {
 			lineCoords = allLines.get(i).getVisitedCoordonates();
 			color = allLines.get(i).getColor();
 			for(int j = 0; j < lineCoords.size()-1; j++) {
-				
-			
 				xPixel = (lineCoords.get(j).getX()+1 )*(caseWidth) - (caseWidth/2);
 				yPixel = (lineCoords.get(j).getY()+1 )*(caseWidth) - (caseWidth/2);
 				xNextPixel = (lineCoords.get(j+1).getX()+1 )*(caseWidth) - (caseWidth/2);
@@ -188,6 +223,14 @@ public class Grid extends JPanel{
 					System.out.println("Coordonnee pixel case : "+xPixel +" / "+ yPixel);
 					g.setColor(color);
 					g.drawLine(xPixel,yPixel, xNextPixel, yNextPixel);
+					g.drawLine(xPixel+1,yPixel, xNextPixel+1, yNextPixel);
+                    g.drawLine(xPixel-1,yPixel, xNextPixel-1, yNextPixel);
+                    g.drawLine(xPixel,yPixel+1, xNextPixel, yNextPixel+1);
+                    g.drawLine(xPixel,yPixel-1, xNextPixel, yNextPixel-1);
+                    g.drawLine(xPixel+2,yPixel, xNextPixel+2, yNextPixel);
+                    g.drawLine(xPixel-2,yPixel, xNextPixel-2, yNextPixel);
+                    g.drawLine(xPixel,yPixel+2, xNextPixel, yNextPixel+2);
+                    g.drawLine(xPixel,yPixel-2, xNextPixel, yNextPixel-2);
 			}
 			
 		}
@@ -282,7 +325,8 @@ public class Grid extends JPanel{
 			System.out.println("\n|///////////////////////////////////////////////////////////////////////|");
 			System.out.println("|\tgrid["+i+"]["+j+"] got "+calNbRes+" residential neighborhood(s) nearby\t\t|");
 			System.out.println("|\t\tgrid["+i+"]["+j+"] got "+calNbStation+" station(s) nearby\t\t\t|");
-				
+			System.out.println("|\t\tgrid["+i+"]["+j+"] got "+grid[i][j].getSatisfaction()+" satisfaction\t\t\t\t|");
+			
 			if(grid[a][b] != null && grid[a][b].isStation()) {
 				System.out.println("|\t\tgrid["+i+"]["+j+"] got his own station\t\t\t\t|");
 			}
@@ -293,6 +337,20 @@ public class Grid extends JPanel{
 	}
 			//}
 		//}
+	public void destroyLines(District clickedDistrict,Grid myGrid){
+		int i = 0;
+		while(i < myGrid.getAllLines().size()) {
+			if (clickedDistrict == myGrid.getAllLines().get(i).getFirstDistrict()){
+				myGrid.getAllLines().remove(i);
+			}
+			else if (clickedDistrict == myGrid.getAllLines().get(i).getSecondDistrict()){
+				myGrid.getAllLines().remove(i);
+			} else {
+				i++;
+			}
+		}
+	}
+	
 	public void setGridscreen(JPanel contentPane){
 		myGridScreen = contentPane;
 	}
@@ -315,6 +373,10 @@ public class Grid extends JPanel{
 	
 	public boolean getAddLineBool(){
 		return addLineBool;
+	}
+	
+	public ArrayList<Line> getAllLines(){
+		return allLines;
 	}
 	
 	public void setAddLineBool(boolean newBool){
