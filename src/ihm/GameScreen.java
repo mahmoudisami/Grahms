@@ -417,6 +417,7 @@ public class GameScreen extends JFrame implements Runnable{
 				} else if (nom.equals("Station")) {
 					myGrid.destroyLines(myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()], myGrid);
 					myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()].deleteStation();
+					myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()].setUpdateStatusNoStationFalse(); //set update var to 0 to update again when we build another one 
 					myGrid.repaint();
 					subwayPanel2.setVisible(false);
 					subwayPanel.setVisible(true);
