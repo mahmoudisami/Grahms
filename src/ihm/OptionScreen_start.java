@@ -16,9 +16,10 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-public class OptionScreen extends JFrame {
+public class OptionScreen_start extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField txtName;
 	private JTextField txtCode;
 
 	/**
@@ -28,7 +29,7 @@ public class OptionScreen extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					OptionScreen frame = new OptionScreen();
+					OptionScreen_start frame = new OptionScreen_start();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,23 +41,22 @@ public class OptionScreen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public OptionScreen() {
+	public OptionScreen_start() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(687, 587);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(null);
+		setContentPane(contentPane);
 		setLocationRelativeTo(null);
 		setResizable(false);
-		setContentPane(contentPane);
-		
+		contentPane.setLayout(null);
 		
 		Font fontRadio = new Font("Tahoma", Font.BOLD, 16);
 		
 		
 		ButtonGroup sizeMapGroup = new ButtonGroup();
 		
-		JLabel lblOption = new JLabel("Import your Game");
+		JLabel lblOption = new JLabel("New Game");
 		lblOption.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		lblOption.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOption.setBounds(10, 24, 651, 37);
@@ -72,15 +72,24 @@ public class OptionScreen extends JFrame {
 		btnStart.setBounds(261, 393, 159, 62);
 		contentPane.add(btnStart);
 		
-		JLabel lblGameCode = new JLabel("Game code :");
-		lblGameCode.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblGameCode.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblGameCode.setBounds(103, 199, 109, 37);
-		contentPane.add(lblGameCode);
+		txtName = new JTextField();
+		txtName.setBounds(228, 127, 220, 37);
+		contentPane.add(txtName);
+		txtName.setColumns(10);
+		
+		JLabel lblCityName = new JLabel("City Name :");
+		lblCityName.setFont(fontRadio);
+		lblCityName.setBounds(109, 127, 109, 37);
+		contentPane.add(lblCityName);
+		
+		JLabel lblcode = new JLabel("Game code :");
+		lblcode.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblcode.setBounds(109, 266, 109, 37);
+		contentPane.add(lblcode);
 		
 		txtCode = new JTextField();
 		txtCode.setColumns(10);
-		txtCode.setBounds(228, 201, 220, 37);
+		txtCode.setBounds(228, 268, 220, 37);
 		contentPane.add(txtCode);
 	}
 }

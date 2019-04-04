@@ -1,7 +1,7 @@
 package data;
 
 public class HappinessTotal {
-	private int happinessTotal = 0;
+	private static int happinessTotal = 0;
 	public HappinessTotal() {
 		
 	}
@@ -21,7 +21,7 @@ public class HappinessTotal {
 				
 	}
 	*/
-	public int getHappinessTotal() {
+	public static int getHappinessTotal() {
 		return happinessTotal;
 	}
 	public void setHappinessTotal(int values) {

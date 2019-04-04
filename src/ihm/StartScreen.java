@@ -57,7 +57,8 @@ public class StartScreen extends JFrame {
 		JButton btnNewButton = new JButton("Continue");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GameScreen frame = new GameScreen();
+				OptionScreen start_game = new OptionScreen();
+				start_game.setVisible(true);
 				dispose();
 			}
 		});
@@ -67,7 +68,9 @@ public class StartScreen extends JFrame {
 		JButton button = new JButton("Start");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GameScreen frame = new GameScreen();
+				OptionScreen_start start_game = new OptionScreen_start();
+				start_game.setVisible(true);
+				dispose();
 			}
 		});
 		button.setBounds(218, 202, 223, 62);

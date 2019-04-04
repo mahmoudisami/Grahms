@@ -75,6 +75,8 @@ public class Save {
 		int station = 0;
 		int people = 0;
 		int money = Money.getMoney();
+		int satisfaction;
+		int satisfaction_all = HappinessTotal.getHappinessTotal();
 		District[][] grid = Grid.getMapTab();
 		
 		///Save Game
@@ -90,7 +92,9 @@ public class Save {
 		for(int x=0; x<width; x++){
 			for(int y=0; y<height; y++){
 				if (grid[x][y] != null) {
-					if(grid[x][y].isResidential()) type = 1;
+					if(grid[x][y].isResidential()) { type = 1;
+					satisfaction = grid[x][y].getSatisfaction();
+					}
 					else if(grid[x][y].isCommercial()) type = 2;
 					else if(grid[x][y].isService()) type = 3;
 					
