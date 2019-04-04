@@ -1,6 +1,7 @@
 package moteur;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import data.*;
@@ -77,6 +78,7 @@ public class DistrictLinker {
 				}
 			}
 		}
+		Collections.sort(aDistrict1);
 	}
 	
 	public int correspondingLineDistance(ArrayList<Line> line, District d1, District d2) {

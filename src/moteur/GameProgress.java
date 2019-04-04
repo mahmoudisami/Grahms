@@ -1,6 +1,7 @@
 package moteur;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -33,6 +34,9 @@ public class GameProgress {
 	private int tmpHapp;
 	private JPanel infoVillePanel;
 	private JProgressBar bar_SatisfactionCity = new JProgressBar();
+	private int actualDistanceComm;
+	private int actualDistanceServ;
+	
 	
 	public GameProgress(Clock clock, Money money, Grid grid,JPanel infoVillePanel) {
 		this.clock = clock;
@@ -127,9 +131,19 @@ public class GameProgress {
 		int remain;
 		int index;
 		int trainCapacity = Const.CAPACITY+ 150*dist.getSize();
+		Collections.sort(dist.getAccessibleDistrict());
 		if(canWorkComm(dist)) {
+			if(actualDistanceComm == 2) {
+				dist.setSatisfaction(-1);
+			}
+			else if(actualDistanceComm == 3) {
+				dist.setSatisfaction(-2);
+			}
+			else if(actualDistanceComm >= 4){
+				dist.setSatisfaction(-3);
+			}
 			for(index = 0; index < 3; index ++) { //Numero du train, 1 par heure
-				if(commercial >= trainCapacity) { // 500 étant la limite par train
+				if(commercial >= trainCapacity) { 
 					commercial -= trainCapacity;
 					commercialWorker.put(index, trainCapacity);
 					dist.setSatisfaction(1);
@@ -149,6 +163,15 @@ public class GameProgress {
 			}
 		}
 		if(canWorkServ(dist)) {
+			if(actualDistanceServ == 2) {
+				dist.setSatisfaction(-1);
+			}
+			else if(actualDistanceServ == 3) {
+				dist.setSatisfaction(-2);
+			}
+			else if(actualDistanceServ >= 4){
+				dist.setSatisfaction(-3);
+			}
 			for(index = 0; index < 3; index ++) {
 				if(service >= trainCapacity) {
 					service -= trainCapacity;
@@ -174,9 +197,7 @@ public class GameProgress {
 		remain = commercial + service; // habitants restants
 		if(remain > 0) {
 			int lessSatisfaction = 1+(remain/10);
-			System.out.println("- sat "+lessSatisfaction);
 			dist.setSatisfaction(-lessSatisfaction);
-			System.out.println("Satisfaction "+dist.getSatisfaction());
 		}
 	}
 	
@@ -191,6 +212,15 @@ public class GameProgress {
 					int trainCapacity = 100 + Const.CAPACITY*dist.getSize();
 					popRemain = dist.getActualPeople();
 					if(canWorkServ(dist)) {
+						if(actualDistanceServ == 2) {
+							dist.setSatisfaction(-1);
+						}
+						else if(actualDistanceServ == 3) {
+							dist.setSatisfaction(-2);
+						}
+						else if(actualDistanceServ >= 4){
+							dist.setSatisfaction(-3);
+						}
 						ArrayList<AccessibleDistrict> aDist = dist.getAccessibleDistrict();
 						for(int index = 0; index<aDist.size(); index ++ ) {
 							if(aDist.get(index).getDistrict().isService()) {
@@ -271,6 +301,7 @@ public class GameProgress {
 		ArrayList<AccessibleDistrict> aDist = dist.getAccessibleDistrict();
 		for(int index = 0; index<aDist.size(); index ++ ) {
 			if(aDist.get(index).getDistrict().isCommercial()) {
+				actualDistanceComm = aDist.get(index).getDistance();
 				return true;
 			}
 		}
@@ -281,6 +312,7 @@ public class GameProgress {
 		ArrayList<AccessibleDistrict> aDist = dist.getAccessibleDistrict();
 		for(int index = 0; index<aDist.size(); index ++ ) {
 			if(aDist.get(index).getDistrict().isService()) {
+				actualDistanceServ = aDist.get(index).getDistance();
 				return true;
 			}
 		}
