@@ -546,7 +546,7 @@ public class GameProgress {
 		for(int x = 0; x<nbrLine; x++) {
 			for(int y = 0; y<nbrRow; y++) {
 				dist = map[x][y];
-				if(dist != null) {
+				if(dist != null && !map[x][y].isStation()) {
 					if(x!=0 && map[x-1][y] != null) {
 						if(map[x-1][y].isStation()) {
 							dist.addAccessibleDistrict(map[x-1][y], 1,false);

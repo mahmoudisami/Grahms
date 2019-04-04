@@ -143,13 +143,34 @@ public class DistrictLinker {
 		ArrayList<AccessibleDistrict> aDistrict1 = dist1.getAccessibleDistrict();
 		int size = aDistrict1.size();
 		int index;
+		ArrayList<Integer> suppIndex = new ArrayList<>();
 		for(index = 0; index<size; index++) {
 			if(aDistrict1.get(index).getDistrict() == dist2  && aDistrict1.get(index).getDistance()== distance) {
-				aDistrict1.remove(index);
-				size --; 
+				suppIndex.add(index);
 			}
-			else if(compteur <= 4) {
+			else if(compteur <= 3) {
 				removeAD(aDistrict1.get(index).getDistrict(),dist2, distance + aDistrict1.get(index).getDistance(), compteur +1);
+			}
+		}
+		for(index= 0; index < suppIndex.size(); index++) {
+			aDistrict1.remove(suppIndex.get(index));
+		}
+	}
+	
+	public void remove(District tab[][], District dist) {
+		ArrayList<AccessibleDistrict> aDist;
+		int size;
+		for(int i=0; i < tab.length; i++) {
+			for(int j=0; j < tab[0].length; j++) {
+				if(tab[i][j]!=null) {
+					aDist = tab[i][j].getAccessibleDistrict();
+					size = aDist.size();
+					for(int index =0;index <aDist.size();index++) {
+						if(aDist.get(index).getDistrict()==dist) {
+							aDist.remove(index);
+						}
+					}
+				}
 			}
 		}
 	}
