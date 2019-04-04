@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
 
@@ -22,7 +23,9 @@ public class Save {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						save();
+						GameScreen game = new GameScreen();
+						game.setVisible(true);
+						//save();
 						System.out.println("salut");
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -62,15 +65,20 @@ public class Save {
 		}
 	}
 	
-	public static void save() throws SQLException{
+	public static void save() throws SQLException, InterruptedException{
 	
 		Connection conn = Save.connectToDB();
 		int rs;
 		int idGame =0 ;
 		int idDistrict = 0;
+		int type = 0;
+		int station = 0;
+		int people = 0;
+		int money = Money.getMoney();
+		District[][] grid = Grid.getMapTab();
 		
 		///Save Game
-		PreparedStatement ps =(PreparedStatement) conn.prepareStatement("INSERT INTO Game (code, name, money) VALUES ('1234','CityTest','65')", Statement.RETURN_GENERATED_KEYS) ;
+		PreparedStatement ps =(PreparedStatement) conn.prepareStatement("INSERT INTO Game (code, name, money) VALUES ('1234','CityTest',"+money+")", Statement.RETURN_GENERATED_KEYS) ;
 		rs = ps.executeUpdate();
 		ResultSet rsId=ps.getGeneratedKeys();
 		if(rsId.next()){
@@ -78,31 +86,35 @@ public class Save {
 		}
 		int width = Grid.getWidthMap();
 		int height = Grid.getHeightMap();
+		
 		for(int x=0; x<width; x++){
 			for(int y=0; y<height; y++){
-			/*	if (grid[x][y] == null) {
-					g.drawImage(img, 1+(caseWidth*x), 1+(caseWidth*y), sizeX-1, sizeY-1, this);
-				}else {
-					g.drawImage(grid[x][y].getImg(), 1+(caseWidth*x), 1+(caseWidth*y), sizeX-1, sizeY-1, this);
-				}*/
+				if (grid[x][y] != null) {
+					if(grid[x][y].isResidential()) type = 1;
+					else if(grid[x][y].isCommercial()) type = 2;
+					else if(grid[x][y].isService()) type = 3;
+					
+					if (grid[x][y].isStation) station = 1;
+					people = grid[x][y].getActualPeople();
+					
+					///Save Grid
+					if(idGame != 0 && type != 0) {
+						PreparedStatement ps2 = (PreparedStatement) conn.prepareStatement("INSERT INTO Grid (idGame, coordX, coordY, type) VALUES ("+idGame+",'0','1','2')", Statement.RETURN_GENERATED_KEYS) ;
+						rs = ps2.executeUpdate();
+						ResultSet rsId2=ps2.getGeneratedKeys();
+						if(rsId2.next()){
+							idDistrict=rsId.getInt(1);
+						}
+					}
+					
+					///save District
+					if (idDistrict !=0) {
+						PreparedStatement ps3 = (PreparedStatement) conn.prepareStatement("INSERT INTO District (idDistrict, population, satisfaction) VALUES ("+idDistrict+" ,'1234','20')") ;
+						rs = ps3.executeUpdate();
+					}
+				}
 			}
 		}
-		///Save Grid
-		if(idGame != 0) {
-			PreparedStatement ps2 = (PreparedStatement) conn.prepareStatement("INSERT INTO Grid (idGame, coordX, coordY, type) VALUES ("+idGame+",'0','1','2')", Statement.RETURN_GENERATED_KEYS) ;
-			rs = ps2.executeUpdate();
-			ResultSet rsId2=ps2.getGeneratedKeys();
-			if(rsId2.next()){
-				idDistrict=rsId.getInt(1);
-			}
-		}
-		
-		///save District
-		if (idDistrict !=0) {
-			PreparedStatement ps3 = (PreparedStatement) conn.prepareStatement("INSERT INTO District (idDistrict, population, satisfaction) VALUES ("+idDistrict+" ,'1234','20')") ;
-			rs = ps3.executeUpdate();
-		}
-		
 		conn.close();
 	}
 }

@@ -37,7 +37,7 @@ public class Grid extends JPanel{
 	ArrayList<Line> allLines = new ArrayList<Line>();
 	private Money money;
 	
-	public District[][] grid = new District[width][height];
+	public static District[][] grid = new District[width][height];
 	public Image img;
 	int caseX, caseY, caseWidth;
 	int previousCaseX, previousCaseY;
@@ -429,7 +429,7 @@ public class Grid extends JPanel{
 		addLineBoolChangedToTrue = newBool;
 	}
 	
-	public District[][] getMapTab() {
+	public static District[][] getMapTab() {
 		return grid;
 	}
 	public District[][] setMapTab(int lig, int col, District newDistrict){

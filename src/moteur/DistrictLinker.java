@@ -8,6 +8,9 @@ import data.*;
 
 public class DistrictLinker {
 
+	/*
+	 * Link districts to set accessible districts
+	 */
 	
 	public DistrictLinker() {
 	}
@@ -16,13 +19,13 @@ public class DistrictLinker {
 		int distance = line.getDistance();
 		District d1 = line.getFirstDistrict();
 		District d2 = line.getSecondDistrict();
-		addAD(d1,d2,distance);
-		addAD(d2,d1,distance);
+		addAD(d1,d2,distance);  
+		addAD(d2,d1,distance);  //In both ways
 		refreshAD(d2,d1, distance, true);
-		refreshAD(d1,d2, distance, true);
+		refreshAD(d1,d2, distance, true); //In both ways
 	}
 	
-	public void addAD(District dist1, District dist2,int distance) {
+	public void addAD(District dist1, District dist2,int distance) { //for each distric accessible, add new district
 		dist1.addAccessibleDistrict(dist2, distance, true);
 		ArrayList<AccessibleDistrict> aDistrict1 = dist1.getAccessibleDistrict();
 		ArrayList<AccessibleDistrict> aDistrict2 = dist2.getAccessibleDistrict();
@@ -45,7 +48,7 @@ public class DistrictLinker {
 		}
 	}
 	
-	public void refreshAD(District dist1, District dist2, int distance,boolean line) {
+	public void refreshAD(District dist1, District dist2, int distance,boolean line) { // Refresh accessibles districts to be sure to don't forget anything
 		ArrayList<AccessibleDistrict> aDistrict1 = dist1.getAccessibleDistrict();
 		ArrayList<AccessibleDistrict> newAccessible;
 		District addNewDistrict;
@@ -81,7 +84,7 @@ public class DistrictLinker {
 		Collections.sort(aDistrict1);
 	}
 	
-	public int correspondingLineDistance(ArrayList<Line> line, District d1, District d2) {
+	public int correspondingLineDistance(ArrayList<Line> line, District d1, District d2) { //get the distance between 2 districts on the same line
 		int minDist = 99;
 		for(int index = 0; index < line.size(); index ++) { 
 			District fd = line.get(index).getFirstDistrict();
@@ -104,7 +107,7 @@ public class DistrictLinker {
 		return false;
 	}
 	
-	public void stationModification(District[][] dist, ArrayList<Line> lineList, District concernedDistrict) { // Quand une station est crée sur une potentielle ligne
+	public void stationModification(District[][] dist, ArrayList<Line> lineList, District concernedDistrict) { // When station is create on a potential line
 		ArrayList<Coordinates> currentLineCoordinates = new ArrayList<>();
 		ArrayList<Coordinates> newLineCoordinates = new ArrayList<>();
 		Line currentLine;
@@ -131,7 +134,7 @@ public class DistrictLinker {
 		}
 	}
 	
-	public void removedLine(Line line) {
+	public void removedLine(Line line) { // removed all links betweens districts on line destructions
 		District d1 = line.getFirstDistrict();
 		District d2 = line.getSecondDistrict();
 		int distance = line.getDistance();
@@ -139,7 +142,7 @@ public class DistrictLinker {
 		removeAD(d2,d1,distance,0);
 	}
 	
-	public void removeAD(District dist1, District dist2, int distance, int compteur) {
+	public void removeAD(District dist1, District dist2, int distance, int compteur) { // remove accessible districts
 		ArrayList<AccessibleDistrict> aDistrict1 = dist1.getAccessibleDistrict();
 		int size = aDistrict1.size();
 		int index;
@@ -157,7 +160,7 @@ public class DistrictLinker {
 		}
 	}
 	
-	public void remove(District tab[][], District dist) {
+	public void remove(District tab[][], District dist) { // remove all the access to a deleted districts
 		ArrayList<AccessibleDistrict> aDist;
 		int size;
 		for(int i=0; i < tab.length; i++) {

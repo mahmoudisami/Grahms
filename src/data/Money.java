@@ -4,7 +4,7 @@ import data.Const;
 
 public class Money {
 	
-	private int money;
+	private static int money;
 	
 	public Money() {
 		money = Const.START_MONEY;
@@ -18,7 +18,7 @@ public class Money {
 		money -= loss;
 	}
 
-	public int getMoney() {
+	public static int getMoney() {
 		return money;
 	}	
 	
