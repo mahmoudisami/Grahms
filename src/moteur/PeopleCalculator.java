@@ -2,6 +2,7 @@ package moteur;
 
 import data.Const;
 import data.District;
+import data.Money;
 
 public class PeopleCalculator {
 
@@ -9,21 +10,22 @@ public class PeopleCalculator {
 			
 		}
 		
-		public void upgradeDistrict(District[][] dist, int size) {	
-			for(int i=0;i<size;i++) {
-				for(int j=0;j<size;j++) {
-					if(dist[i][j] != null) {
-						if(dist[i][j].isResidential()) {
-							if(dist[i][j].getActualPeople() >= Const.MEDIUM_SIZE_RES && dist[i][j].getSatisfaction() >= Const.SATISFACTION_THRESHOLD_MEDIUM && dist[i][j].getSize() == 1) {
-								dist[i][j].setSize(2);
-							}else if(dist[i][j].getActualPeople() >= Const.HIGH_SIZE_RES && dist[i][j].getSatisfaction() >= Const.SATISFACTION_THRESHOLD_HIGH && dist[i][j].getSize() == 2) {
-								dist[i][j].setSize(3);
-							}
-						}
-						
-					}
+		public int upgradeDistrict(District dist, int size, Money money) {
+			if(size == 4) {
+				return 1;
+			}
+			if(dist.getSatisfaction() > Const.SATISFACTION_THRESHOLD) {
+				if(money.getMoney()<Const.UPGRADE_PRICE) {
+					return 2;
 				}
-			}	
+				else {
+					money.withDraw(Const.UPGRADE_PRICE);
+					dist.setSize(size);
+					System.out.println("size = " +size);
+					return 0;
+				}
+			}
+			return 3;
 		}
 		
 		

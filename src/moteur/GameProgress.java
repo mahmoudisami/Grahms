@@ -126,11 +126,12 @@ public class GameProgress {
 		int service = dist.getActualPeople()-commercial;
 		int remain;
 		int index;
+		int trainCapacity = Const.CAPACITY+ 150*dist.getSize();
 		if(canWorkComm(dist)) {
 			for(index = 0; index < 3; index ++) { //Numero du train, 1 par heure
-				if(commercial >= 200) { // 500 étant la limite par train
-					commercial -= 200;
-					commercialWorker.put(index, 200);
+				if(commercial >= trainCapacity) { // 500 étant la limite par train
+					commercial -= trainCapacity;
+					commercialWorker.put(index, trainCapacity);
 					dist.setSatisfaction(1);
 				}else if(commercial > 0) {
 					commercialWorker.put(index, commercial);
@@ -149,9 +150,9 @@ public class GameProgress {
 		}
 		if(canWorkServ(dist)) {
 			for(index = 0; index < 3; index ++) {
-				if(service >= 200) {
-					service -= 200;
-					serviceWorker.put(index, 200);
+				if(service >= trainCapacity) {
+					service -= trainCapacity;
+					serviceWorker.put(index, trainCapacity);
 					dist.setSatisfaction(1);
 				}else if(service > 0) {
 					serviceWorker.put(index, service);
@@ -187,13 +188,14 @@ public class GameProgress {
 			for(j=0; j<nbrRow;j++) {
 				dist = map[i][j];
 				if(dist != null && dist.isResidential()) {
+					int trainCapacity = 100 + Const.CAPACITY*dist.getSize();
 					popRemain = dist.getActualPeople();
 					if(canWorkServ(dist)) {
 						ArrayList<AccessibleDistrict> aDist = dist.getAccessibleDistrict();
 						for(int index = 0; index<aDist.size(); index ++ ) {
 							if(aDist.get(index).getDistrict().isService()) {
-								if(popRemain > 400) {
-									popRemain -= 400;
+								if(popRemain > trainCapacity) {
+									popRemain -= trainCapacity;
 									//Augmenter la satisfaction de 1
 									map[i][j].setSatisfaction(1);
 									System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has increased by 1");

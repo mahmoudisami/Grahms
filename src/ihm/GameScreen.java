@@ -42,6 +42,7 @@ import javax.swing.JTextArea;
 
 import moteur.Clock;
 import moteur.GameProgress;
+import moteur.PeopleCalculator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -84,6 +85,7 @@ public class GameScreen extends JFrame implements Runnable{
 	private PopulationTotal popTotal = new PopulationTotal();
 	private HappinessTotal happTol = new HappinessTotal();
 	private String[] destroyString;
+	private PeopleCalculator calc = new PeopleCalculator();
 	
 	public Image img;
 	private JPanel districtPanel;
@@ -329,12 +331,28 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		subwayPanel2.add(btnAddLine);
 		
-		JButton btnUpgradeDistrict = new JButton("<html>Upgrade<br>\r\n&nbsp;station<html>");
+		JButton btnUpgradeDistrict = new JButton("<html>Upgrade<br>\r\n&nbsp;District<html>");
 		btnUpgradeDistrict.setBounds(37, 74, 188, 52);
-		subwayPanel.add(btnUpgradeDistrict);
-		JButton btnUpgradeDistrict2 = new JButton("<html>Upgrade<br>\r\n&nbsp;station<html>");
-		btnUpgradeDistrict2.setBounds(37, 74, 188, 52);
-		subwayPanel2.add(btnUpgradeDistrict2);
+		subwayPanel2.add(btnUpgradeDistrict);
+		btnUpgradeDistrict.addActionListener(new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			District dist = myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()];
+			switch(calc.upgradeDistrict(dist, dist.getSize()+1, money)) {
+			case 0: System.out.println("ok");
+					myGrid.repaint();
+					break;
+			case 1: System.out.println("limite size");
+					break;
+			case 2: System.out.println("not enought money");
+					break;
+			case 3: System.out.println("not enought satisfaction");
+					break;
+			default: break;
+			};
+			}
+		});
+	
 		
 		JButton destroyButton = new JButton("Destroy");
 		destroyButton.setBounds(37, 137, 188, 52);
