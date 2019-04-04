@@ -50,21 +50,23 @@ public class GameProgress {
 		if(clock.getHour().equals("01")) {
 			initDistrict();
 		}
-		if(clock.getHour().equals("07") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
-			goWork();
-		}
-		if(clock.getHour().equals("08") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
-			arriveWork(0);
-		}
-		if(clock.getHour().equals("09") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
-			arriveWork(1);
-		}
-		if(clock.getHour().equals("10") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
-			arriveWork(2);
-		}
-		if(clock.getHour().equals("16") && clock.getDayPos() != 7 && clock.getDayPos() != 6) {
-			fin.cumulMoney(map,commercialWorkerByDistrict, serviceWorkerByDistrict);
-			goHome();
+		if(clock.getDayPos() != 7 && clock.getDayPos() != 6) {
+			if(clock.getHour().equals("07")) {
+				goWork();
+			}
+			if(clock.getHour().equals("08") ) {
+				arriveWork(0);
+			}
+			if(clock.getHour().equals("09") ) {
+				arriveWork(1);
+			}
+			if(clock.getHour().equals("10") ) {
+				arriveWork(2);
+			}
+			if(clock.getHour().equals("16") ) {
+				fin.cumulMoney(map,commercialWorkerByDistrict, serviceWorkerByDistrict);
+				goHome();
+			}
 		}
 		if(clock.getDayPos()==7 && clock.getHour().equals("01")) { //Call the function every Monday at 1am
 			happinessCalculator();
