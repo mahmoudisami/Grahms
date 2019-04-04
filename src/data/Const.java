@@ -21,7 +21,7 @@ public class Const {
 	public final static int MEDIUM_SIZE_RES = 300; // Nbr d'habitants pour changer la taille en médium
 	public final static int HIGH_SIZE_RES = 600; // Nbr d'habitants pour changer la taille en high
 	public final static int SATISFACTION_THRESHOLD = 90; //Seuil de satisfaction pour évolution
-	public final static int UPGRADE_PRICE = 1000; //Seuil de satisfaction pour évolution
+	public final static int UPGRADE_PRICE = 5000; //Seuil de satisfaction pour évolution
 	public final static int CAPACITY = 200;
 	
 	/***********************      SERVICES        *****************************/	
