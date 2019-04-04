@@ -58,7 +58,7 @@ public class District {
 	}
 	
 	public void addPeople(int num) {
-		if(actualPeople + num >= 0 && actualPeople +num <=100 ) {
+		if(actualPeople + num >= 0) {
 			actualPeople = actualPeople + num;
 		} 
 		else if(actualPeople + num <= 0) {
