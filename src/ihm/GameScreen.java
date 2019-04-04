@@ -228,7 +228,7 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		
 		
-		// This Pane is visible when case without District is clicked
+		// This panel is visible when case without District is clicked
 		districtPanel = new JPanel();
 		districtPanel.setBounds(922, 373, 260, 192);
 		contentPane.add(districtPanel);
