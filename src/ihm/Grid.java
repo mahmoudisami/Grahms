@@ -340,9 +340,11 @@ public class Grid extends JPanel{
 		int i = 0;
 		while(i < myGrid.getAllLines().size()) {
 			if (clickedDistrict == myGrid.getAllLines().get(i).getFirstDistrict()){
+				districtLinker.removedLine(myGrid.getAllLines().get(i));
 				myGrid.getAllLines().remove(i);
 			}
 			else if (clickedDistrict == myGrid.getAllLines().get(i).getSecondDistrict()){
+				districtLinker.removedLine(myGrid.getAllLines().get(i));
 				myGrid.getAllLines().remove(i);
 			} else {
 				i++;
