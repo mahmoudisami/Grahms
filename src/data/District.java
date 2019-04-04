@@ -57,8 +57,16 @@ public class District {
 		return actualPeople;
 	}
 	
-	public void addPeople(int newPopulation) {
-		actualPeople += newPopulation;
+	public void addPeople(int num) {
+		if(actualPeople + num >= 0 && actualPeople +num <=100 ) {
+			actualPeople = actualPeople + num;
+		} 
+		else if(actualPeople + num <= 0) {
+			actualPeople = 0;
+		}
+		else if(actualPeople + num >= 100) {
+			actualPeople = 100;
+		}
 	}
 	
 	public void setPeople(int newPopulation) {
