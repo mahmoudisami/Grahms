@@ -502,13 +502,13 @@ public class GameProgress {
 			for(int j=0; j<nbrRow; j++) {
 				if(map[i][j] != null && map[i][j].isResidential()) {
 					if(map[i][j].getSatisfaction() < 15 ) {
-						tmp = -(15*map[i][j].getActualPeople())/100; //moins 10% de la pop
-						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 15%");
+						tmp = -(10*map[i][j].getActualPeople())/100; //moins 10% de la pop
+						System.out.println("PopEvol : map["+i+"]["+j+"] has decreased 10%");
 						
 					}
 					if(map[i][j].getSatisfaction() >= 15 && map[i][j].getSatisfaction() < 25 ) {
-						tmp = -(10*map[i][j].getActualPeople())/100; //moins 15% de la pop
-						System.out.println("PopEvol : map["+i+"]["+j+"] has decreased 10%");
+						tmp = -(7*map[i][j].getActualPeople())/100; //moins 15% de la pop
+						System.out.println("PopEvol : map["+i+"]["+j+"] has decreased 7%");
 						
 					}
 					if(map[i][j].getSatisfaction() >= 25 && map[i][j].getSatisfaction() < 50 ) {
@@ -522,12 +522,12 @@ public class GameProgress {
 						
 					}
 					if(map[i][j].getSatisfaction() >= 75 && map[i][j].getSatisfaction() < 95 ) {
-						tmp = (10*map[i][j].getActualPeople())/100; // plus 15%
-						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 10%");
+						tmp = (7*map[i][j].getActualPeople())/100; // plus 15%
+						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 7%");
 					}
 					if(map[i][j].getSatisfaction() >= 95) {
-						tmp = 15*map[i][j].getActualPeople()/100; //plus 20%
-						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 15%");
+						tmp = 10*map[i][j].getActualPeople()/100; //plus 20%
+						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 10%");
 					}
 			
 					
