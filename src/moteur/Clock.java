@@ -14,13 +14,13 @@ public class Clock  {		//creation of the clock
 	private int dayCpt;
 	private int dayPos;	
 	public Clock(){
-		hour = 16;
+		hour = 02;
 		minute = 00;
 		day = 01;
 		month = 01;
 		year = 2019;
 		dayCpt = 0;
-		dayPos = 2;
+		dayPos = 1;
 	}
 	
 	public Clock(int hH, int mMin, int dD, int mMo, int yYYY, int dC, int dN) {

@@ -144,7 +144,7 @@ public class DistrictLinker {
 		for(index = 0; index<size; index++) {
 			if(aDistrict1.get(index).getDistrict() == dist2  && aDistrict1.get(index).getDistance()== distance) {
 				aDistrict1.remove(index);
-				size --;
+				size --; 
 			}
 		}
 	}
