@@ -493,6 +493,7 @@ public class GameProgress {
 						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 20%");
 					}
 			
+					
 					map[i][j].addPeople(tmp);
 					grid.repaint();
 				}
