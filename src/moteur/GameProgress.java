@@ -69,6 +69,9 @@ public class GameProgress {
 		if(clock.getDayPos()==7 && clock.getHour().equals("01")) { //Call the function every Monday at 1am
 			happinessCalculator();
 		}
+		if(clock.getDayPos() == 6 && clock.getHour().equals("10")) {
+			servicesNeeds();
+		}
 		 calHappinessTotal();
 		
 	}
@@ -160,6 +163,41 @@ public class GameProgress {
 			/*
 			 * Gerer la satisfaction par rapport au nombre restant d'habitants
 			 */
+		}
+	}
+	
+	public void servicesNeeds() {
+		int i,j;
+		int popRemain;
+		District dist;
+		for(i=0; i<nbrLine;i++) {
+			for(j=0; j<nbrRow;j++) {
+				dist = map[i][j];
+				if(dist != null && dist.isResidential()) {
+					popRemain = dist.getActualPeople();
+					if(canWorkServ(dist)) {
+						ArrayList<AccessibleDistrict> aDist = dist.getAccessibleDistrict();
+						for(int index = 0; index<aDist.size(); index ++ ) {
+							if(aDist.get(index).getDistrict().isService()) {
+								if(popRemain > 500) {
+									popRemain -= 500;
+									//Augmenter la satisfaction de 1
+								}
+								else if(popRemain > 0) {
+									popRemain = 0;
+									//Augmenter la satisfaction de 5
+								}
+							}
+						}
+						if(popRemain != 0) {
+							//Réduire la satisfaction de 2
+						}
+					}
+					else {
+						//Réduire satisfaction de 5
+					}
+				}
+			}
 		}
 	}
 	
