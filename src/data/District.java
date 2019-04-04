@@ -13,14 +13,20 @@ public class District {
 	private ArrayList<Line> line = new ArrayList<>();
 	protected boolean isStation;
 	private ArrayList<AccessibleDistrict> accessibleDistrictList = new ArrayList<>();
-
+	private int updateStatusGotStation;
+	private int updateStatusNoStation;
+	private int updateStatusGotStationNearby;
+	private int updateStatusNoStationNearby;
 	public District(int cost) {
 		this.cost = cost;
-		
 		isStation = false;
 		accessibleDistrictList.clear();
 		actualPeople = 50;
 		satisfaction = 50;
+		updateStatusGotStation = 0;
+		updateStatusNoStation = 0;
+		updateStatusGotStationNearby = 0;
+		updateStatusNoStationNearby = 0;
 	}
 	
 	public boolean createStation() {
@@ -68,9 +74,49 @@ public class District {
 	}
 	
 	public void setSatisfaction(int num) {
-		//if(getSatisfaction() <=100) {
+		if(satisfaction >= 0 && satisfaction <=100 ) {
 			satisfaction = satisfaction + num;
-		//}
+		}
+	}
+
+	public void setUpdateStatusGotStationTrue() {
+		updateStatusGotStation = 1;
+	}
+	public void setUpdateStatusGotStationFalse() {
+		updateStatusGotStation = 0;
+	}
+	public int getUpdateStatusGotStation() {
+		return updateStatusGotStation;
+	}
+	
+	public void setUpdateStatusNoStationTrue() {
+		updateStatusNoStation = 1;
+	}
+	public void setUpdateStatusNoStationFalse() {
+		updateStatusNoStation = 0;
+	}
+	public int getUpdateStatusNoStation() {
+		return updateStatusNoStation;
+	}
+	
+	public void setUpdateStatusGotStationNearbyTrue() {
+		updateStatusGotStationNearby = 1;
+	}
+	public void setUpdateStatusGotStationNearbyFalse() {
+		updateStatusGotStationNearby = 0;
+	}
+	public int getUpdateStatusGotStationNearby() {
+		return updateStatusGotStationNearby;
+	}
+	
+	public void setUpdateStatusNoStationNearbyTrue() {
+		updateStatusNoStationNearby = 1;
+	}
+	public void setUpdateStatusNoStationNearbyFalse() {
+		updateStatusNoStationNearby = 0;
+	}
+	public int getUpdateStatusNoStationNearby() {
+		return updateStatusNoStationNearby;
 	}
 	
 	public boolean isResidential() {
