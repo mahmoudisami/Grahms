@@ -129,6 +129,27 @@ public class DistrictLinker {
 		}
 	}
 	
+	public void removedLine(Line line) {
+		District d1 = line.getFirstDistrict();
+		District d2 = line.getSecondDistrict();
+		int distance = line.getDistance();
+		removeAD(d1,d2,distance);
+		removeAD(d2,d1,distance);
+	}
+	
+	public void removeAD(District dist1, District dist2, int distance) {
+		ArrayList<AccessibleDistrict> aDistrict1 = dist1.getAccessibleDistrict();
+		int size = aDistrict1.size();
+		int index, j;
+		for(index = 0; index<size; index++) {
+			if(aDistrict1.get(index).getDistrict() == dist2  && aDistrict1.get(index).getDistance()== distance) {
+				aDistrict1.remove(index);
+				size --; 
+			}
+		}
+	}
+
+	
 	public ArrayList<Coordinates> visitedCoordinates(int startIndex,int lastIndex, Line line){
 		ArrayList<Coordinates> visited = new ArrayList<>();
 		for(int index = startIndex; index < lastIndex; index ++) {

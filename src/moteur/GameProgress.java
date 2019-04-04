@@ -77,8 +77,10 @@ public class GameProgress {
 		}
 		if(clock.getDayPos() == 6 && clock.getHour().equals("10")) {
 			servicesNeeds();
+			popEvolutionCalculator();
 		}
 		 calHappinessTotal();
+		 grid.repaint();
 		
 	}
 	
@@ -457,7 +459,47 @@ public class GameProgress {
 		}	
 	}
 	
-	
+	public void popEvolutionCalculator() {
+		int tmp = 0;
+		for(int i=0; i<nbrLine; i++) {
+			for(int j=0; j<nbrRow; j++) {
+				if(map[i][j] != null && map[i][j].isResidential()) {
+					if(map[i][j].getSatisfaction() < 15 ) {
+						tmp = -(20*map[i][j].getActualPeople())/100; //moins 10% de la pop
+						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 20%");
+						
+					}
+					if(map[i][j].getSatisfaction() >= 15 && map[i][j].getSatisfaction() < 25 ) {
+						tmp = -(15*map[i][j].getActualPeople())/100; //moins 15% de la pop
+						System.out.println("PopEvol : map["+i+"]["+j+"] has decreased 15%");
+						
+					}
+					if(map[i][j].getSatisfaction() >= 25 && map[i][j].getSatisfaction() < 50 ) {
+						tmp = -(10*map[i][j].getActualPeople())/100; //moins 10% de la pop
+						System.out.println("PopEvol : map["+i+"]["+j+"] has decreased 10%");
+						
+					}
+					if(map[i][j].getSatisfaction() >= 50 && map[i][j].getSatisfaction() < 70 ) {
+						tmp = (10*map[i][j].getActualPeople())/100; //plus 10% de la pop
+						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 10%");
+						
+					}
+					if(map[i][j].getSatisfaction() >= 75 && map[i][j].getSatisfaction() < 95 ) {
+						tmp = (15*map[i][j].getActualPeople())/100; // plus 15%
+						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 15%");
+					}
+					if(map[i][j].getSatisfaction() >= 95) {
+						tmp = 20*map[i][j].getActualPeople()/100; //plus 20%
+						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 20%");
+					}
+			
+					
+					map[i][j].addPeople(tmp);
+					grid.repaint();
+				}
+			}
+		}
+	}
 	public String getHistoricText() {
 		return historicText;
 	}

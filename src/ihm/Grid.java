@@ -220,7 +220,6 @@ public class Grid extends JPanel{
 				yPixel = (lineCoords.get(j).getY()+1 )*(caseWidth) - (caseWidth/2);
 				xNextPixel = (lineCoords.get(j+1).getX()+1 )*(caseWidth) - (caseWidth/2);
 				yNextPixel = (lineCoords.get(j+1).getY()+1 )*(caseWidth) - (caseWidth/2);
-					System.out.println("Coordonnee pixel case : "+xPixel +" / "+ yPixel);
 					g.setColor(color);
 					g.drawLine(xPixel,yPixel, xNextPixel, yNextPixel);
 					g.drawLine(xPixel+1,yPixel, xNextPixel+1, yNextPixel);
@@ -341,9 +340,11 @@ public class Grid extends JPanel{
 		int i = 0;
 		while(i < myGrid.getAllLines().size()) {
 			if (clickedDistrict == myGrid.getAllLines().get(i).getFirstDistrict()){
+				districtLinker.removedLine(myGrid.getAllLines().get(i));
 				myGrid.getAllLines().remove(i);
 			}
 			else if (clickedDistrict == myGrid.getAllLines().get(i).getSecondDistrict()){
+				districtLinker.removedLine(myGrid.getAllLines().get(i));
 				myGrid.getAllLines().remove(i);
 			} else {
 				i++;
