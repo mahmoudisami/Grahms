@@ -64,9 +64,7 @@ public class District {
 		else if(actualPeople + num <= 0) {
 			actualPeople = 0;
 		}
-		else if(actualPeople + num >= 100) {
-			actualPeople = 100;
-		}
+		
 	}
  	
 	public void setPeople(int newPopulation) {
