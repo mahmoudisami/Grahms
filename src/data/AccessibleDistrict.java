@@ -1,6 +1,6 @@
 package data;
 
-public class AccessibleDistrict {
+public class AccessibleDistrict implements Comparable<AccessibleDistrict> {
 
 	private District district;
 	private int distance;
@@ -16,5 +16,10 @@ public class AccessibleDistrict {
 
 	public int getDistance() {
 		return distance;
+	}
+
+	@Override
+	public int compareTo(AccessibleDistrict aDist) {
+		return this.getDistance() - aDist.getDistance();
 	}
 }

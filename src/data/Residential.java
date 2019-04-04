@@ -30,27 +30,11 @@ public class Residential extends District{
 	
 	public BufferedImage getImg() {
 		if(!isStation) {
-			if(size == 1) {
 				try {
 					img = ImageIO.read(new File(src1));
 				}catch (IOException e){
 					e.printStackTrace();
 				}
-			}
-			else if(size == 2) {
-				try {
-					img = ImageIO.read(new File(src2));
-				}catch (IOException e){
-					e.printStackTrace();
-				}
-			}
-			else {
-				try {
-					img = ImageIO.read(new File(src3));
-				}catch (IOException e){
-					e.printStackTrace();
-				}
-			}
 		}
 		else {
 			if(size == 1) {
@@ -62,14 +46,14 @@ public class Residential extends District{
 			}
 			else if(size == 2) {
 				try {
-					img = ImageIO.read(new File(srcStation1)); // Changer avec station
+					img = ImageIO.read(new File(srcStation2)); // Changer avec station
 				}catch (IOException e){
 					e.printStackTrace();
 				}
 			}
 			else {
 				try {
-					img = ImageIO.read(new File(srcStation1)); // Changer avec station
+					img = ImageIO.read(new File(srcStation3)); // Changer avec station
 				}catch (IOException e){
 					e.printStackTrace();
 				}

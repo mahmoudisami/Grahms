@@ -1,6 +1,7 @@
 package moteur;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -33,6 +34,9 @@ public class GameProgress {
 	private int tmpHapp;
 	private JPanel infoVillePanel;
 	private JProgressBar bar_SatisfactionCity = new JProgressBar();
+	private int actualDistanceComm;
+	private int actualDistanceServ;
+	
 	
 	public GameProgress(Clock clock, Money money, Grid grid,JPanel infoVillePanel) {
 		this.clock = clock;
@@ -126,11 +130,22 @@ public class GameProgress {
 		int service = dist.getActualPeople()-commercial;
 		int remain;
 		int index;
+		int trainCapacity = Const.CAPACITY+ 150*dist.getSize();
+		Collections.sort(dist.getAccessibleDistrict());
 		if(canWorkComm(dist)) {
+			if(actualDistanceComm == 2) {
+				dist.setSatisfaction(-1);
+			}
+			else if(actualDistanceComm == 3) {
+				dist.setSatisfaction(-2);
+			}
+			else if(actualDistanceComm >= 4){
+				dist.setSatisfaction(-3);
+			}
 			for(index = 0; index < 3; index ++) { //Numero du train, 1 par heure
-				if(commercial >= 500) { // 500 étant la limite par train
-					commercial -= 500;
-					commercialWorker.put(index, 500);
+				if(commercial >= trainCapacity) { 
+					commercial -= trainCapacity;
+					commercialWorker.put(index, trainCapacity);
 					dist.setSatisfaction(1);
 				}else if(commercial > 0) {
 					commercialWorker.put(index, commercial);
@@ -148,10 +163,19 @@ public class GameProgress {
 			}
 		}
 		if(canWorkServ(dist)) {
+			if(actualDistanceServ == 2) {
+				dist.setSatisfaction(-1);
+			}
+			else if(actualDistanceServ == 3) {
+				dist.setSatisfaction(-2);
+			}
+			else if(actualDistanceServ >= 4){
+				dist.setSatisfaction(-3);
+			}
 			for(index = 0; index < 3; index ++) {
-				if(service >= 500) {
-					service -= 500;
-					serviceWorker.put(index, 500);
+				if(service >= trainCapacity) {
+					service -= trainCapacity;
+					serviceWorker.put(index, trainCapacity);
 					dist.setSatisfaction(1);
 				}else if(service > 0) {
 					serviceWorker.put(index, service);
@@ -172,7 +196,8 @@ public class GameProgress {
 		serviceWorkerByDistrict.put(dist, serviceWorker); 
 		remain = commercial + service; // habitants restants
 		if(remain > 0) {
-			dist.setSatisfaction(-5);
+			int lessSatisfaction = 1+(remain/10);
+			dist.setSatisfaction(-lessSatisfaction);
 		}
 	}
 	
@@ -184,13 +209,23 @@ public class GameProgress {
 			for(j=0; j<nbrRow;j++) {
 				dist = map[i][j];
 				if(dist != null && dist.isResidential()) {
+					int trainCapacity = 100 + Const.CAPACITY*dist.getSize();
 					popRemain = dist.getActualPeople();
 					if(canWorkServ(dist)) {
+						if(actualDistanceServ == 2) {
+							dist.setSatisfaction(-1);
+						}
+						else if(actualDistanceServ == 3) {
+							dist.setSatisfaction(-2);
+						}
+						else if(actualDistanceServ >= 4){
+							dist.setSatisfaction(-3);
+						}
 						ArrayList<AccessibleDistrict> aDist = dist.getAccessibleDistrict();
 						for(int index = 0; index<aDist.size(); index ++ ) {
 							if(aDist.get(index).getDistrict().isService()) {
-								if(popRemain > 500) {
-									popRemain -= 500;
+								if(popRemain > trainCapacity) {
+									popRemain -= trainCapacity;
 									//Augmenter la satisfaction de 1
 									map[i][j].setSatisfaction(1);
 									System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has increased by 1");
@@ -198,8 +233,8 @@ public class GameProgress {
 								else if(popRemain > 0) {
 									popRemain = 0;
 									//Augmenter la satisfaction de 5
-									map[i][j].setSatisfaction(5);
-									System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has increased by 5");
+									map[i][j].setSatisfaction(2);
+									System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has increased by 3");
 								}
 							}
 						}
@@ -266,6 +301,7 @@ public class GameProgress {
 		ArrayList<AccessibleDistrict> aDist = dist.getAccessibleDistrict();
 		for(int index = 0; index<aDist.size(); index ++ ) {
 			if(aDist.get(index).getDistrict().isCommercial()) {
+				actualDistanceComm = aDist.get(index).getDistance();
 				return true;
 			}
 		}
@@ -276,6 +312,7 @@ public class GameProgress {
 		ArrayList<AccessibleDistrict> aDist = dist.getAccessibleDistrict();
 		for(int index = 0; index<aDist.size(); index ++ ) {
 			if(aDist.get(index).getDistrict().isService()) {
+				actualDistanceServ = aDist.get(index).getDistance();
 				return true;
 			}
 		}
@@ -465,32 +502,32 @@ public class GameProgress {
 			for(int j=0; j<nbrRow; j++) {
 				if(map[i][j] != null && map[i][j].isResidential()) {
 					if(map[i][j].getSatisfaction() < 15 ) {
-						tmp = -(20*map[i][j].getActualPeople())/100; //moins 10% de la pop
-						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 20%");
-						
-					}
-					if(map[i][j].getSatisfaction() >= 15 && map[i][j].getSatisfaction() < 25 ) {
-						tmp = -(15*map[i][j].getActualPeople())/100; //moins 15% de la pop
-						System.out.println("PopEvol : map["+i+"]["+j+"] has decreased 15%");
-						
-					}
-					if(map[i][j].getSatisfaction() >= 25 && map[i][j].getSatisfaction() < 50 ) {
 						tmp = -(10*map[i][j].getActualPeople())/100; //moins 10% de la pop
 						System.out.println("PopEvol : map["+i+"]["+j+"] has decreased 10%");
 						
 					}
+					if(map[i][j].getSatisfaction() >= 15 && map[i][j].getSatisfaction() < 25 ) {
+						tmp = -(7*map[i][j].getActualPeople())/100; //moins 15% de la pop
+						System.out.println("PopEvol : map["+i+"]["+j+"] has decreased 7%");
+						
+					}
+					if(map[i][j].getSatisfaction() >= 25 && map[i][j].getSatisfaction() < 50 ) {
+						tmp = -(5*map[i][j].getActualPeople())/100; //moins 10% de la pop
+						System.out.println("PopEvol : map["+i+"]["+j+"] has decreased 5%");
+						
+					}
 					if(map[i][j].getSatisfaction() >= 50 && map[i][j].getSatisfaction() < 70 ) {
-						tmp = (10*map[i][j].getActualPeople())/100; //plus 10% de la pop
-						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 10%");
+						tmp = (5*map[i][j].getActualPeople())/100; //plus 10% de la pop
+						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 5%");
 						
 					}
 					if(map[i][j].getSatisfaction() >= 75 && map[i][j].getSatisfaction() < 95 ) {
-						tmp = (15*map[i][j].getActualPeople())/100; // plus 15%
-						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 15%");
+						tmp = (7*map[i][j].getActualPeople())/100; // plus 15%
+						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 7%");
 					}
 					if(map[i][j].getSatisfaction() >= 95) {
-						tmp = 20*map[i][j].getActualPeople()/100; //plus 20%
-						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 20%");
+						tmp = 10*map[i][j].getActualPeople()/100; //plus 20%
+						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 10%");
 					}
 			
 					

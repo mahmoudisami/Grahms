@@ -1,6 +1,7 @@
 package moteur;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import data.*;
@@ -77,6 +78,7 @@ public class DistrictLinker {
 				}
 			}
 		}
+		Collections.sort(aDistrict1);
 	}
 	
 	public int correspondingLineDistance(ArrayList<Line> line, District d1, District d2) {
@@ -133,18 +135,21 @@ public class DistrictLinker {
 		District d1 = line.getFirstDistrict();
 		District d2 = line.getSecondDistrict();
 		int distance = line.getDistance();
-		removeAD(d1,d2,distance);
-		removeAD(d2,d1,distance);
+		removeAD(d1,d2,distance,0);
+		removeAD(d2,d1,distance,0);
 	}
 	
-	public void removeAD(District dist1, District dist2, int distance) {
+	public void removeAD(District dist1, District dist2, int distance, int compteur) {
 		ArrayList<AccessibleDistrict> aDistrict1 = dist1.getAccessibleDistrict();
 		int size = aDistrict1.size();
-		int index, j;
+		int index;
 		for(index = 0; index<size; index++) {
 			if(aDistrict1.get(index).getDistrict() == dist2  && aDistrict1.get(index).getDistance()== distance) {
 				aDistrict1.remove(index);
 				size --; 
+			}
+			else if(compteur <= 4) {
+				removeAD(aDistrict1.get(index).getDistrict(),dist2, distance + aDistrict1.get(index).getDistance(), compteur +1);
 			}
 		}
 	}

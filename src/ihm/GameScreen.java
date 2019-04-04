@@ -42,6 +42,7 @@ import javax.swing.JTextArea;
 
 import moteur.Clock;
 import moteur.GameProgress;
+import moteur.PeopleCalculator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -80,10 +81,11 @@ public class GameScreen extends JFrame implements Runnable{
 	private JProgressBar bar_SatisfactionCity; 
 	private GameScreen instance = this;
 	
-	private Money money = new Money();
+	public Money money = new Money();
 	private PopulationTotal popTotal = new PopulationTotal();
 	private HappinessTotal happTol = new HappinessTotal();
 	private String[] destroyString;
+	private PeopleCalculator calc = new PeopleCalculator();
 	
 	public Image img;
 	private JPanel districtPanel;
@@ -119,6 +121,7 @@ public class GameScreen extends JFrame implements Runnable{
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setSize(1200, 695);
+		setTitle("Grahms");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -139,7 +142,7 @@ public class GameScreen extends JFrame implements Runnable{
 		JLabel lblCity = new JLabel("CITY");
 		lblCity.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCity.setFont(fontTitle);
-		lblCity.setBounds(10, 0, 188, 25);
+		lblCity.setBounds(35, 0, 188, 25);
 		infoVillePanel.add(lblCity);
 		
 		/*
@@ -176,7 +179,7 @@ public class GameScreen extends JFrame implements Runnable{
 		});
 		infoVillePanel.add(btnHistoric);
 		
-		lblGlobalMoney = new JLabel("Global Money :");
+		lblGlobalMoney = new JLabel("Global money:");
 		lblGlobalMoney.setBounds(10, 65, 109, 20);
 		lblGlobalMoney.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		infoVillePanel.add(lblGlobalMoney);
@@ -192,12 +195,12 @@ public class GameScreen extends JFrame implements Runnable{
 		lblValGlobalMoney.setBounds(134, 65, 90, 20);
 		infoVillePanel.add(lblValGlobalMoney);
 		
-		lblHistoric = new JLabel("Historic :");
+		lblHistoric = new JLabel("History:");
 		lblHistoric.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		lblHistoric.setBounds(10, 159, 70, 20);
 		infoVillePanel.add(lblHistoric);
 		
-		lblSatisfaction = new JLabel("Satisfaction :");
+		lblSatisfaction = new JLabel("Satisfaction:");
 		lblSatisfaction.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		lblSatisfaction.setBounds(10, 104, 90, 20);
 		infoVillePanel.add(lblSatisfaction);
@@ -212,29 +215,29 @@ public class GameScreen extends JFrame implements Runnable{
 		lblDistrict = new JLabel("DISTRICT");
 		lblDistrict.setFont(fontTitle);
 		lblDistrict.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDistrict.setBounds(10, 0, 186, 27);
+		lblDistrict.setBounds(37, 0, 186, 27);
 		infoDistrictPanel.add(lblDistrict);
 		
-		lblPopulation = new JLabel("Population :");
+		lblPopulation = new JLabel("Population:");
 		lblPopulation.setBounds(10, 38, 94, 20);
 		lblPopulation.setFont(fontInfo);
 		infoDistrictPanel.add(lblPopulation);
 		
-		JLabel lblDistrictSatisfaction = new JLabel("Satisfaction :");
+		JLabel lblDistrictSatisfaction = new JLabel("Satisfaction:");
 		lblDistrictSatisfaction.setBounds(10, 83, 117, 20);
 		lblDistrictSatisfaction.setFont(fontInfo);
 		infoDistrictPanel.add(lblDistrictSatisfaction);
 		
 		
 		
-		// This Pane is visible when case without District is clicked
+		// This panel is visible when case without District is clicked
 		districtPanel = new JPanel();
 		districtPanel.setBounds(922, 373, 260, 192);
 		contentPane.add(districtPanel);
 		districtPanel.setLayout(null);
 		
-		btnResDistrict = new JButton("Residential District");
-		btnResDistrict.setBounds(34, 11, 186, 50);
+		btnResDistrict = new JButton("Residential district");
+		btnResDistrict.setBounds(37, 11, 186, 50);
 		btnResDistrict.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -252,8 +255,8 @@ public class GameScreen extends JFrame implements Runnable{
 		});
 		districtPanel.add(btnResDistrict);
 		
-		btnComDistrict = new JButton("Commercial District");
-		btnComDistrict.setBounds(34, 72, 186, 50);
+		btnComDistrict = new JButton("Commercial district");
+		btnComDistrict.setBounds(37, 72, 186, 50);
 		btnComDistrict.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -270,8 +273,8 @@ public class GameScreen extends JFrame implements Runnable{
 		});
 		districtPanel.add(btnComDistrict);
 		
-		btnServDistrict = new JButton("Services District");
-		btnServDistrict.setBounds(34, 133, 186, 50);
+		btnServDistrict = new JButton("Services district");
+		btnServDistrict.setBounds(37, 133, 186, 50);
 		btnServDistrict.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -300,8 +303,8 @@ public class GameScreen extends JFrame implements Runnable{
 		contentPane.add(subwayPanel2);
 		subwayPanel2.setLayout(null);
 		
-		btnAddStation = new JButton("Add Station");
-		btnAddStation.setBounds(34, 11, 188, 52);
+		btnAddStation = new JButton("Add station");
+		btnAddStation.setBounds(37, 11, 188, 52);
 		btnAddStation.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -315,8 +318,8 @@ public class GameScreen extends JFrame implements Runnable{
 		});
 		subwayPanel.add(btnAddStation);
 		
-		btnAddLine = new JButton("Add Line");
-		btnAddLine.setBounds(34, 11, 188, 52);
+		btnAddLine = new JButton("Add line");
+		btnAddLine.setBounds(37, 11, 188, 52);
 		btnAddLine.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -328,15 +331,31 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		subwayPanel2.add(btnAddLine);
 		
-		JButton btnUpgradeDistrict = new JButton("<html>Upgrade<br>\r\n&nbsp;Station<html>");
-		btnUpgradeDistrict.setBounds(34, 74, 188, 52);
-		subwayPanel.add(btnUpgradeDistrict);
-		JButton btnUpgradeDistrict2 = new JButton("<html>Upgrade<br>\r\n&nbsp;Station<html>");
-		btnUpgradeDistrict2.setBounds(34, 74, 188, 52);
-		subwayPanel2.add(btnUpgradeDistrict2);
+		JButton btnUpgradeDistrict = new JButton("<html>Upgrade<br>\r\n&nbsp;District<html>");
+		btnUpgradeDistrict.setBounds(37, 74, 188, 52);
+		subwayPanel2.add(btnUpgradeDistrict);
+		btnUpgradeDistrict.addActionListener(new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			District dist = myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()];
+			switch(calc.upgradeDistrict(dist, dist.getSize()+1, money)) {
+			case 0: System.out.println("ok");
+					myGrid.repaint();
+					break;
+			case 1: System.out.println("limite size");
+					break;
+			case 2: System.out.println("not enought money");
+					break;
+			case 3: System.out.println("not enought satisfaction");
+					break;
+			default: break;
+			};
+			}
+		});
+	
 		
 		JButton destroyButton = new JButton("Destroy");
-		destroyButton.setBounds(34, 137, 188, 52);
+		destroyButton.setBounds(37, 137, 188, 52);
 		destroyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {	
@@ -381,7 +400,7 @@ public class GameScreen extends JFrame implements Runnable{
 		subwayPanel.add(destroyButton);
 		
 		JButton destroyButton2 = new JButton("Destroy");
-		destroyButton2.setBounds(34, 137, 188, 52);
+		destroyButton2.setBounds(37, 137, 188, 52);
 		destroyButton2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {	
@@ -430,7 +449,7 @@ public class GameScreen extends JFrame implements Runnable{
 		subwayPanel2.setVisible(false);
 		infoDistrictPanel.setVisible(false);
 		
-		myGrid = new Grid(districtPanel, subwayPanel, subwayPanel2, infoDistrictPanel);
+		myGrid = new Grid(districtPanel, subwayPanel, subwayPanel2, infoDistrictPanel, money);
 		
 		
 		myGrid.setBounds(10, 10, 902, 602);
@@ -511,6 +530,10 @@ public class GameScreen extends JFrame implements Runnable{
 		windowThread.start();
 	}
 
+	public Money getMoney() {
+		return money;
+	}
+	
 	
 	@Override
 	public void run() {
