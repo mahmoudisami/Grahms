@@ -141,6 +141,7 @@ public class GameScreen extends JFrame implements Runnable{
 		lblCity.setFont(fontTitle);
 		lblCity.setBounds(10, 0, 188, 25);
 		infoVillePanel.add(lblCity);
+		
 		/*
 		JProgressBar bar_SatisfactionCity = new JProgressBar();
 		bar_SatisfactionCity.setBounds(112, 104, 138, 20);

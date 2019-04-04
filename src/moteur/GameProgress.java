@@ -32,6 +32,8 @@ public class GameProgress {
 	int height = 12;
 	private int tmpHapp;
 	private JPanel infoVillePanel;
+	private JProgressBar bar_SatisfactionCity = new JProgressBar();
+	
 	public GameProgress(Clock clock, Money money, Grid grid,JPanel infoVillePanel) {
 		this.clock = clock;
 		this.money = money;
@@ -41,6 +43,8 @@ public class GameProgress {
 		allLines = grid.getAllLines();
 		nbrLine = map.length;
 		nbrRow = map[0].length;
+		
+		bar_SatisfactionCity.setBounds(112, 104, 138, 20);
 	}
 	
 	public void launchGameProgress () {
@@ -218,7 +222,7 @@ public class GameProgress {
 		int counter = 0;
 		int happinessTotal = 0;
 		
-		if(gotDistrict()) {
+		//if(gotDistrict()) {
 			for(int i=0; i<nbrLine; i++) {
 				for(int j=0; j<nbrRow; j++) {
 						if(map[i][j] != null && map[i][j].isResidential()) {
@@ -234,15 +238,15 @@ public class GameProgress {
 				happinessTotal = 0;
 			}
 			
-			JProgressBar bar_SatisfactionCity = new JProgressBar();
-			bar_SatisfactionCity.setBounds(112, 104, 138, 20);
+			
 			bar_SatisfactionCity.setValue(happinessTotal);
 			bar_SatisfactionCity.setStringPainted(true);
 			infoVillePanel.add(bar_SatisfactionCity);
 			//happTotal.setHappinessTotal(happinessTotal);
 			//System.out.println(happinessTotal);
 					
-		}
+		//}
+			grid.repaint();
 		
 	}
 
@@ -422,7 +426,7 @@ public class GameProgress {
 			if (gotHisOwnStation == false && calNbStation == 0 && map[i][j].getUpdateStatusNoStation() == 0) {
 				map[i][j].setSatisfaction(-10); //if the district dont have his own station and no station nearby, the satisfaction will decrease by 10
 				map[i][j].setUpdateStatusNoStationTrue();
-				map[i][j].setUpdateStatusGotStationFalse();
+				//map[i][j].setUpdateStatusGotStationFalse();
 				System.out.println("Satisfaction level on map["+i+"]["+j+"] has decreased by 10");
 				//grid.repaint();
 			}
@@ -430,7 +434,7 @@ public class GameProgress {
 			if(gotHisOwnStation == true && map[i][j].getUpdateStatusGotStation() == 0) {
 				map[i][j].setSatisfaction(10);
 				map[i][j].setUpdateStatusGotStationTrue();
-				map[i][j].setUpdateStatusNoStationFalse(); //set var to 0
+				//map[i][j].setUpdateStatusNoStationFalse(); //set var to 0
 				System.out.println("Satisfaction level on map["+i+"]["+j+"] has increased by 10");
 				//grid.repaint();
 			}
@@ -438,7 +442,7 @@ public class GameProgress {
 			if (calNbStation > 0 && calNbStation <= 9 && map[i][j].getUpdateStatusGotStationNearby() == 0) {
 				map[i][j].setSatisfaction(5);
 				map[i][j].setUpdateStatusGotStationNearbyTrue();
-				map[i][j].setUpdateStatusNoStationNearbyFalse();
+				//map[i][j].setUpdateStatusNoStationNearbyFalse();
 				System.out.println("Satisfaction level on map["+i+"]["+j+"] has increased by 5");
 				//grid.repaint();
 			}
@@ -446,7 +450,7 @@ public class GameProgress {
 			if(calNbStation == 0 && map[i][j].getUpdateStatusNoStationNearby() == 0) {
 				map[i][j].setSatisfaction(5);
 				map[i][j].setUpdateStatusNoStationNearbyTrue();
-				map[i][j].setUpdateStatusGotStationNearbyFalse();
+				//map[i][j].setUpdateStatusGotStationNearbyFalse();
 				System.out.println("Satisfaction level on map["+i+"]["+j+"] has decreased by 5");
 			}
 			
