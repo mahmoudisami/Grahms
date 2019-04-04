@@ -25,8 +25,8 @@ import moteur.DistrictLinker;
 public class Grid extends JPanel{
 	
 	public JPanel myGridScreen;
-	int width = 18;
-	int height = 12;
+	public static int width = 18;
+	public static int height = 12;
 	public int sizeScreenX = 900;
 	public int sizeScreenY = 600;
 	
@@ -435,5 +435,12 @@ public class Grid extends JPanel{
 	public District[][] setMapTab(int lig, int col, District newDistrict){
 		grid[lig][col] = newDistrict;
 		return grid;
+	}
+	
+	public static int getWidthMap() {
+		return width;
+	}
+	public static int getHeightMap() {
+		return height;
 	}
 }
