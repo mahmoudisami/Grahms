@@ -1,5 +1,6 @@
 package moteur;
 
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,9 +39,10 @@ public class GameProgress {
 	private int tmpHapp;
 	private JPanel infoVillePanel;
 	private JProgressBar bar_SatisfactionCity = new JProgressBar();
+	private JLabel lblCityPop = new JLabel();
 	private int actualDistanceComm;
 	private int actualDistanceServ;
-	
+	private PopulationTotal popTotal = new PopulationTotal();
 	
 	public GameProgress(Clock clock, Money money, Grid grid,JPanel infoVillePanel) {
 		this.clock = clock;
@@ -88,6 +90,7 @@ public class GameProgress {
 			popEvolutionCalculator();
 		}
 		 calHappinessTotal();
+		 calPopTotal();
 		 grid.repaint();
 		
 	}
@@ -253,7 +256,25 @@ public class GameProgress {
 			}
 		}
 	}
-	
+	public void calPopTotal() {
+		int total = 0;
+		for(int i=0; i<nbrLine; i++) {
+			for(int j=0; j<nbrRow; j++) {
+					if(map[i][j] != null && map[i][j].isResidential()) {
+						total = map[i][j].getActualPeople() + total;
+						
+					}
+			}
+		}
+		popTotal.setPopulation(total);
+		//lblCityPop = new JLabel(""+popTotal.getPopulationTotal());
+		//Font fontInfo = new Font("Yu Gothic UI Semibold", Font.PLAIN, 15);
+		//lblCityPop.setFont(fontInfo);
+		lblCityPop.setText(""+popTotal.getPopulationTotal());
+		lblCityPop.setBounds(150, 30, 100, 20);
+		infoVillePanel.add(lblCityPop);
+		grid.repaint();
+	}
 	public void calHappinessTotal() {
 		int somme = 0;
 		int counter = 0;

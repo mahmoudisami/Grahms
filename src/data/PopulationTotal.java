@@ -15,4 +15,7 @@ public class PopulationTotal {
 	public void wdPopulationTotal(int values) {
 		popTotal = popTotal - values;
 	}
+	public void setPopulation(int values) {
+		popTotal = values;
+	}
 }

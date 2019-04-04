@@ -185,12 +185,12 @@ public class GameScreen extends JFrame implements Runnable{
 		lblGlobalMoney.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		infoVillePanel.add(lblGlobalMoney);
 		
-		
-		lblCityPop = new JLabel();
+		/*
+		lblCityPop = new JLabel(""+popTotal.getPopulationTotal());
 		lblCityPop.setFont(fontInfo);
 		lblCityPop.setBounds(150, 30, 100, 20);
 		infoVillePanel.add(lblCityPop);
-		
+		*/
 		lblValGlobalMoney = new JLabel(""+money.getMoney());
 		lblValGlobalMoney.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
 		lblValGlobalMoney.setBounds(134, 65, 90, 20);
@@ -249,9 +249,11 @@ public class GameScreen extends JFrame implements Runnable{
                 	subwayPanel.setVisible(true);
                 	infoDistrictPanel.setVisible(false);
 				}
-				myGrid.repaint();
+				/*
 				tmpPop = myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getActualPeople();
 				popTotal.addPopulationTotal(tmpPop);
+				*/	
+				myGrid.repaint();
 			}
 		});
 		districtPanel.add(btnResDistrict);
@@ -381,8 +383,10 @@ public class GameScreen extends JFrame implements Runnable{
 				}
 				else if (nom.equals("District")) {
 					myGrid.destroyLines(myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()], myGrid);
+					/*
 					tmpPop = myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getActualPeople();
 					popTotal.wdPopulationTotal(tmpPop);
+					*/
 					dlink.remove( myGrid.getMapTab(),myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()]);
 					myGrid.setMapTab(myGrid.getCoordsX(),myGrid.getCoordsY(),null);
 					subwayPanel.setVisible(false);
@@ -536,8 +540,11 @@ public class GameScreen extends JFrame implements Runnable{
 	public Money getMoney() {
 		return money;
 	}
-	
-	
+	/*
+	public PopulationTotal getPopulationTotal() {
+		return popTotal;
+	}
+	*/
 	@Override
 	public void run() {
 		while (true) {
@@ -555,7 +562,7 @@ public class GameScreen extends JFrame implements Runnable{
 			lblDaysgone.setText("Days Gone : "+clock.getDayCpt());
 			lblDayNumber.setText(clock.getDay());
 			lblValGlobalMoney.setText(""+money.getMoney());
-			lblCityPop.setText(""+popTotal.getPopulationTotal());
+			//lblCityPop.setText(""+popTotal.getPopulationTotal());
 			/*tmpHapp = happTol.getHappinessTotal();
 			bar_SatisfactionCity.setValue(tmpHapp);*/
 			
