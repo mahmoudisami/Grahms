@@ -540,11 +540,6 @@ public class GameScreen extends JFrame implements Runnable{
 	public Money getMoney() {
 		return money;
 	}
-	/*
-	public PopulationTotal getPopulationTotal() {
-		return popTotal;
-	}
-	*/
 	@Override
 	public void run() {
 		while (true) {
@@ -562,9 +557,6 @@ public class GameScreen extends JFrame implements Runnable{
 			lblDaysgone.setText("Days Gone : "+clock.getDayCpt());
 			lblDayNumber.setText(clock.getDay());
 			lblValGlobalMoney.setText(""+money.getMoney());
-			//lblCityPop.setText(""+popTotal.getPopulationTotal());
-			/*tmpHapp = happTol.getHappinessTotal();
-			bar_SatisfactionCity.setValue(tmpHapp);*/
 			
 		}
 		

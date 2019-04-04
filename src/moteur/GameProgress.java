@@ -274,6 +274,7 @@ public class GameProgress {
 		lblCityPop.setBounds(150, 30, 100, 20);
 		infoVillePanel.add(lblCityPop);
 		grid.repaint();
+		
 	}
 	public void calHappinessTotal() {
 		int somme = 0;
