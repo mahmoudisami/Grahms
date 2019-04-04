@@ -155,8 +155,22 @@ public class Grid extends JPanel{
 		                			System.out.println("Cette case a deja ete selectionnee, creation de ligne annulee");
 		                			crossBool = true;
 		                			setAddLineBool(false);
-		                			subwayPanel2.setVisible(false);
-		                			districtPanel.setVisible(true);
+		                			if(grid[caseX][caseY]== null){
+		    		                	subwayPanel.setVisible(false);
+		    		                	subwayPanel2.setVisible(false);
+		    		                	infoDistrictPanel.setVisible(false);
+		    		                	districtPanel.setVisible(true);
+		    		                }else{
+		    		                	if(grid[caseX][caseY].isStation()){
+		    		                		districtPanel.setVisible(false);
+		    			                	subwayPanel2.setVisible(true);
+		    			                	subwayPanel.setVisible(false);
+		    		                	}else{
+		    		                		districtPanel.setVisible(false);
+		    			                	subwayPanel.setVisible(true);
+		    			                	subwayPanel2.setVisible(false);
+		    		                	}
+		    		                }
 		                		}
 		                	}
 		                	if(crossBool == false){
@@ -177,8 +191,22 @@ public class Grid extends JPanel{
 		                		}else{
 		                			System.out.println("Cette case n'est pas adjacente a la precedente, creation de ligne annulee");
 		                			setAddLineBool(false);
-		                			subwayPanel2.setVisible(false);
-		                			districtPanel.setVisible(true);
+		                			if(grid[caseX][caseY]== null){
+		    		                	subwayPanel.setVisible(false);
+		    		                	subwayPanel2.setVisible(false);
+		    		                	infoDistrictPanel.setVisible(false);
+		    		                	districtPanel.setVisible(true);
+		    		                }else{
+		    		                	if(grid[caseX][caseY].isStation()){
+		    		                		districtPanel.setVisible(false);
+		    			                	subwayPanel2.setVisible(true);
+		    			                	subwayPanel.setVisible(false);
+		    		                	}else{
+		    		                		districtPanel.setVisible(false);
+		    			                	subwayPanel.setVisible(true);
+		    			                	subwayPanel2.setVisible(false);
+		    		                	}
+		    		                }
 		                		}
 		                		
 		                	}
