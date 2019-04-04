@@ -162,9 +162,7 @@ public class GameProgress {
 		serviceWorkerByDistrict.put(dist, serviceWorker); 
 		remain = commercial + service; // habitants restants
 		if(remain > 0) {
-			/*
-			 * Gerer la satisfaction par rapport au nombre restant d'habitants
-			 */
+			dist.setSatisfaction(-5);
 		}
 	}
 	
