@@ -10,7 +10,7 @@ public class PeopleCalculator {
 			
 		}
 		
-		public int upgradeDistrict(District dist, int size, Money money) {
+		public int upgradeDistrict(District dist, int size, Money money) { // Upgrade district size if conditions are OK
 			if(size == 4) {
 				return 1;
 			}

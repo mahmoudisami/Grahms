@@ -19,7 +19,7 @@ public class AccessibleDistrict implements Comparable<AccessibleDistrict> {
 	}
 
 	@Override
-	public int compareTo(AccessibleDistrict aDist) {
+	public int compareTo(AccessibleDistrict aDist) { // Sort districts by distances
 		return this.getDistance() - aDist.getDistance();
 	}
 }
