@@ -11,7 +11,11 @@ import javax.swing.JProgressBar;
 
 import data.*;
 import ihm.*;
-
+/*
+ * 
+ * Main class that allows the running of the game
+ * 
+ */
 public class GameProgress {
 	
 	private Clock clock;
@@ -51,8 +55,8 @@ public class GameProgress {
 		bar_SatisfactionCity.setBounds(112, 104, 138, 20);
 	}
 	
-	public void launchGameProgress () {
-		if(clock.getDayPos()==7 && clock.getHour().equals("23")) { //Chaque dimanche a 23h
+	public void launchGameProgress () {  // Performs daily actions
+		if(clock.getDayPos()==7 && clock.getHour().equals("23")) { 
 			historicCalculator();
 		}
 		if(clock.getHour().equals("01")) {
@@ -109,12 +113,12 @@ public class GameProgress {
 					AccessibleDistrict visitedDistrict;
 					for(int index = 0; index < aDistrict.size(); index ++) {
 						visitedDistrict = aDistrict.get(index); 
-						if(!isDoneComm && visitedDistrict.getDistrict().isCommercial()) { // Quartier commercial ou ils vont travailler
+						if(!isDoneComm && visitedDistrict.getDistrict().isCommercial()) {
 							cWorkingDistrict = visitedDistrict.getDistrict();				
 							cWorkingDistrict.setPeople(0);
 							isDoneComm = true;
 						}
-						if(!isDoneServ && visitedDistrict.getDistrict().isService()) { // Quartier commercial ou ils vont travailler
+						if(!isDoneServ && visitedDistrict.getDistrict().isService()) {
 							sWorkingDistrict = visitedDistrict.getDistrict();				
 							sWorkingDistrict.setPeople(0);
 							isDoneServ = true;
@@ -142,7 +146,7 @@ public class GameProgress {
 			else if(actualDistanceComm >= 4){
 				dist.setSatisfaction(-3);
 			}
-			for(index = 0; index < 3; index ++) { //Numero du train, 1 par heure
+			for(index = 0; index < 3; index ++) { //Train number, one per hour
 				if(commercial >= trainCapacity) { 
 					commercial -= trainCapacity;
 					commercialWorker.put(index, trainCapacity);
@@ -192,7 +196,7 @@ public class GameProgress {
 				serviceWorker.put(index, 0);
 			}
 		}
-		commercialWorkerByDistrict.put(dist, commercialWorker); // On lie aux quartiers les dÃ©placements
+		commercialWorkerByDistrict.put(dist, commercialWorker); // linked districts and deplacements
 		serviceWorkerByDistrict.put(dist, serviceWorker); 
 		remain = commercial + service; // habitants restants
 		if(remain > 0) {
@@ -201,7 +205,7 @@ public class GameProgress {
 		}
 	}
 	
-	public void servicesNeeds() {
+	public void servicesNeeds() { // the inhabitants go to the service districts for their needs
 		int i,j;
 		int popRemain;
 		District dist;
@@ -226,26 +230,22 @@ public class GameProgress {
 							if(aDist.get(index).getDistrict().isService()) {
 								if(popRemain > trainCapacity) {
 									popRemain -= trainCapacity;
-									//Augmenter la satisfaction de 1
 									map[i][j].setSatisfaction(1);
 									System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has increased by 1");
 								}
 								else if(popRemain > 0) {
 									popRemain = 0;
-									//Augmenter la satisfaction de 5
 									map[i][j].setSatisfaction(2);
 									System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has increased by 3");
 								}
 							}
 						}
 						if(popRemain != 0) {
-							//Réduire la satisfaction de 2
 							map[i][j].setSatisfaction(-2);
 							System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has decreased by 2");
 						}
 					}
 					else {
-						//Réduire satisfaction de 5
 						map[i][j].setSatisfaction(-5);
 						System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has decreased by 5");
 					}
@@ -297,7 +297,8 @@ public class GameProgress {
 		}
 		return false;
 	}
-	public boolean canWorkComm(District dist){
+	
+	public boolean canWorkComm(District dist){ //Is a Commercial District accessible?
 		ArrayList<AccessibleDistrict> aDist = dist.getAccessibleDistrict();
 		for(int index = 0; index<aDist.size(); index ++ ) {
 			if(aDist.get(index).getDistrict().isCommercial()) {
@@ -308,7 +309,7 @@ public class GameProgress {
 		return false;
 	}
 	
-	public boolean canWorkServ(District dist){
+	public boolean canWorkServ(District dist){ //Is a Services District accessible?
 		ArrayList<AccessibleDistrict> aDist = dist.getAccessibleDistrict();
 		for(int index = 0; index<aDist.size(); index ++ ) {
 			if(aDist.get(index).getDistrict().isService()) {
@@ -319,7 +320,7 @@ public class GameProgress {
 		return false;
 	}
 	
-	public void arriveWork(int trainNumber) {
+	public void arriveWork(int trainNumber) { // Time to work ! Arrive with the train
 		boolean isDoneComm = false;
 		boolean isDoneServ = false;
 		District cWorkingDistrict;
@@ -347,7 +348,7 @@ public class GameProgress {
 		}
 	}
 	
-	public void historicCalculator() {
+	public void historicCalculator() { // write the history and manage money
 		tmpMoney = fin.districtCalculatorCost(map);
 		money.withDraw(tmpMoney);
 		historicText += "------------ "+ clock.getDay() +" "+ clock.getMonthName() +"------------\n";
@@ -380,7 +381,7 @@ public class GameProgress {
 		}
 	}
 	
-	public void neighbourCalculator(int a, int b) {
+	public void neighbourCalculator(int a, int b) { // Is there a neighbour with a station to walk?
 		int calNbRes = 0;
 		int calNbServ = 0;
 		int calNbShop = 0;
@@ -496,37 +497,37 @@ public class GameProgress {
 		}	
 	}
 	
-	public void popEvolutionCalculator() {
+	public void popEvolutionCalculator() { //  Increase or Decrease the population
 		int tmp = 0;
 		for(int i=0; i<nbrLine; i++) {
 			for(int j=0; j<nbrRow; j++) {
 				if(map[i][j] != null && map[i][j].isResidential()) {
 					if(map[i][j].getSatisfaction() < 15 ) {
-						tmp = -(10*map[i][j].getActualPeople())/100; //moins 10% de la pop
+						tmp = -(10*map[i][j].getActualPeople())/100; //Decrease 10%
 						System.out.println("PopEvol : map["+i+"]["+j+"] has decreased 10%");
 						
 					}
 					if(map[i][j].getSatisfaction() >= 15 && map[i][j].getSatisfaction() < 25 ) {
-						tmp = -(7*map[i][j].getActualPeople())/100; //moins 15% de la pop
+						tmp = -(7*map[i][j].getActualPeople())/100; //Decrease 15%
 						System.out.println("PopEvol : map["+i+"]["+j+"] has decreased 7%");
 						
 					}
 					if(map[i][j].getSatisfaction() >= 25 && map[i][j].getSatisfaction() < 50 ) {
-						tmp = -(5*map[i][j].getActualPeople())/100; //moins 10% de la pop
+						tmp = -(5*map[i][j].getActualPeople())/100; //Decrease 10%
 						System.out.println("PopEvol : map["+i+"]["+j+"] has decreased 5%");
 						
 					}
 					if(map[i][j].getSatisfaction() >= 50 && map[i][j].getSatisfaction() < 70 ) {
-						tmp = (5*map[i][j].getActualPeople())/100; //plus 10% de la pop
+						tmp = (5*map[i][j].getActualPeople())/100; //Increase 10%
 						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 5%");
 						
 					}
 					if(map[i][j].getSatisfaction() >= 75 && map[i][j].getSatisfaction() < 95 ) {
-						tmp = (7*map[i][j].getActualPeople())/100; // plus 15%
+						tmp = (7*map[i][j].getActualPeople())/100; // Increase 15%
 						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 7%");
 					}
 					if(map[i][j].getSatisfaction() >= 95) {
-						tmp = 10*map[i][j].getActualPeople()/100; //plus 20%
+						tmp = 10*map[i][j].getActualPeople()/100; //Increase 20%
 						System.out.println("PopEvol : map["+i+"]["+j+"] has increased 10%");
 					}
 			
@@ -537,11 +538,12 @@ public class GameProgress {
 			}
 		}
 	}
+	
 	public String getHistoricText() {
 		return historicText;
 	}
 	
-	public void initDistrict() {
+	public void initDistrict() { // Add neighbour district to accessible districts
 		District dist;
 		for(int x = 0; x<nbrLine; x++) {
 			for(int y = 0; y<nbrRow; y++) {
