@@ -125,9 +125,11 @@ public class GameProgress {
 				if(commercial >= 500) { // 500 étant la limite par train
 					commercial -= 500;
 					commercialWorker.put(index, 500);
+					dist.setSatisfaction(1);
 				}else if(commercial > 0) {
 					commercialWorker.put(index, commercial);
 					commercial = 0;
+					dist.setSatisfaction(2);
 				}
 				else {
 					commercialWorker.put(index, 0); 
@@ -144,9 +146,11 @@ public class GameProgress {
 				if(service >= 500) {
 					service -= 500;
 					serviceWorker.put(index, 500);
+					dist.setSatisfaction(1);
 				}else if(service > 0) {
 					serviceWorker.put(index, service);
 					service = 0;
+					dist.setSatisfaction(2);
 				}
 				else {
 					serviceWorker.put(index, 0); 
