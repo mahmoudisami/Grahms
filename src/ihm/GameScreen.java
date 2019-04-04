@@ -41,6 +41,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import moteur.Clock;
+import moteur.DistrictLinker;
 import moteur.GameProgress;
 import moteur.PeopleCalculator;
 
@@ -86,7 +87,7 @@ public class GameScreen extends JFrame implements Runnable{
 	private HappinessTotal happTol = new HappinessTotal();
 	private String[] destroyString;
 	private PeopleCalculator calc = new PeopleCalculator();
-	
+	private DistrictLinker dlink = new DistrictLinker();
 	public Image img;
 	private JPanel districtPanel;
 	private JPanel subwayPanel;		//Panel for district without station
@@ -382,6 +383,7 @@ public class GameScreen extends JFrame implements Runnable{
 					myGrid.destroyLines(myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()], myGrid);
 					tmpPop = myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getActualPeople();
 					popTotal.wdPopulationTotal(tmpPop);
+					dlink.remove( myGrid.getMapTab(),myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()]);
 					myGrid.setMapTab(myGrid.getCoordsX(),myGrid.getCoordsY(),null);
 					subwayPanel.setVisible(false);
 					subwayPanel2.setVisible(false);
@@ -427,6 +429,7 @@ public class GameScreen extends JFrame implements Runnable{
 					myGrid.destroyLines(myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()], myGrid);
 					tmpPop = myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getActualPeople();
 					popTotal.wdPopulationTotal(tmpPop);
+					dlink.remove( myGrid.getMapTab(),myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()]);
 					myGrid.setMapTab(myGrid.getCoordsX(),myGrid.getCoordsY(),null);
 					subwayPanel.setVisible(false);
 					subwayPanel2.setVisible(false);
