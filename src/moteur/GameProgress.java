@@ -182,19 +182,27 @@ public class GameProgress {
 								if(popRemain > 500) {
 									popRemain -= 500;
 									//Augmenter la satisfaction de 1
+									map[i][j].setSatisfaction(1);
+									System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has increased by 1");
 								}
 								else if(popRemain > 0) {
 									popRemain = 0;
 									//Augmenter la satisfaction de 5
+									map[i][j].setSatisfaction(5);
+									System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has increased by 5");
 								}
 							}
 						}
 						if(popRemain != 0) {
 							//Réduire la satisfaction de 2
+							map[i][j].setSatisfaction(-2);
+							System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has decreased by 2");
 						}
 					}
 					else {
 						//Réduire satisfaction de 5
+						map[i][j].setSatisfaction(-5);
+						System.out.println("Services Need : Satisfaction level on map["+i+"]["+j+"] has decreased by 5");
 					}
 				}
 			}
@@ -407,19 +415,31 @@ public class GameProgress {
 				gotHisOwnStation = true;
 			}
 			
-			if (gotHisOwnStation == false && calNbStation == 0) {
+			if (gotHisOwnStation == false && calNbStation == 0 && map[i][j].getUpdateStatusNoStation() == 0) {
 				map[i][j].setSatisfaction(-10); //if the district dont have his own station and no station nearby, the satisfaction will decrease by 10
+				map[i][j].setUpdateStatusNoStationTrue();
 				System.out.println("Satisfaction level on map["+i+"]["+j+"] has decreased by 10");
+				//grid.repaint();
 			}
 			
-			if(gotHisOwnStation == true) {
+			if(gotHisOwnStation == true && map[i][j].getUpdateStatusGotStation() == 0) {
 				map[i][j].setSatisfaction(10);
+				map[i][j].setUpdateStatusGotStationTrue();
 				System.out.println("Satisfaction level on map["+i+"]["+j+"] has increased by 10");
+				//grid.repaint();
 			}
 			
-			if (gotHisOwnStation == false && calNbStation > 0 && calNbStation <= 9) {
+			if (calNbStation > 0 && calNbStation <= 9 && map[i][j].getUpdateStatusGotStationNearby() == 0) {
 				map[i][j].setSatisfaction(5);
+				map[i][j].setUpdateStatusGotStationNearbyTrue();
 				System.out.println("Satisfaction level on map["+i+"]["+j+"] has increased by 5");
+				//grid.repaint();
+			}
+			
+			if(calNbStation == 0 && map[i][j].getUpdateStatusNoStationNearby() == 0) {
+				map[i][j].setSatisfaction(5);
+				map[i][j].setUpdateStatusNoStationNearbyTrue();
+				System.out.println("Satisfaction level on map["+i+"]["+j+"] has decreased by 5");
 			}
 			
 		}	
