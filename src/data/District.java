@@ -68,7 +68,7 @@ public class District {
 			actualPeople = 100;
 		}
 	}
-	
+ 	
 	public void setPeople(int newPopulation) {
 		actualPeople = newPopulation;
 	}
