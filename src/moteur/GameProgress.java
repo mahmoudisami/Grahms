@@ -418,6 +418,7 @@ public class GameProgress {
 			if (gotHisOwnStation == false && calNbStation == 0 && map[i][j].getUpdateStatusNoStation() == 0) {
 				map[i][j].setSatisfaction(-10); //if the district dont have his own station and no station nearby, the satisfaction will decrease by 10
 				map[i][j].setUpdateStatusNoStationTrue();
+				map[i][j].setUpdateStatusGotStationFalse();
 				System.out.println("Satisfaction level on map["+i+"]["+j+"] has decreased by 10");
 				//grid.repaint();
 			}
@@ -425,6 +426,7 @@ public class GameProgress {
 			if(gotHisOwnStation == true && map[i][j].getUpdateStatusGotStation() == 0) {
 				map[i][j].setSatisfaction(10);
 				map[i][j].setUpdateStatusGotStationTrue();
+				map[i][j].setUpdateStatusNoStationFalse(); //set var to 0
 				System.out.println("Satisfaction level on map["+i+"]["+j+"] has increased by 10");
 				//grid.repaint();
 			}
@@ -432,6 +434,7 @@ public class GameProgress {
 			if (calNbStation > 0 && calNbStation <= 9 && map[i][j].getUpdateStatusGotStationNearby() == 0) {
 				map[i][j].setSatisfaction(5);
 				map[i][j].setUpdateStatusGotStationNearbyTrue();
+				map[i][j].setUpdateStatusNoStationNearbyFalse();
 				System.out.println("Satisfaction level on map["+i+"]["+j+"] has increased by 5");
 				//grid.repaint();
 			}
@@ -439,6 +442,7 @@ public class GameProgress {
 			if(calNbStation == 0 && map[i][j].getUpdateStatusNoStationNearby() == 0) {
 				map[i][j].setSatisfaction(5);
 				map[i][j].setUpdateStatusNoStationNearbyTrue();
+				map[i][j].setUpdateStatusGotStationNearbyFalse();
 				System.out.println("Satisfaction level on map["+i+"]["+j+"] has decreased by 5");
 			}
 			
