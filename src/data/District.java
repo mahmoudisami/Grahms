@@ -74,9 +74,15 @@ public class District {
 	}
 	
 	public void setSatisfaction(int num) {
-		if(satisfaction >= 0 && satisfaction <=100 ) {
+		if(satisfaction + num >= 0 && satisfaction +num <=100 ) {
 			satisfaction = satisfaction + num;
 		} 
+		else if(satisfaction + num <= 0) {
+			satisfaction = 0;
+		}
+		else if(satisfaction + num >= 100) {
+			satisfaction = 100;
+		}
 	}
 
 	public void setUpdateStatusGotStationTrue() {
