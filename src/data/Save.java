@@ -68,6 +68,7 @@ public class Save {
 		int rs;
 		int idGame =0 ;
 		int idDistrict = 0;
+		District[][] grid = Grid.getMapTab();
 		
 		///Save Game
 		PreparedStatement ps =(PreparedStatement) conn.prepareStatement("INSERT INTO Game (code, name, money) VALUES ('1234','CityTest','65')", Statement.RETURN_GENERATED_KEYS) ;
@@ -80,6 +81,9 @@ public class Save {
 		int height = Grid.getHeightMap();
 		for(int x=0; x<width; x++){
 			for(int y=0; y<height; y++){
+				if (grid[x][y] == null) {
+					
+				}
 			/*	if (grid[x][y] == null) {
 					g.drawImage(img, 1+(caseWidth*x), 1+(caseWidth*y), sizeX-1, sizeY-1, this);
 				}else {
