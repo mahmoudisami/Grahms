@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
@@ -156,7 +157,7 @@ public class Grid extends JPanel{
 		                if(caseX != previousCaseX || caseY != previousCaseY){
 		                	for(int i=0;i<lineCoo.size();i++){
 		                		if(lineCoo.get(i).getX() == coo.getX() && lineCoo.get(i).getY() == coo.getY()){
-		                			System.out.println("Cette case a deja ete selectionnee, creation de ligne annulee");
+		                			JOptionPane.showMessageDialog(null, "This square has already been selected before, subway line creation cancelled", "Error", JOptionPane.ERROR_MESSAGE);
 		                			crossBool = true;
 		                			setAddLineBool(false);
 		                			if(grid[caseX][caseY]== null){
@@ -185,7 +186,7 @@ public class Grid extends JPanel{
 		    		                }
 		                			if(grid[caseX][caseY] != null && grid[caseX][caseY].isStation() == true && (caseX != previousCaseX || caseY != previousCaseY)){
 		                				setAddLineBool(false);
-		                				System.out.println("Ligne completee avec succes");
+		                				JOptionPane.showMessageDialog(null, "Subway line created successfully!", "Information", JOptionPane.INFORMATION_MESSAGE);
 		                				money.withDraw((lineCoo.size() -1 )*Const.MAINTENANCE_COST_LINE);
 		      /*ICI*/          			Line lineCompleted = new Line(grid[lineCoo.get(0).getX()][lineCoo.get(0).getY()], grid[lineCoo.get(lineCoo.size()-1).getX()][lineCoo.get(lineCoo.size()-1).getY()], lineCoo.size()-1, true, lineCoo);
 		                				districtLinker.linkDistrict(lineCompleted);
@@ -193,7 +194,7 @@ public class Grid extends JPanel{
 		                				repaint();
 		                			}
 		                		}else{
-		                			System.out.println("Cette case n'est pas adjacente a la precedente, creation de ligne annulee");
+		                			JOptionPane.showMessageDialog(null, "This square isn't adjacent to the previous one, subway line creation cancelled", "Error", JOptionPane.ERROR_MESSAGE);
 		                			setAddLineBool(false);
 		                			if(grid[caseX][caseY]== null){
 		    		                	subwayPanel.setVisible(false);

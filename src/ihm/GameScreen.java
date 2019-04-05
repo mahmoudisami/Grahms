@@ -337,7 +337,7 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		subwayPanel2.add(btnAddLine);
 		
-		JButton btnUpgradeDistrict = new JButton("<html>Upgrade<br>\r\n&nbsp;District<html>");
+		JButton btnUpgradeDistrict = new JButton("<html>Upgrade<br>\r\n&nbsp;district<html>");
 		btnUpgradeDistrict.setBounds(37, 74, 188, 52);
 		subwayPanel2.add(btnUpgradeDistrict);
 		btnUpgradeDistrict.addActionListener(new ActionListener() {
@@ -345,14 +345,14 @@ public class GameScreen extends JFrame implements Runnable{
 		public void actionPerformed(ActionEvent e) {
 			District dist = myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()];
 			switch(calc.upgradeDistrict(dist, dist.getSize()+1, money)) {
-			case 0: System.out.println("ok");
+			case 0: JOptionPane.showMessageDialog(null, "Upgrade done successfully!", "Information", JOptionPane.INFORMATION_MESSAGE);
 					myGrid.repaint();
 					break;
-			case 1: System.out.println("limite size");
+			case 1: JOptionPane.showMessageDialog(null, "Already upgraded to maximum", "Error", JOptionPane.ERROR_MESSAGE);
 					break;
-			case 2: System.out.println("not enought money");
+			case 2: JOptionPane.showMessageDialog(null, "Not enough money", "Error", JOptionPane.ERROR_MESSAGE);
 					break;
-			case 3: System.out.println("not enought satisfaction");
+			case 3: JOptionPane.showMessageDialog(null, "Not enough satisfaction", "Error", JOptionPane.ERROR_MESSAGE);
 					break;
 			default: break;
 			};
@@ -361,7 +361,7 @@ public class GameScreen extends JFrame implements Runnable{
 	
 		
 		JButton destroyButton = new JButton("Destroy");
-		destroyButton.setBounds(37, 137, 188, 52);
+		destroyButton.setBounds(37, 75, 188, 52);
 		destroyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {	
@@ -386,10 +386,6 @@ public class GameScreen extends JFrame implements Runnable{
 				}
 				else if (nom.equals("District")) {
 					myGrid.destroyLines(myGrid.getMapTab()[myGrid.getCoordsX()][myGrid.getCoordsY()], myGrid);
-					/*
-					tmpPop = myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()].getActualPeople();
-					popTotal.wdPopulationTotal(tmpPop);
-					*/
 					dlink.remove( myGrid.getMapTab(),myGrid.getMapTab()[myGrid.getCoordsX()] [myGrid.getCoordsY()]);
 					myGrid.setMapTab(myGrid.getCoordsX(),myGrid.getCoordsY(),null);
 					subwayPanel.setVisible(false);
