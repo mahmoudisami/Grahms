@@ -26,6 +26,8 @@ public class Save {
 		public static String name;
 		public static int idGame;
 		public static int lastIdGame;
+		public static District[][] grid = Grid.getMapTab();
+		public static  ArrayList<Coordinates> lineCoo = new ArrayList<Coordinates>();
 	/*	
 		public static void main(String[] args) {
 			EventQueue.invokeLater(new Runnable() {
@@ -73,16 +75,54 @@ public class Save {
 		    System.out.println(rs2.getString("money"));
 		}
 	}
-	//Initialise Game
-	public static int initialisation() throws SQLException {
+	//Create the first save game
+	public static int firstRegister(String txtCode, String name) throws SQLException {
+		int rs;
 		Connection conn = Save.connectToDB();
-			PreparedStatement ps =(PreparedStatement) conn.prepareStatement("INSERT INTO Game (code, name) VALUES ('getCode','getCityName')", Statement.RETURN_GENERATED_KEYS) ;
-			int rs = ps.executeUpdate();
-			ResultSet rsId=ps.getGeneratedKeys();
-			if(rsId.next()){
-				idGame=rsId.getInt(1);
+		PreparedStatement ps =(PreparedStatement) conn.prepareStatement("INSERT INTO Game (code,name) VALUES ('"+txtCode+"','"+name+"')", Statement.RETURN_GENERATED_KEYS) ;
+		System.out.println("INSERT INTO Game (code,name) VALUES ("+txtCode+","+name+")");
+		rs = ps.executeUpdate();
+		ResultSet rsId=ps.getGeneratedKeys();
+		if(rsId.next()){
+			idGame=rsId.getInt(1);
+		}
+	conn.close();
+		return idGame;
+	}
+	
+	//Initialise Game
+	public static int initialisation(String txtCode) throws SQLException {
+		
+		Connection conn = Save.connectToDB();
+			PreparedStatement ps =(PreparedStatement) conn.prepareStatement("SELECT * FROM Game WHERE code = "+txtCode+"") ;
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				idGame=rs.getInt("idGame");
 			}
+			
+			//LINE
+			PreparedStatement ps2 =(PreparedStatement) conn.prepareStatement("SELECT * FROM Line WHERE idGame = "+idGame+"") ;
+			ResultSet rs2 = ps2.executeQuery();
+		    while(rs2.next()){
+		    	
+		    	PreparedStatement ps3 =(PreparedStatement) conn.prepareStatement("SELECT * FROM CoordinateLine WHERE idLine = "+rs2.getInt("idLine")+"") ;
+				ResultSet rs3 = ps3.executeQuery();
+			    while(rs3.next()){
+			    	Coordinates coo = new Coordinates(rs3.getInt("coordX"), rs3.getInt("coordY"));
+			    	lineCoo.add(coo);
+			    }
+			    
+		    	Grid.setLineCoo(lineCoo);
+		    	
+		    	//Add Line
+		    	Line lineCompleted = new Line( grid[rs.getInt("district1X")][rs.getInt("district1Y")], grid[rs.getInt("district2X")][rs.getInt("district2Y")], lineCoo.size()-1, true, lineCoo);
+		//		districtLinker.linkDistrict(lineCompleted);
+		//		allLines.add(lineCompleted);;
+		    }
+		    
 		conn.close();
+		
+		System.out.println(idGame +""+ txtCode);
 		return idGame;
 	}
 	
@@ -102,22 +142,18 @@ public class Save {
 		int satisfaction = 50;
 		int global_satisfaction= HappinessTotal.getHappinessTotal();
 		System.out.print(global_satisfaction);
-		District[][] grid = Grid.getMapTab();
+		
 
 		///Save Game
-		if(idGame != 0) {
-			
-			PreparedStatement psup =(PreparedStatement) conn.prepareStatement("DELETE FROM Game WHERE idGame = "+idGame+"");
-			lastIdGame = idGame;
-			rs = psup.executeUpdate();
-		}
 		
-		PreparedStatement ps =(PreparedStatement) conn.prepareStatement("INSERT INTO Game (code, name, money, satisfaction, hour, minute, day, month, year, dayCpt, dayPos) VALUES ('getCode','getCityName',"+money+","+global_satisfaction+","+Clock.getHour()+","+Clock.getHour()+","+Clock.getHour()+","+Clock.getHour()+","+Clock.getHour()+","+Clock.getHour()+","+Clock.getHour()+")", Statement.RETURN_GENERATED_KEYS) ;
+		System.out.println("UPDATE Game SET money='"+money+"', satisfaction='"+global_satisfaction+
+				"', hour='"+Clock.getHour()+"', minute='"+Clock.getMinute()+"', day='"+Clock.getDayPos()+"', month='"+Clock.getMonth()+"', year='"+Clock.getYear()+
+				"', dayCpt='"+Clock.getDayCpt()+"', dayPos='"+Clock.getDayPos()+"' WHERE idGame='"+idGame+"'");
+		PreparedStatement ps =(PreparedStatement) conn.prepareStatement("UPDATE Game SET money='"+money+"', satisfaction='"+global_satisfaction+
+				"', hour='"+Clock.getHour()+"', minute='"+Clock.getMinute()+"', day='"+Clock.getDayPos()+"', month='"+Clock.getMonth()+"', year='"+Clock.getYear()+
+				"', dayCpt='"+Clock.getDayCpt()+"', dayPos='"+Clock.getDayPos()+"' WHERE idGame='"+idGame+"'");
 		rs = ps.executeUpdate();
-		ResultSet rsId=ps.getGeneratedKeys();
-		if(rsId.next()){
-			idGame=rsId.getInt(1);
-		}
+		
 		int width = Grid.getWidthMap();
 		int height = Grid.getHeightMap();
 

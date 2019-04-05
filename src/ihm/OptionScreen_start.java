@@ -70,15 +70,20 @@ public class OptionScreen_start extends JFrame {
 		btnStart.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					///initialisation for the data save
-					idGame = Save.initialisation();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
+				
+				if((!txtCode.getText().isEmpty()) && (!txtName.getText().isEmpty())){
+					try {
+						///initialisation for the data save
+						idGame = Save.firstRegister(txtCode.getText(), txtName.getText());
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+					Save.setIdGame(idGame);
+					///Game starts
+					GameScreen frame = new GameScreen();
+					frame.setVisible(true);
+					dispose();
 				}
-				if(!txtCode.getText().isEmpty()) Save.setIdGame(idGame);
-				///Game starts
-				GameScreen frame = new GameScreen();
 			}
 		});
 		btnStart.setBounds(261, 393, 159, 62);

@@ -35,7 +35,7 @@ public class Grid extends JPanel{
 	public DistrictLinker districtLinker = new DistrictLinker();
 	boolean addLineBool = false;
 	boolean addLineBoolChangedToTrue = false;	//TRUE si on viens de passer AddLineBool de FALSE à TRUE, sinon FALSE
-	static ArrayList<Coordinates> lineCoo;
+	public static ArrayList<Coordinates> lineCoo;
 	public static ArrayList<Line> allLines = new ArrayList<Line>();
 	private Money money;
 	

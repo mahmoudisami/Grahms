@@ -7,12 +7,40 @@ import java.util.concurrent.TimeUnit;
 public class Clock  {		//creation of the clock
 	private boolean started;
 	private static int hour;
-	private int minute;
-	private int day;
+	private static int minute;
+	public static void setHour(int hour) {
+		Clock.hour = hour;
+	}
+
+	public static void setMinute(int minute) {
+		Clock.minute = minute;
+	}
+
+	public static void setDay(int day) {
+		Clock.day = day;
+	}
+
+	public static void setMonth(int month) {
+		Clock.month = month;
+	}
+
+	public static void setYear(int year) {
+		Clock.year = year;
+	}
+
+	public static void setDayCpt(int dayCpt) {
+		Clock.dayCpt = dayCpt;
+	}
+
+	public static void setDayPos(int dayPos) {
+		Clock.dayPos = dayPos;
+	}
+
+	private static int day;
 	private static int month;
-	private int year;
-	private int dayCpt;
-	private int dayPos;	
+	private static int year;
+	private static int dayCpt;
+	private static int dayPos;	
 	public Clock(){
 		hour = 02;
 		minute = 00;
@@ -42,7 +70,7 @@ public class Clock  {		//creation of the clock
 		}
 	}
 
-	public String getMinute() {
+	public static String getMinute() {
 		if (minute<10)
 			return "" + 0 + minute;
 		else{
@@ -50,7 +78,7 @@ public class Clock  {		//creation of the clock
 		}
 	}
  
-	public String getDay() {
+	public static String getDay() {
 		/*if (day<10)
 			return "" + 0 + day;
 		else{
@@ -80,19 +108,19 @@ public class Clock  {		//creation of the clock
 		}
 	}
 	
-	public int getMonthPos() {
+	public static int getMonthPos() {
 		return month;
 	}
 
-	public int getYear() {		//<-
+	public static int getYear() {		//<-
 		return year;
 	}
 	
-	public int getDayCpt() {
+	public static int getDayCpt() {
 		return dayCpt;
 	}
 	
-	public int getDayPos() {
+	public static int getDayPos() {
 		return dayPos;
 	}
 	
