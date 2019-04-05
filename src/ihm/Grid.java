@@ -1,6 +1,7 @@
 package ihm;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -35,7 +36,7 @@ public class Grid extends JPanel{
 	public DistrictLinker districtLinker = new DistrictLinker();
 	boolean addLineBool = false;
 	boolean addLineBoolChangedToTrue = false;	//TRUE si on viens de passer AddLineBool de FALSE à TRUE, sinon FALSE
-	public static ArrayList<Coordinates> lineCoo;
+	static ArrayList<Coordinates> lineCoo;
 	public static ArrayList<Line> allLines = new ArrayList<Line>();
 	private Money money;
 	
@@ -47,6 +48,7 @@ public class Grid extends JPanel{
 	private JPanel subwayPanel;		//Panel for district without station
 	private JPanel subwayPanel2;	//Panel for district with station
 	private JPanel infoDistrictPanel;
+	public static Graphics g;
 	
 	
 	public Grid(JPanel districtPanel, JPanel subwayPanel, JPanel subwayPanel2, JPanel infoDistrictPanel,Money money){
@@ -222,6 +224,7 @@ public class Grid extends JPanel{
 	public void drawCaseSelected(int caseX, int caseY) {
 	}
 	public void paintComponent(Graphics g){
+		this.g =g;
 		super.paintComponent(g);
 		g.setColor(Color.black);
 		caseWidth = getHeight()/height;
@@ -246,7 +249,6 @@ public class Grid extends JPanel{
 		}
 		drawSubwayLine(g, caseWidth);
 	}
-	
 	public void drawSubwayLine(Graphics g, int caseWidth){
 		int xPixel, yPixel, xNextPixel, yNextPixel;
 		ArrayList<Coordinates> lineCoords;
@@ -391,7 +393,6 @@ public class Grid extends JPanel{
 			}
 		}
 	}
-	
 	public void setGridscreen(JPanel contentPane){
 		myGridScreen = contentPane;
 	}
@@ -444,7 +445,7 @@ public class Grid extends JPanel{
 	public static District[][] getMapTab() {
 		return grid;
 	}
-	public District[][] setMapTab(int lig, int col, District newDistrict){
+	public static District[][] setMapTab(int lig, int col, District newDistrict){
 		grid[lig][col] = newDistrict;
 		return grid;
 	}

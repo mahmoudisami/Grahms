@@ -42,12 +42,19 @@ public class Clock  {		//creation of the clock
 	private static int dayCpt;
 	private static int dayPos;	
 	public Clock(){
+		if(hour < 3)
 		hour = 02;
+		if(minute < 1)
 		minute = 00;
+		if(day < 2)
 		day = 01;
+		if(month <  2);
 		month = 01;
+		if (year <= 2020)
 		year = 2019;
+		if(dayCpt < 1)
 		dayCpt = 0;
+		if(dayPos < 1)
 		dayPos = 1;
 	}
 	

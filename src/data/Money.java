@@ -7,10 +7,12 @@ public class Money {
 	private static int money;
 	
 	public Money() {
+		if(!(money > 0)) {
 		money = Const.START_MONEY;
+		}
 	}
 	
-	public void addMoney(int gain) {
+	public static void addMoney(int gain) {
 		money += gain;
 	}
 	
@@ -20,6 +22,9 @@ public class Money {
 
 	public static int getMoney() {
 		return money;
-	}	
+	}
+	public static void setMoney(int moneyPut) {
+		money = moneyPut;
+	}
 	
 }

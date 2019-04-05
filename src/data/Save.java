@@ -1,5 +1,7 @@
 package data;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.EventQueue;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -98,7 +100,40 @@ public class Save {
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
 				idGame=rs.getInt("idGame");
+				Money.setMoney(rs.getInt("money"));
+		      	Clock.setDay(rs.getInt("day"));
+		    	Clock.setDayCpt(rs.getInt("dayCpt"));
+		    	Clock.setDayPos(rs.getInt("dayPos"));	
+		    	Clock.setHour(rs.getInt("hour"));
+		    	Clock.setMinute(rs.getInt("minute"));
+		    	Clock.setMonth(rs.getInt("month"));
+		    	Clock.setYear(rs.getInt("year"));
 			}
+			//Grid
+			District[][] grid = Grid.getMapTab();
+			PreparedStatement ps1 =(PreparedStatement) conn.prepareStatement("SELECT * FROM District WHERE idGame = "+idGame+"") ;
+			ResultSet rs1 = ps1.executeQuery();
+		    while(rs1.next()){
+		    	
+		    	District newDistrict = new District(500);
+		    
+		    	Grid.setMapTab(rs1.getInt("coordX"),rs1.getInt("coordY") , newDistrict);
+		    	
+		    	if(rs1.getInt("isStation") == 1)
+		    	Grid.getMapTab()[rs1.getInt("coordX")][rs1.getInt("coordY")].createStation();
+		    	
+		    	if(rs1.getInt("type") == 1)
+		    	Grid.getMapTab()[rs1.getInt("coordX")][rs1.getInt("coordY")] = new Residential();
+		    	
+		    	if(rs1.getInt("type") == 2)
+		    	Grid.getMapTab()[rs1.getInt("coordX")][rs1.getInt("coordY")] = new Commercial();
+		    	
+		    	if(rs1.getInt("type") == 3)
+		    	Grid.getMapTab()[rs1.getInt("coordX")][rs1.getInt("coordY")] = new Services();
+		    }
+			
+			
+			
 			
 			//LINE
 			PreparedStatement ps2 =(PreparedStatement) conn.prepareStatement("SELECT * FROM Line WHERE idGame = "+idGame+"") ;
@@ -115,11 +150,10 @@ public class Save {
 		    	Grid.setLineCoo(lineCoo);
 		    	
 		    	//Add Line
-		    	Line lineCompleted = new Line( grid[rs.getInt("district1X")][rs.getInt("district1Y")], grid[rs.getInt("district2X")][rs.getInt("district2Y")], lineCoo.size()-1, true, lineCoo);
-		//		districtLinker.linkDistrict(lineCompleted);
-		//		allLines.add(lineCompleted);;
+		  //  	Line lineCompleted = new Line( grid[rs.getInt("district1X")][rs.getInt("district1Y")], grid[rs.getInt("district2X")][rs.getInt("district2Y")], lineCoo.size()-1, true, lineCoo);
+				//		districtLinker.linkDistrict(lineCompleted);
+		//		Grid.allLines.add(lineCompleted);
 		    }
-		    
 		conn.close();
 		
 		System.out.println(idGame +""+ txtCode);
@@ -157,6 +191,12 @@ public class Save {
 		int width = Grid.getWidthMap();
 		int height = Grid.getHeightMap();
 
+		
+		if(idGame != 0) {
+		PreparedStatement psup =(PreparedStatement) conn.prepareStatement("DELETE FROM District WHERE idGame = "+idGame+"");
+		rs = psup.executeUpdate();
+		}
+		
 		for(int x=0; x<width; x++){
 			for(int y=0; y<height; y++){
 				if (grid[x][y] != null) {
@@ -173,8 +213,6 @@ public class Save {
 					///Save Grid
 					if(idGame != 0 && type != 0) {
 						
-						PreparedStatement psup =(PreparedStatement) conn.prepareStatement("DELETE FROM District WHERE idGame = "+lastIdGame+"");
-						rs = psup.executeUpdate();
 						PreparedStatement ps2 = (PreparedStatement) conn.prepareStatement("INSERT INTO District (idGame, coordX, coordY, type, population, satisfaction, isStation) VALUES ("+idGame+","+x+","+y+","+type+","+people+","+satisfaction+","+station+")", Statement.RETURN_GENERATED_KEYS);
 						rs = ps2.executeUpdate();
 						ResultSet rsId2=ps2.getGeneratedKeys();
