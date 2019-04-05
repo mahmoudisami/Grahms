@@ -6,10 +6,10 @@ import java.util.concurrent.TimeUnit;
 
 public class Clock  {		//creation of the clock
 	private boolean started;
-	private int hour;
+	private static int hour;
 	private int minute;
 	private int day;
-	private int month;
+	private static int month;
 	private int year;
 	private int dayCpt;
 	private int dayPos;	
@@ -34,7 +34,7 @@ public class Clock  {		//creation of the clock
 		dayPos = dN;
 	}
 	
-	public String getHour() {		//getters ->
+	public static String getHour() {		//getters ->
 		if (hour<10)
 			return "" + 0 + hour;
 		else{
@@ -72,7 +72,7 @@ public class Clock  {		//creation of the clock
 	}
 
 
-	public String getMonth() {
+	public static String getMonth() {
 		if (month<10)
 			return "" + 0 + month;
 		else{

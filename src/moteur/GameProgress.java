@@ -293,6 +293,7 @@ public class GameProgress {
 			}
 			if(counter != 0) {
 				happinessTotal = somme/counter;
+				HappinessTotal.setHappinessTotal(happinessTotal);	
 			}else {
 				happinessTotal = 0;
 			}

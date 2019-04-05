@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
+import data.Save;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
@@ -21,6 +24,7 @@ public class OptionScreen_start extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtName;
 	private JTextField txtCode;
+	public static int idGame;
 
 	/**
 	 * Launch the application.
@@ -66,6 +70,14 @@ public class OptionScreen_start extends JFrame {
 		btnStart.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					///initialisation for the data save
+					idGame = Save.initialisation();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				if(!txtCode.getText().isEmpty()) Save.setIdGame(idGame);
+				///Game starts
 				GameScreen frame = new GameScreen();
 			}
 		});

@@ -18,6 +18,7 @@ import data.HappinessTotal;
 import data.Money;
 import data.PopulationTotal;
 import data.Residential;
+import data.Save;
 import data.Services;
 import data.Station;
 
@@ -29,6 +30,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
@@ -102,6 +104,7 @@ public class GameScreen extends JFrame implements Runnable{
 	private String nbPopTotalLb;
 	private long speed = 300;
 	private int tmpPop,tmpHapp;
+	private JButton btnSave;
 	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -297,12 +300,12 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		// This Pane is visible when a District is clicked
 		subwayPanel = new JPanel();
-		subwayPanel.setBounds(922, 367, 262, 263);
+		subwayPanel.setBounds(922, 367, 262, 208);
 		contentPane.add(subwayPanel);
 		subwayPanel.setLayout(null);
 		
 		subwayPanel2 = new JPanel();
-		subwayPanel2.setBounds(922, 367, 262, 263);
+		subwayPanel2.setBounds(922, 367, 262, 208);
 		contentPane.add(subwayPanel2);
 		subwayPanel2.setLayout(null);
 		
@@ -505,12 +508,12 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		lblDay = new JLabel("of "+clock.getMonthName());
 		lblDay.setFont(fontDate);
-		lblDay.setBounds(198, 10, 74, 19);
+		lblDay.setBounds(214, 10, 74, 19);
 		datePanel.add(lblDay);
 		
 		lblYears = new JLabel(""+clock.getYear());
 		lblYears.setFont(fontDate);
-		lblYears.setBounds(282, 10, 46, 19);
+		lblYears.setBounds(298, 10, 46, 19);
 		datePanel.add(lblYears);
 		
 		lblHour = new JLabel(clock.displayTime());
@@ -520,18 +523,32 @@ public class GameScreen extends JFrame implements Runnable{
 		
 		lblDayofWeek = new JLabel(clock.getDayName());
 		lblDayofWeek.setFont(fontDate);
-		lblDayofWeek.setBounds(58, 10, 74, 19);
+		lblDayofWeek.setBounds(66, 10, 82, 19);
 		datePanel.add(lblDayofWeek);
 		
 		lblDaysgone = new JLabel("Days Gone : "+clock.getDayCpt());
 		lblDaysgone.setFont(fontDate);
-		lblDaysgone.setBounds(338, 10, 128, 19);
+		lblDaysgone.setBounds(354, 10, 128, 19);
 		datePanel.add(lblDaysgone);
 		
 		lblDayNumber = new JLabel(clock.getDay());
 		lblDayNumber.setFont(fontDate);
-		lblDayNumber.setBounds(142, 10, 46, 19);
+		lblDayNumber.setBounds(158, 10, 46, 19);
 		datePanel.add(lblDayNumber);
+		
+		btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Save.save();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		btnSave.setBounds(1028, 615, 154, 40);
+		contentPane.add(btnSave);
 		
 		Thread windowThread = new Thread(instance);
 		windowThread.start();

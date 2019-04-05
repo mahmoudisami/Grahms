@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -20,6 +21,7 @@ import data.Coordinates;
 import data.District;
 import data.Line;
 import data.Money;
+import data.Save;
 import moteur.DistrictLinker;
 
 public class Grid extends JPanel{
@@ -33,8 +35,8 @@ public class Grid extends JPanel{
 	public DistrictLinker districtLinker = new DistrictLinker();
 	boolean addLineBool = false;
 	boolean addLineBoolChangedToTrue = false;	//TRUE si on viens de passer AddLineBool de FALSE à TRUE, sinon FALSE
-	ArrayList<Coordinates> lineCoo;
-	ArrayList<Line> allLines = new ArrayList<Line>();
+	static ArrayList<Coordinates> lineCoo;
+	public static ArrayList<Line> allLines = new ArrayList<Line>();
 	private Money money;
 	
 	public static District[][] grid = new District[width][height];
@@ -130,7 +132,7 @@ public class Grid extends JPanel{
 		                	
 		                }
 	                }
-	            // MouseEvent Branche pour la création de ligne.
+	            // MouseEvent Branche pour la creation de ligne.
 	            }else{
 	            	if(addLineBoolChangedToTrue == true){
 	            		lineCoo = new ArrayList<Coordinates>();
@@ -177,13 +179,13 @@ public class Grid extends JPanel{
 		                		if(((lineCoo.get(lineCoo.size()-1).getX() == caseX-1 || lineCoo.get(lineCoo.size()-1).getX() == caseX+1) && lineCoo.get(lineCoo.size()-1).getY() == caseY) || ((lineCoo.get(lineCoo.size()-1).getY() == caseY-1 || lineCoo.get(lineCoo.size()-1).getY() == caseY+1) && lineCoo.get(lineCoo.size()-1).getX() == caseX)){
 		                			lineCoo.add(coo);
 		                			for(int i=0;i<lineCoo.size();i++){
-		    		                	System.out.println("ArrayList N°"+i+" : "+lineCoo.get(i).getX()+" et "+lineCoo.get(i).getY());
+		    		                	System.out.println("ArrayList N�"+i+" : "+lineCoo.get(i).getX()+" et "+lineCoo.get(i).getY());
 		    		                }
 		                			if(grid[caseX][caseY] != null && grid[caseX][caseY].isStation() == true && (caseX != previousCaseX || caseY != previousCaseY)){
 		                				setAddLineBool(false);
 		                				System.out.println("Ligne completee avec succes");
 		                				money.withDraw((lineCoo.size() -1 )*Const.MAINTENANCE_COST_LINE);
-		                				Line lineCompleted = new Line(grid[lineCoo.get(0).getX()][lineCoo.get(0).getY()], grid[lineCoo.get(lineCoo.size()-1).getX()][lineCoo.get(lineCoo.size()-1).getY()], lineCoo.size()-1, true, lineCoo);
+		      /*ICI*/          			Line lineCompleted = new Line(grid[lineCoo.get(0).getX()][lineCoo.get(0).getY()], grid[lineCoo.get(lineCoo.size()-1).getX()][lineCoo.get(lineCoo.size()-1).getY()], lineCoo.size()-1, true, lineCoo);
 		                				districtLinker.linkDistrict(lineCompleted);
 		                				allLines.add(lineCompleted);
 		                				repaint();
@@ -272,6 +274,7 @@ public class Grid extends JPanel{
 		}
 		g.setColor(Color.black);
 	}
+	
 	public int getCaseX(int coordinateX, int numberOfSquare) {
         int divider = sizeScreenX / numberOfSquare;
         int position = (int) Math.floor(coordinateX / divider);
@@ -413,10 +416,19 @@ public class Grid extends JPanel{
 		return addLineBool;
 	}
 	
-	public ArrayList<Line> getAllLines(){
+	public static ArrayList<Line> getAllLines(){
 		return allLines;
 	}
 	
+	public static ArrayList<Coordinates> getLineCoo() {
+		return lineCoo;
+	}
+	public static void setLineCoo(ArrayList<Coordinates> lineCoo) {
+		Grid.lineCoo = lineCoo;
+	}
+	public static void setAllLines(ArrayList<Line> allLines) {
+		Grid.allLines = allLines;
+	}
 	public void setAddLineBool(boolean newBool){
 		addLineBool = newBool;
 	}

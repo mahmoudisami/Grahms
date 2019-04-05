@@ -24,7 +24,7 @@ public class HappinessTotal {
 	public static int getHappinessTotal() {
 		return happinessTotal;
 	}
-	public void setHappinessTotal(int values) {
+	public static void setHappinessTotal(int values) {
 		happinessTotal = values;
 	}
 }
