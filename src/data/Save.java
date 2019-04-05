@@ -162,10 +162,10 @@ public class Save {
 			int district2X = lineCoords.get(lineCoords.size()-1).getX();
 			int district2Y = lineCoords.get(lineCoords.size()-1).getY();
 			int distance = lineCoords.size()-1;
-			int idLine = Save.saveTheLine(district1X, district1Y, district2X, district2Y, distance);
+			int idLine = saveTheLine(district1X, district1Y, district2X, district2Y, distance);
 			System.out.println("Sauvegarde de la ligne :\n de  : ["+ district1X + "]["+ district1Y + "] a [" + district2X + "][" + district2Y + "]\n" );
 			Connection conn = Save.connectToDB();
-			for(int j = 0; j < lineCoords.size()-1; j++) {
+			for(int j = 0; j < lineCoords.size(); j++) {
 				int x = lineCoords.get(j).getX();
 				int y = lineCoords.get(j).getY();
 			/*	PreparedStatement psup =(PreparedStatement) conn.prepareStatement("DELETE FROM CoordinateLine WHERE idLine = "+idLine+"");
